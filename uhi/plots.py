@@ -77,7 +77,7 @@ def cooling_by_size(parks: pd.DataFrame, n_scenes: int, path: Path) -> None:
     ax1.set_xticks(range(3), [f"{c}\nn = {(parks['size_class'] == c).sum()}" for c in CLASS_ORDER])
     ax1.set_xlim(-0.5, 2.75)
     ax1.set_ylabel(Y_LABEL)
-    ax1.set_title("By size class (bar = median, line = quartiles)")
+    ax1.set_title("By size class")
     ax1.grid(axis="x", visible=False)
     ax2.set_xscale("log")
     ax2.set_xlabel("Park area (ha, log scale)")
@@ -89,11 +89,13 @@ def cooling_by_size(parks: pd.DataFrame, n_scenes: int, path: Path) -> None:
                 name, (row["area_ha"].iloc[0], row["delta_median_c"].iloc[0]),
                 xytext=(5, 5), textcoords="offset points", fontsize=8, color=MUTED,
             )
-    ax2.legend(loc="lower left", title="Park size")
+    ax2.legend(loc="upper right", ncols=3, columnspacing=1.0, handletextpad=0.2)
+    ax2.set_ylim(top=1.6)
     for ax in (ax1, ax2):
         _zero_line(ax)
     fig.suptitle(
-        f"Each dot is one park: its median over up to {n_scenes} summer Landsat scenes, 2013–2026",
+        f"Each dot is one park: its median over up to {n_scenes} summer Landsat scenes, 2013–2026. "
+        "Bar = median of the class, line = quartiles.",
         x=0.01, ha="left", fontsize=9, color=MUTED,
     )
     _save(fig, path)
@@ -102,12 +104,20 @@ def cooling_by_size(parks: pd.DataFrame, n_scenes: int, path: Path) -> None:
 def cooling_vs_ndvi(sites: pd.DataFrame, fit: tuple[float, float], r: float, path: Path) -> None:
     fig, ax = plt.subplots(figsize=(7, 4.4), constrained_layout=True)
     parks = sites[sites["kind"] == "park"]
+    dry = parks[~parks["near_water"]]
     for cls in CLASS_ORDER:
-        d = parks[parks["size_class"] == cls]
+        d = dry[dry["size_class"] == cls]
         ax.scatter(
-            d["ndvi_s2"], d["delta_median_c"], s=26, color=CLASS_COLOR[cls], alpha=0.8,
+            d["ndvi_s2"], d["delta_median_c"], s=26, color=CLASS_COLOR[cls], alpha=0.85,
             edgecolor=SURFACE, linewidth=0.6, label=CLASS_LABEL[cls],
         )
+    wet = parks[parks["near_water"]]
+    ax.scatter(
+        wet["ndvi_s2"], wet["delta_median_c"], s=30, marker="D", facecolor="none",
+        edgecolor=[CLASS_COLOR[c] for c in wet["size_class"]], linewidth=1.3,
+    )
+    ax.scatter([], [], s=30, marker="D", facecolor="none", edgecolor=MUTED, linewidth=1.3,
+               label="park within 100 m of water")
     sealed = sites[sites["kind"] == "sealed"]
     ax.scatter(
         sealed["ndvi_s2"], sealed["delta_median_c"], s=40, marker="s", color=SEALED_COLOR,
@@ -118,17 +128,17 @@ def cooling_vs_ndvi(sites: pd.DataFrame, fit: tuple[float, float], r: float, pat
             row.site, (row.ndvi_s2, row.delta_median_c), xytext=(6, -3),
             textcoords="offset points", fontsize=8, color=MUTED,
         )
-    xs = np.array([parks["ndvi_s2"].min(), parks["ndvi_s2"].max()])
+    xs = np.array([dry["ndvi_s2"].min(), dry["ndvi_s2"].max()])
     ax.plot(xs, fit[0] * xs + fit[1], color=INK, linewidth=1.5, linestyle="--")
     ax.annotate(
-        f"parks: {fit[0] / 10:+.1f} °C per 0.1 NDVI, r = {r:.2f}",
-        (xs[1], fit[0] * xs[1] + fit[1]), xytext=(-4, 10), textcoords="offset points",
-        ha="right", fontsize=9, color=INK,
+        f"parks away from water:\n{fit[0] / 10:+.1f} °C per 0.1 NDVI, r = {r:.2f}",
+        (xs[0], fit[0] * xs[0] + fit[1]), xytext=(0, 8), textcoords="offset points",
+        ha="left", fontsize=9, color=INK,
     )
     _zero_line(ax)
     ax.set_xlabel("Mean NDVI of the site (Sentinel-2, 10 m, summer median)")
     ax.set_ylabel(Y_LABEL)
-    ax.set_title("Greener parks are cooler")
+    ax.set_title("Park cooling against greenness")
     ax.legend(loc="lower left")
     _save(fig, path)
 
@@ -150,7 +160,7 @@ def cooling_per_year(years: pd.DataFrame, path: Path) -> None:
     ax.annotate(
         "scenes:", (counts["year"].min() - 0.6, low - 0.9), ha="right", fontsize=8, color=MUTED
     )
-    ax.set_ylim(low - 1.4, 0.5)
+    ax.set_ylim(low - 1.4, 1.4)
     ax.set_xlim(counts["year"].min() - 1.6, counts["year"].max() + 0.5)
     ax.set_xticks(counts["year"])
     _zero_line(ax)

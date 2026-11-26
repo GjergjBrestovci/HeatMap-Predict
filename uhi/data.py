@@ -82,19 +82,27 @@ def landsat_grid() -> Grid:
     return make_grid(transform_bounds("EPSG:4326", CRS, *VIENNA_BBOX), 30.0, 15.0)
 
 
-def read_to_grid(href: str, grid: Grid, resampling=Resampling.nearest) -> np.ndarray:
-    """Read band 1 of a remote raster onto `grid`. Cells outside the raster are 0."""
-    with rasterio.Env(**GDAL_ENV), rasterio.open(href) as src, WarpedVRT(
-        src,
-        crs=CRS,
-        transform=grid.transform,
-        width=grid.width,
-        height=grid.height,
-        resampling=resampling,
-        src_nodata=None,
-        nodata=0,
-    ) as vrt:
-        return vrt.read(1)
+def read_to_grid(href: str | Path, grid: Grid, resampling=Resampling.nearest) -> np.ndarray:
+    """Read band 1 of a raster onto `grid`.
+
+    The raster's own no-data value and cells outside the raster both come back
+    as 0. The source no-data value must be passed on explicitly: without it GDAL
+    treats no-data cells as valid and changes zeros to 1 to keep them apart from
+    the output no-data value.
+    """
+    with rasterio.Env(**GDAL_ENV), rasterio.open(href) as src:
+        src_nodata = src.nodata if src.nodata is not None else 0
+        with WarpedVRT(
+            src,
+            crs=CRS,
+            transform=grid.transform,
+            width=grid.width,
+            height=grid.height,
+            resampling=resampling,
+            src_nodata=src_nodata,
+            nodata=0,
+        ) as vrt:
+            return vrt.read(1)
 
 
 # ------------------------------------------------------------------ Stadt Wien layers
@@ -134,6 +142,8 @@ GUERTEL_HALF_WIDTH_M = 40
 PARK_MIN_HA = 1.0
 PARK_MAX_DIST_KM = 6.0
 PARK_CLUSTER_GAP_M = 50.0
+# A site this close to mapped water shares thermal pixels (100 m) with it.
+NEAR_WATER_M = 100.0
 # River and canal bank strips carry the park flag but are not parks.
 PARK_EXCLUDE_PREFIXES = ("Donauinsel", "Donaukanal", "Handelskai", "Neue Donau")
 # Large parks whose main polygons are flagged as forest or garden instead of park.
@@ -201,6 +211,9 @@ def build_sites(cache: Path) -> gpd.GeoDataFrame:
     sites = pd.concat([park_sites(cache), sealed_sites(cache)], ignore_index=True)
     sites = gpd.GeoDataFrame(sites, crs=CRS)
     sites["area_ha"] = (sites.area / 1e4).round(2)
+    landuse = wfs("REALNUT2022OGD", cache)
+    water = landuse[landuse["NUTZUNG_LEVEL2"] == "Gewässer"].union_all()
+    sites["near_water"] = sites.distance(water) <= NEAR_WATER_M
     if sites["site"].duplicated().any():
         raise ValueError("duplicate site names")
     return sites.sort_values(["kind", "area_ha"], ascending=[True, False]).reset_index(drop=True)

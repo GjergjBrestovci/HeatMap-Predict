@@ -164,3 +164,20 @@ def test_summaries():
     groups = core.summarize_groups(sites, "size_class")
     assert groups.loc[0, "sites"] == 2
     assert groups.loc[0, "delta_median_c"] == pytest.approx(-5.5)
+
+
+def test_summarize_groups_per_scene():
+    df = pd.DataFrame(
+        {
+            "size_class": ["small"] * 6,
+            "scene": ["s1", "s1", "s2", "s2", "s3", "s3"],
+            "site": ["a", "b"] * 3,
+            "delta_c": [-2.0, -4.0, -1.0, -3.0, 0.5, 1.5],  # scene medians: -3, -2, +1
+        }
+    )
+    out = core.summarize_groups_per_scene(df, "size_class").iloc[0]
+    assert out["scenes"] == 3
+    assert out["scene_q25_c"] == pytest.approx(-2.5)
+    assert out["scene_q75_c"] == pytest.approx(-0.5)
+    assert out["scene_max_c"] == pytest.approx(1.0)
+    assert out["scenes_cooler_share"] == pytest.approx(2 / 3)

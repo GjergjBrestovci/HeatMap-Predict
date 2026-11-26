@@ -150,3 +150,14 @@ def summarize_groups(site_summary: pd.DataFrame, by: str) -> pd.DataFrame:
         .agg(sites="count", delta_median_c="median", delta_q25_c=_q25, delta_q75_c=_q75)
         .reset_index()
     )
+
+
+def summarize_groups_per_scene(df: pd.DataFrame, by: str) -> pd.DataFrame:
+    """Spread between scenes: per scene the median `delta_c` of a group's sites,
+    then quartiles of that over scenes and the share of scenes below zero."""
+    per_scene = df.groupby([by, "scene"])["delta_c"].median().reset_index()
+    out = per_scene.groupby(by)["delta_c"].agg(
+        scenes="count", scene_q25_c=_q25, scene_q75_c=_q75, scene_max_c="max"
+    )
+    out["scenes_cooler_share"] = per_scene.groupby(by)["delta_c"].agg(lambda s: (s < 0).mean())
+    return out.reset_index()

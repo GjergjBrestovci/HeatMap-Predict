@@ -125,17 +125,44 @@ def main() -> None:
     parks = summary[summary["kind"] == "park"]
     table = table[table["site"].isin(summary["site"])]
 
-    classes = core.summarize_groups(parks, "size_class")
+    # Per size class, for all parks and for parks away from water
+    class_tables = []
+    for label, subset in (("all parks", parks), ("away from water", parks[~parks["near_water"]])):
+        rows = table.merge(subset[["site", "size_class"]], on="site")
+        part = core.summarize_groups(subset, "size_class").merge(
+            core.summarize_groups_per_scene(rows, "size_class"), on="size_class"
+        )
+        part.insert(0, "subset", label)
+        class_tables.append(part)
+    classes = pd.concat(class_tables, ignore_index=True)
     classes["size_class"] = pd.Categorical(classes["size_class"], plots.CLASS_ORDER, ordered=True)
-    classes = classes.sort_values("size_class")
+    classes = classes.sort_values(["subset", "size_class"]).reset_index(drop=True)
     years_df = year_summary(table, parks)
 
-    log_area = np.log10(parks["area_ha"])
-    fit_ndvi = np.polyfit(parks["ndvi_s2"], parks["delta_median_c"], 1)
-    fit_area = np.polyfit(log_area, parks["delta_median_c"], 1)
-    design = np.column_stack([parks["ndvi_s2"], log_area, np.ones(len(parks))])
-    both, *_ = np.linalg.lstsq(design, parks["delta_median_c"].to_numpy(), rcond=None)
-    resid = parks["delta_median_c"] - design @ both
+    def relation(p: pd.DataFrame) -> dict:
+        """How the park medians relate to NDVI and to area."""
+        log_area = np.log10(p["area_ha"])
+        delta = p["delta_median_c"]
+        design = np.column_stack([p["ndvi_s2"], log_area, np.ones(len(p))])
+        coef, *_ = np.linalg.lstsq(design, delta.to_numpy(), rcond=None)
+        resid = delta - design @ coef
+        return {
+            "parks": len(p),
+            "pearson_r_delta_vs_ndvi_s2": round(float(delta.corr(p["ndvi_s2"])), 2),
+            "spearman_r_delta_vs_ndvi_s2": round(float(delta.rank().corr(p["ndvi_s2"].rank())), 2),
+            "slope_c_per_0.1_ndvi": round(float(np.polyfit(p["ndvi_s2"], delta, 1)[0]) / 10, 2),
+            "pearson_r_delta_vs_log10_area": round(float(delta.corr(log_area)), 2),
+            "spearman_r_delta_vs_area": round(float(delta.rank().corr(p["area_ha"].rank())), 2),
+            "slope_c_per_10x_area": round(float(np.polyfit(log_area, delta, 1)[0]), 2),
+            "pearson_r_ndvi_s2_vs_log10_area": round(float(p["ndvi_s2"].corr(log_area)), 2),
+            "joint_fit_c_per_0.1_ndvi": round(float(coef[0]) / 10, 2),
+            "joint_fit_c_per_10x_area": round(float(coef[1]), 2),
+            "joint_fit_r2": round(float(1 - resid.var() / delta.var()), 2),
+        }
+
+    dry = parks[~parks["near_water"]]
+    wet = parks[parks["near_water"]]
+    fit_dry = np.polyfit(dry["ndvi_s2"], dry["delta_median_c"], 1)
     stats = {
         "landsat_items_considered": len(items),
         "overpasses_considered": len(passes),
@@ -144,53 +171,47 @@ def main() -> None:
         "first_scene": table["date"].min(),
         "last_scene": table["date"].max(),
         "parks": len(parks),
+        "parks_near_water": len(wet),
         "sites_dropped_too_few_scenes": dropped,
         "sentinel2_dates": s2_dates,
-        "pearson_r_delta_vs_ndvi_s2": round(float(parks["delta_median_c"].corr(parks["ndvi_s2"])), 3),
-        "spearman_r_delta_vs_ndvi_s2": round(
-            float(parks["delta_median_c"].corr(parks["ndvi_s2"], method="spearman")), 3),
-        "slope_c_per_0.1_ndvi": round(float(fit_ndvi[0]) / 10, 2),
-        "pearson_r_delta_vs_log10_area": round(float(parks["delta_median_c"].corr(log_area)), 3),
-        "spearman_r_delta_vs_area": round(
-            float(parks["delta_median_c"].corr(parks["area_ha"], method="spearman")), 3),
-        "slope_c_per_10x_area": round(float(fit_area[0]), 2),
-        "pearson_r_ndvi_s2_vs_log10_area": round(float(parks["ndvi_s2"].corr(log_area)), 3),
-        "joint_fit_c_per_0.1_ndvi": round(float(both[0]) / 10, 2),
-        "joint_fit_c_per_10x_area": round(float(both[1]), 2),
-        "joint_fit_r2": round(float(1 - resid.var() / parks["delta_median_c"].var()), 3),
+        "near_water_median_delta_c": round(float(wet["delta_median_c"].median()), 2),
+        "away_from_water_median_delta_c": round(float(dry["delta_median_c"].median()), 2),
+        "relation_all_parks": relation(parks),
+        "relation_away_from_water": relation(dry),
     }
 
     # Outputs
-    table.round({"lst_mean_c": 2, "ndvi_landsat": 3, "sealed_mean_c": 2, "delta_c": 2}).to_csv(
-        args.out / "scene_site.csv", index=False)
+    sealed_ref = table.groupby("scene")["sealed_mean_c"].first().round(2)
+    log = log.merge(sealed_ref, on="scene", how="left")
+    table.drop(columns=["date", "sealed_mean_c"]).round(
+        {"lst_mean_c": 2, "ndvi_landsat": 2, "delta_c": 2, "valid_frac": 2}
+    ).to_csv(args.out / "scene_site.csv", index=False)
     summary.round(2).to_csv(args.out / "site_summary.csv", index=False)
     classes.round(2).to_csv(args.out / "class_summary.csv", index=False)
     years_df.round(2).to_csv(args.out / "year_summary.csv", index=False)
     log.to_csv(args.out / "scenes.csv", index=False)
     (args.out / "stats.json").write_text(json.dumps(stats, indent=2, ensure_ascii=False) + "\n")
     plots.cooling_by_size(parks, n_scenes, args.out / "cooling_by_size.png")
-    plots.cooling_vs_ndvi(summary, fit_ndvi, stats["pearson_r_delta_vs_ndvi_s2"],
-                          args.out / "cooling_vs_ndvi.png")
+    plots.cooling_vs_ndvi(
+        summary, fit_dry, stats["relation_away_from_water"]["pearson_r_delta_vs_ndvi_s2"],
+        args.out / "cooling_vs_ndvi.png",
+    )
     plots.cooling_per_year(years_df, args.out / "cooling_per_year.png")
 
     print(f"\nOverpasses: {len(passes)} considered, {n_scenes} used "
           f"({stats['first_scene']} to {stats['last_scene']})")
     for reason, n in stats["overpasses_skipped"].items():
         print(f"  skipped, {reason}: {n}")
-    print(f"Sites: {len(parks)} parks + {len(sealed_names)} sealed; "
+    print(f"Sites: {len(parks)} parks ({len(wet)} near water) + {len(sealed_names)} sealed; "
           f"{len(dropped)} dropped for fewer than {MIN_SCENES_PER_SITE} scenes")
-    print("\nMedian difference to the sealed sites, per park size class (°C):")
+    print("\nDifference to the sealed sites per park size class (°C):")
     print(classes.round(2).to_markdown(index=False))
     print("\nSealed sites:")
     print(summary.loc[summary["kind"] == "sealed",
                       ["site", "scenes", "delta_median_c", "delta_q25_c", "delta_q75_c", "ndvi_s2"]]
           .round(2).to_markdown(index=False))
-    print(f"\nParks, difference vs Sentinel-2 NDVI: r = {stats['pearson_r_delta_vs_ndvi_s2']}, "
-          f"{stats['slope_c_per_0.1_ndvi']} °C per 0.1 NDVI")
-    print(f"Parks, difference vs log10(area):     r = {stats['pearson_r_delta_vs_log10_area']}, "
-          f"{stats['slope_c_per_10x_area']} °C per tenfold area")
-    print(f"Both together: {stats['joint_fit_c_per_0.1_ndvi']} °C per 0.1 NDVI, "
-          f"{stats['joint_fit_c_per_10x_area']} °C per tenfold area, R² = {stats['joint_fit_r2']}")
+    for label in ("relation_all_parks", "relation_away_from_water"):
+        print(f"\n{label}: {json.dumps(stats[label])}")
     print(f"\nWrote results to {args.out}/")
 
 

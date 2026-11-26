@@ -1,0 +1,7 @@
+subset,size_class,sites,delta_median_c,delta_q25_c,delta_q75_c,scenes,scene_q25_c,scene_q75_c,scene_max_c,scenes_cooler_share
+all parks,small,53,-3.4,-4.97,-2.53,69,-4.0,-3.02,-1.29,1.0
+all parks,medium,37,-5.55,-6.8,-3.61,69,-6.26,-4.76,-2.09,1.0
+all parks,large,5,-7.58,-7.72,-7.43,69,-8.47,-6.86,-3.53,1.0
+away from water,small,43,-3.33,-4.12,-2.47,69,-3.7,-2.79,-0.96,1.0
+away from water,medium,20,-4.2,-5.56,-3.21,69,-4.88,-3.73,-0.99,1.0
+away from water,large,1,-5.91,-5.91,-5.91,68,-6.97,-5.17,-1.44,1.0
