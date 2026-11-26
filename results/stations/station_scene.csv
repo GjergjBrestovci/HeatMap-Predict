@@ -37,7 +37,6 @@ scene,overpass_utc,station,station_id,air_c,lst_pixel_c,lst_ring_c,ndvi_ring,sta
 2015-06-01_landsat-8_p189,2015-06-01T09:38,Wien Donaufeld,5935,23.88,31.05,29.09,0.47,urban
 2015-06-01_landsat-8_p189,2015-06-01T09:38,Wien Hohe Warte,105,24.31,28.06,28.96,0.57,urban
 2015-06-01_landsat-8_p189,2015-06-01T09:38,Wien Innere Stadt,5925,24.61,35.06,35.85,0.23,urban
-2015-06-01_landsat-8_p189,2015-06-01T09:38,Wien Jubiläumswarte,5802,22.46,17.09,16.85,0.81,green
 2015-06-01_landsat-8_p189,2015-06-01T09:38,Wien Stammersdorf,4115,23.46,31.36,31.38,0.6,green
 2015-06-01_landsat-8_p189,2015-06-01T09:38,Wien Unterlaa,107,23.46,32.4,31.33,0.59,urban
 2015-07-03_landsat-8_p189,2015-07-03T09:38,Wien Donaufeld,5935,27.85,41.15,39.02,0.43,urban
@@ -55,8 +54,6 @@ scene,overpass_utc,station,station_id,air_c,lst_pixel_c,lst_ring_c,ndvi_ring,sta
 2015-08-11_landsat-8_p190,2015-08-11T09:44,Wien Donaufeld,5935,32.91,46.32,44.27,0.39,urban
 2015-08-11_landsat-8_p190,2015-08-11T09:44,Wien Hohe Warte,105,32.9,39.86,40.67,0.53,urban
 2015-08-11_landsat-8_p190,2015-08-11T09:44,Wien Innere Stadt,5925,31.99,41.69,42.98,0.19,urban
-2015-08-11_landsat-8_p190,2015-08-11T09:44,Wien Jubiläumswarte,5802,32.0,32.31,31.18,0.79,green
-2015-08-11_landsat-8_p190,2015-08-11T09:44,Wien Mariabrunn,106,33.16,32.9,32.29,0.57,urban
 2015-08-11_landsat-8_p190,2015-08-11T09:44,Wien Stammersdorf,4115,33.0,46.29,46.78,0.48,green
 2015-08-11_landsat-8_p190,2015-08-11T09:44,Wien Unterlaa,107,32.6,42.6,42.82,0.33,urban
 2016-07-05_landsat-8_p189,2016-07-05T09:38,Wien Donaufeld,5935,25.28,38.52,36.39,0.44,urban
@@ -81,9 +78,7 @@ scene,overpass_utc,station,station_id,air_c,lst_pixel_c,lst_ring_c,ndvi_ring,sta
 2017-07-31_landsat-8_p190,2017-07-31T09:45,Wien Donaufeld,5935,30.36,44.39,41.62,0.44,urban
 2017-07-31_landsat-8_p190,2017-07-31T09:45,Wien Hohe Warte,105,29.6,34.6,34.77,0.54,urban
 2017-07-31_landsat-8_p190,2017-07-31T09:45,Wien Innere Stadt,5925,29.35,43.73,44.64,0.21,urban
-2017-07-31_landsat-8_p190,2017-07-31T09:45,Wien Jubiläumswarte,5802,27.76,27.79,27.12,0.84,green
 2017-07-31_landsat-8_p190,2017-07-31T09:45,Wien Mariabrunn,106,29.0,33.45,33.83,0.65,urban
-2017-07-31_landsat-8_p190,2017-07-31T09:45,Wien Stammersdorf,4115,30.25,26.85,28.06,0.52,green
 2017-07-31_landsat-8_p190,2017-07-31T09:45,Wien Unterlaa,107,28.85,41.1,40.51,0.58,urban
 2017-08-16_landsat-8_p190,2017-08-16T09:45,Wien Donaufeld,5935,27.65,37.26,35.59,0.43,urban
 2017-08-16_landsat-8_p190,2017-08-16T09:45,Wien Hohe Warte,105,27.1,33.2,33.63,0.56,urban
@@ -211,7 +206,6 @@ scene,overpass_utc,station,station_id,air_c,lst_pixel_c,lst_ring_c,ndvi_ring,sta
 2021-07-26_landsat-8_p190,2021-07-26T09:45,Wien Innere Stadt,5925,27.1,38.82,40.58,0.22,urban
 2021-07-26_landsat-8_p190,2021-07-26T09:45,Wien Jubiläumswarte,5802,24.9,28.79,27.89,0.86,green
 2021-07-26_landsat-8_p190,2021-07-26T09:45,Wien Mariabrunn,106,26.7,34.6,34.27,0.64,urban
-2021-07-26_landsat-8_p190,2021-07-26T09:45,Wien Stammersdorf,4115,26.91,24.88,26.2,0.58,green
 2021-07-26_landsat-8_p190,2021-07-26T09:45,Wien Unterlaa,107,26.5,38.75,38.41,0.45,urban
 2021-08-11_landsat-8_p190,2021-08-11T09:45,Wien Donaufeld,5935,25.91,37.21,35.0,0.48,urban
 2021-08-11_landsat-8_p190,2021-08-11T09:45,Wien Hohe Warte,105,26.09,32.69,33.32,0.61,urban
@@ -479,10 +473,7 @@ scene,overpass_utc,station,station_id,air_c,lst_pixel_c,lst_ring_c,ndvi_ring,sta
 2026-07-25_landsat-9_p189,2026-07-25T09:38,Wien Stammersdorf,4115,26.44,39.8,39.56,0.48,green
 2026-07-25_landsat-9_p189,2026-07-25T09:38,Wien Unterlaa,107,24.96,41.5,41.13,0.3,urban
 2026-08-01_landsat-9_p190,2026-08-01T09:44,Wien Donaufeld,5935,33.05,36.78,35.17,0.43,urban
-2026-08-01_landsat-9_p190,2026-08-01T09:44,Wien Hohe Warte,105,32.7,27.91,28.1,0.54,urban
 2026-08-01_landsat-9_p190,2026-08-01T09:44,Wien Innere Stadt,5925,32.4,39.44,40.62,0.23,urban
-2026-08-01_landsat-9_p190,2026-08-01T09:44,Wien Jubiläumswarte,5802,31.5,22.72,21.08,0.8,green
-2026-08-01_landsat-9_p190,2026-08-01T09:44,Wien Mariabrunn,106,33.2,27.22,28.04,0.59,urban
 2026-08-01_landsat-9_p190,2026-08-01T09:44,Wien Stammersdorf,4115,32.6,36.5,36.56,0.44,green
 2026-08-01_landsat-9_p190,2026-08-01T09:44,Wien Unterlaa,107,33.05,43.5,43.23,0.3,urban
 2026-08-09_landsat-8_p190,2026-08-09T09:44,Wien Donaufeld,5935,28.19,40.0,38.53,0.43,urban

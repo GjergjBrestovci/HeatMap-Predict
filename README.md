@@ -149,19 +149,19 @@ air-temperature differences, which is what people feel and what the model will h
 surface are not measurably warmer in the air at 2 m. The park results above are differences
 in surface temperature and should be reported as such.
 
-- **The surface is much hotter than the air:** by 9.6 °C in the median (middle half 7.0 to
-  12.0 °C) over 494 station–overpass pairs, from +2.8 °C at the forested Jubiläumswarte to
+- **The surface is much hotter than the air:** by 9.8 °C in the median (middle half 7.1 to
+  12.1 °C) over 485 station–overpass pairs, from +3.0 °C at the forested Jubiläumswarte to
   +14.4 °C at Innere Stadt.
 - **Between the six stations below 300 m, the surface differs a lot and the air hardly at
-  all.** Their median surface temperatures span 6.3 °C (34.3 °C at Mariabrunn to 40.6 °C at
+  all.** Their median surface temperatures span 6.1 °C (34.5 °C at Mariabrunn to 40.6 °C at
   Innere Stadt); their median air temperatures span about 1 °C, and Innere Stadt, the hottest
   surface, has the coolest air of the six. Scene by scene, a station's surface deviation from
   the group says nothing about its air deviation: slope 0.00 °C of air per °C of surface,
-  r = −0.02.
+  r = 0.01.
 - **The one apparent link is altitude.** With the Jubiläumswarte (450 m) included, the slope
-  is 0.10 and r = 0.58. But its air is about 1.6 °C cooler than at the other stations, which
+  is 0.10 and r = 0.60. But its air is about 1.7 °C cooler than at the other stations, which
   is what 250 m of height gives on its own.
-- **Day to day the two do move together** at every station (r = 0.56 to 0.77 over scenes): a
+- **Day to day the two do move together** at every station (r = 0.68 to 0.92 over scenes): a
   hot day is hot at the surface and in the air. That is weather, not a difference between
   places.
 
@@ -173,11 +173,28 @@ in surface temperature and should be reported as such.
 |---|---:|---:|---:|---:|---:|---:|
 | Innere Stadt | 177 m | 6 % | 74 | 26.4 °C | 40.6 °C | +14.4 °C |
 | Donaufeld | 160 m | 16 % | 74 | 27.4 °C | 37.3 °C | +10.9 °C |
-| Hohe Warte | 198 m | 26 % | 75 | 26.9 °C | 34.6 °C | +8.2 °C |
+| Hohe Warte | 198 m | 26 % | 74 | 26.9 °C | 34.6 °C | +8.2 °C |
 | Unterlaa | 200 m | 33 % | 72 | 26.8 °C | 38.4 °C | +11.6 °C |
-| Mariabrunn | 225 m | 41 % | 52 | 27.0 °C | 34.3 °C | +7.8 °C |
-| Stammersdorf | 191 m | 65 % | 75 | 26.9 °C | 36.6 °C | +10.4 °C |
-| Jubiläumswarte | 450 m | 97 % | 72 | 25.3 °C | 27.9 °C | +2.8 °C |
+| Mariabrunn | 225 m | 41 % | 50 | 26.8 °C | 34.5 °C | +7.9 °C |
+| Stammersdorf | 191 m | 65 % | 73 | 26.7 °C | 36.6 °C | +10.5 °C |
+| Jubiläumswarte | 450 m | 97 % | 68 | 25.1 °C | 27.9 °C | +3.0 °C |
+
+**Suspect points removed.** 9 of 494 station–overpass pairs had a surface colder than the air
+(4 at the Jubiläumswarte, 2 each at Mariabrunn and Stammersdorf, 1 at Hohe Warte). In late
+morning in summer that is most likely cloud or cloud shadow the Landsat mask missed, so they
+are left out. The conclusion does not depend on them: with all 494 pairs the slope among the
+low stations was also 0.00 (r = −0.02) and the median gap 9.6 °C.
+
+### Limits: what the model will and will not predict
+
+- The model in the third part of the plan predicts **land surface temperature**, as Landsat
+  sees it in the late morning.
+- The comparison above shows that surface-temperature differences between places **cannot be
+  read as air-temperature differences**. A scenario result such as "this car park becomes
+  4 °C cooler as a park" is a statement about the ground, not about what a person feels.
+- Air temperature would need other data: night-time thermal scenes (ECOSTRESS, which needs a
+  free NASA account that the project does not have for now) or measurements from sensors
+  inside the neighbourhoods.
 
 ### What this does not show
 
@@ -202,6 +219,7 @@ in surface temperature and should be reported as such.
 2. Loads the Vienna stations of GeoSphere Austria's 10-minute dataset (`klima-v2-10min`,
    open, no key, CC BY 4.0) and interpolates air temperature at 2 m to the minute of each
    overpass. Three stations are listed under two ids; each station is counted once.
+   Pairs where the surface reads colder than the air are dropped as likely cloud.
 3. Reads the Landsat surface temperature at the station's pixel and as the mean within 300 m.
    The 300 m value is the main one, since one thermal measurement is 100 m wide; the single
    pixel gives the same picture.

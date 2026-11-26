@@ -10,36 +10,43 @@
     "Wien Jubiläumswarte"
   ],
   "stations_dropped": [],
-  "station_scene_pairs": 494,
-  "surface_minus_air_median_c": 9.64,
-  "surface_minus_air_q25_c": 6.98,
-  "surface_minus_air_q75_c": 12.0,
-  "r_surface_vs_air_all_pairs": 0.544,
+  "pairs_dropped_surface_colder_than_air": 9,
+  "pairs_dropped_by_station": {
+    "Wien Jubiläumswarte": 4,
+    "Wien Mariabrunn": 2,
+    "Wien Stammersdorf": 2,
+    "Wien Hohe Warte": 1
+  },
+  "station_scene_pairs": 485,
+  "surface_minus_air_median_c": 9.75,
+  "surface_minus_air_q25_c": 7.12,
+  "surface_minus_air_q75_c": 12.11,
+  "r_surface_vs_air_all_pairs": 0.607,
   "between_places_300m": {
-    "n": 494,
+    "n": 485,
     "scenes": 76,
     "stations": 7,
-    "air_per_lst": 0.095,
-    "r": 0.58,
-    "lst_anom_sd_c": 4.13,
-    "air_anom_sd_c": 0.68
+    "air_per_lst": 0.103,
+    "r": 0.597,
+    "lst_anom_sd_c": 3.93,
+    "air_anom_sd_c": 0.67
   },
   "between_places_300m_below_300m_altitude": {
-    "n": 422,
+    "n": 417,
     "scenes": 76,
     "stations": 6,
-    "air_per_lst": -0.004,
-    "r": -0.023,
-    "lst_anom_sd_c": 2.68,
+    "air_per_lst": 0.002,
+    "r": 0.009,
+    "lst_anom_sd_c": 2.49,
     "air_anom_sd_c": 0.44
   },
   "between_places_single_pixel": {
-    "n": 499,
+    "n": 490,
     "scenes": 76,
     "stations": 7,
-    "air_per_lst": 0.102,
-    "r": 0.598,
-    "lst_anom_sd_c": 3.99,
-    "air_anom_sd_c": 0.68
+    "air_per_lst": 0.111,
+    "r": 0.622,
+    "lst_anom_sd_c": 3.77,
+    "air_anom_sd_c": 0.67
   }
 }
