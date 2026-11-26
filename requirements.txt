@@ -1,0 +1,12 @@
+affine
+geopandas
+matplotlib
+numpy
+pandas
+planetary-computer
+pystac
+pystac-client
+rasterio
+requests
+shapely
+tabulate
