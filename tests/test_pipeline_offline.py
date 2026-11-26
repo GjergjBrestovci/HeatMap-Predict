@@ -74,7 +74,7 @@ def fake_city(monkeypatch):
     lwir = np.full(grid.shape, _dn(SEALED_C), dtype="uint16")
     lwir[mask(_square(16.37, 48.17, 500))] = _dn(COOL_SEALED_C)
     lwir[mask(_square(16.40, 48.16, 500))] = _dn(COOL_SEALED_C)
-    for name, (geom, on_water) in parks.items():
+    for geom, on_water in parks.values():
         lwir[mask(geom)] = _dn(WATER_PARK_C if on_water else PARK_C)
     lwir[mask(_square(16.37, 48.15, 900))] = 0  # permanent gap
     raw = {
