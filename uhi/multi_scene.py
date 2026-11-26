@@ -16,7 +16,7 @@ import numpy as np
 import pandas as pd
 from rasterio.features import geometry_mask
 
-from . import core, data, plots
+from . import core, data, plots, summary
 
 MIN_SCENES_PER_SITE = 10  # sites seen less often are left out of the summaries
 
@@ -44,20 +44,6 @@ def scene_site_table(passes, grid, cache, site_pixels, city, min_city_clear, min
     return pd.concat(rows, ignore_index=True), pd.DataFrame(log)
 
 
-def year_summary(table: pd.DataFrame, parks: pd.DataFrame) -> pd.DataFrame:
-    """Per summer and size class: median over parks of each park's median that summer."""
-    t = table.merge(parks[["site", "size_class"]], on="site")
-    t["year"] = t["date"].str[:4].astype(int)
-    per_site = t.groupby(["year", "size_class", "site"])["delta_c"].median().reset_index()
-    out = (
-        per_site.groupby(["year", "size_class"])["delta_c"]
-        .agg(delta_median_c="median", sites="count")
-        .reset_index()
-    )
-    scenes = t.groupby("year")["scene"].nunique().rename("scenes")
-    return out.merge(scenes, on="year")
-
-
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--years", default="2013-2026", help="first-last summer")
@@ -77,26 +63,37 @@ def main() -> None:
     years = range(first, last + 1)
     args.out.mkdir(parents=True, exist_ok=True)
 
-    # Sites and grids
-    sites = data.build_sites(args.cache)
+    # Landsat: every summer overpass, cached as a window over Vienna
     grid = data.landsat_grid()
-    site_pixels = data.rasterize_sites(sites, grid)
-    city_geom = data.wfs("LANDESGRENZEOGD", args.cache).geometry
-    city = geometry_mask(city_geom, grid.shape, grid.transform, invert=True)
-    sealed_names = sites.loc[sites["kind"] == "sealed", "site"].tolist()
-
-    # Landsat: every summer overpass, then filter by what the QA mask says locally
     items = data.landsat_items(args.cache, years, args.max_scene_cloud, args.refresh)
     data.fetch_landsat(items, grid, args.cache)
     passes = data.landsat_passes(items)
-    table, log = scene_site_table(
+    gap_mask = data.landsat_gap_mask(passes, grid, args.cache)
+
+    # Sites
+    sites = data.build_sites(args.cache, grid, gap_mask)
+    site_pixels = data.rasterize_sites(sites, grid)
+    city_geom = data.wfs("LANDESGRENZEOGD", args.cache).geometry
+    city = geometry_mask(city_geom, grid.shape, grid.transform, invert=True)
+    sealed = sites[sites["kind"] == "sealed"]
+    baselines = {
+        data.BASELINE_CITYWIDE: sealed["site"].tolist(),
+        data.BASELINE_WEST: sealed.loc[sealed["baseline"] == data.BASELINE_WEST, "site"].tolist(),
+    }
+    sealed_names = baselines[data.BASELINE_CITYWIDE]
+
+    # Filter by what the QA mask says locally, then compare with the sealed reference
+    raw_table, log = scene_site_table(
         passes, grid, args.cache, site_pixels, city, args.min_city_clear, args.min_site_valid
     )
-    with_ref = core.add_sealed_delta(table, sealed_names)
-    no_ref = (log["status"] == "used") & ~log["scene"].isin(with_ref["scene"])
+    table = summary.with_baselines(raw_table, baselines)
+    no_ref = (log["status"] == "used") & ~log["scene"].isin(table["scene"])
     log.loc[no_ref, "status"] = "a sealed reference site is masked"
-    table = with_ref
     n_scenes = table["scene"].nunique()
+    # The original baseline on all of its own scenes, to compare with the earlier result.
+    west_table = summary.with_baselines(
+        raw_table, {data.BASELINE_WEST: baselines[data.BASELINE_WEST]}
+    )
 
     # Sentinel-2 NDVI at 10 m over the area that holds the sites
     minx, miny, maxx, maxy = sites.total_bounds
@@ -111,89 +108,69 @@ def main() -> None:
         sites["ndvi_s2"] = [float(np.nanmean(flat[s2_pixels[s]])) for s in sites["site"]]
 
     # Summaries
-    summary = sites.drop(columns="geometry").merge(core.summarize_sites(table), on="site")
-    summary = summary.merge(
+    site_summary = sites.drop(columns="geometry").merge(core.summarize_sites(table), on="site")
+    site_summary = site_summary.merge(
         table.groupby("site")
-        .agg(lst_median_c=("lst_mean_c", "median"), ndvi_landsat=("ndvi_landsat", "median"),
+        .agg(delta_west_median_c=("delta_west_c", "median"),
+             lst_median_c=("lst_mean_c", "median"), ndvi_landsat=("ndvi_landsat", "median"),
              pixels_30m=("pixels", "max"))
         .reset_index(),
         on="site",
     )
-    rare = summary["scenes"] < MIN_SCENES_PER_SITE
-    dropped = sorted(set(sites["site"]) - set(summary.loc[~rare, "site"]))
-    summary = summary[~rare].sort_values(["kind", "area_ha"], ascending=[True, False])
-    parks = summary[summary["kind"] == "park"]
-    table = table[table["site"].isin(summary["site"])]
+    rare = site_summary["scenes"] < MIN_SCENES_PER_SITE
+    dropped = sorted(set(sites["site"]) - set(site_summary.loc[~rare, "site"]))
+    site_summary = site_summary[~rare].sort_values(["kind", "area_ha"], ascending=[True, False])
+    parks = site_summary[site_summary["kind"] == "park"]
+    table = table[table["site"].isin(site_summary["site"])]
 
-    # Per size class, for all parks and for parks away from water
-    class_tables = []
-    for label, subset in (("all parks", parks), ("away from water", parks[~parks["near_water"]])):
-        rows = table.merge(subset[["site", "size_class"]], on="site")
-        part = core.summarize_groups(subset, "size_class").merge(
-            core.summarize_groups_per_scene(rows, "size_class"), on="size_class"
-        )
-        part.insert(0, "subset", label)
-        class_tables.append(part)
-    classes = pd.concat(class_tables, ignore_index=True)
-    classes["size_class"] = pd.Categorical(classes["size_class"], plots.CLASS_ORDER, ordered=True)
-    classes = classes.sort_values(["subset", "size_class"]).reset_index(drop=True)
-    years_df = year_summary(table, parks)
+    subsets = summary.park_subsets(parks)
+    dry, wet = subsets["away from water"], subsets["near water"]
+    classes = summary.class_summary(table, parks)
+    classes.insert(0, "baseline", data.BASELINE_CITYWIDE)
+    classes_west = summary.class_summary(west_table, parks)
+    classes_west.insert(0, "baseline", f"{data.BASELINE_WEST} (its own scenes)")
+    comparison = summary.baseline_comparison(table, parks, data.BASELINE_WEST)
+    years_df = summary.year_summary(table, dry)
 
-    def relation(p: pd.DataFrame) -> dict:
-        """How the park medians relate to NDVI and to area."""
-        log_area = np.log10(p["area_ha"])
-        delta = p["delta_median_c"]
-        design = np.column_stack([p["ndvi_s2"], log_area, np.ones(len(p))])
-        coef, *_ = np.linalg.lstsq(design, delta.to_numpy(), rcond=None)
-        resid = delta - design @ coef
-        return {
-            "parks": len(p),
-            "pearson_r_delta_vs_ndvi_s2": round(float(delta.corr(p["ndvi_s2"])), 2),
-            "spearman_r_delta_vs_ndvi_s2": round(float(delta.rank().corr(p["ndvi_s2"].rank())), 2),
-            "slope_c_per_0.1_ndvi": round(float(np.polyfit(p["ndvi_s2"], delta, 1)[0]) / 10, 2),
-            "pearson_r_delta_vs_log10_area": round(float(delta.corr(log_area)), 2),
-            "spearman_r_delta_vs_area": round(float(delta.rank().corr(p["area_ha"].rank())), 2),
-            "slope_c_per_10x_area": round(float(np.polyfit(log_area, delta, 1)[0]), 2),
-            "pearson_r_ndvi_s2_vs_log10_area": round(float(p["ndvi_s2"].corr(log_area)), 2),
-            "joint_fit_c_per_0.1_ndvi": round(float(coef[0]) / 10, 2),
-            "joint_fit_c_per_10x_area": round(float(coef[1]), 2),
-            "joint_fit_r2": round(float(1 - resid.var() / delta.var()), 2),
-        }
-
-    dry = parks[~parks["near_water"]]
-    wet = parks[parks["near_water"]]
     fit_dry = np.polyfit(dry["ndvi_s2"], dry["delta_median_c"], 1)
+    headline = classes[classes["subset"] == "away from water"]
     stats = {
         "landsat_items_considered": len(items),
         "overpasses_considered": len(passes),
         "overpasses_used": int(n_scenes),
+        "overpasses_used_west_baseline": int(west_table["scene"].nunique()),
         "overpasses_skipped": log.loc[log["status"] != "used", "status"].value_counts().to_dict(),
         "first_scene": table["date"].min(),
         "last_scene": table["date"].max(),
+        "sealed_sites": baselines,
         "parks": len(parks),
         "parks_near_water": len(wet),
         "sites_dropped_too_few_scenes": dropped,
         "sentinel2_dates": s2_dates,
+        "headline_away_from_water_median_delta_c": {
+            str(r.size_class): round(float(r.delta_median_c), 2) for r in headline.itertuples()
+        },
         "near_water_median_delta_c": round(float(wet["delta_median_c"].median()), 2),
         "away_from_water_median_delta_c": round(float(dry["delta_median_c"].median()), 2),
-        "relation_all_parks": relation(parks),
-        "relation_away_from_water": relation(dry),
+        "relation_away_from_water": summary.relation(dry),
+        "relation_all_parks": summary.relation(parks),
     }
 
     # Outputs
     sealed_ref = table.groupby("scene")["sealed_mean_c"].first().round(2)
     log = log.merge(sealed_ref, on="scene", how="left")
     table.drop(columns=["date", "sealed_mean_c"]).round(
-        {"lst_mean_c": 2, "ndvi_landsat": 2, "delta_c": 2, "valid_frac": 2}
+        {"lst_mean_c": 2, "ndvi_landsat": 2, "delta_c": 2, "delta_west_c": 2, "valid_frac": 2}
     ).to_csv(args.out / "scene_site.csv", index=False)
-    summary.round(2).to_csv(args.out / "site_summary.csv", index=False)
-    classes.round(2).to_csv(args.out / "class_summary.csv", index=False)
+    site_summary.round(2).to_csv(args.out / "site_summary.csv", index=False)
+    pd.concat([classes, classes_west]).round(2).to_csv(args.out / "class_summary.csv", index=False)
+    comparison.round(2).to_csv(args.out / "baseline_comparison.csv", index=False)
     years_df.round(2).to_csv(args.out / "year_summary.csv", index=False)
     log.to_csv(args.out / "scenes.csv", index=False)
     (args.out / "stats.json").write_text(json.dumps(stats, indent=2, ensure_ascii=False) + "\n")
     plots.cooling_by_size(parks, n_scenes, args.out / "cooling_by_size.png")
     plots.cooling_vs_ndvi(
-        summary, fit_dry, stats["relation_away_from_water"]["pearson_r_delta_vs_ndvi_s2"],
+        site_summary, fit_dry, stats["relation_away_from_water"]["pearson_r_delta_vs_ndvi_s2"],
         args.out / "cooling_vs_ndvi.png",
     )
     plots.cooling_per_year(years_df, args.out / "cooling_per_year.png")
@@ -204,13 +181,16 @@ def main() -> None:
         print(f"  skipped, {reason}: {n}")
     print(f"Sites: {len(parks)} parks ({len(wet)} near water) + {len(sealed_names)} sealed; "
           f"{len(dropped)} dropped for fewer than {MIN_SCENES_PER_SITE} scenes")
-    print("\nDifference to the sealed sites per park size class (°C):")
+    print("\nDifference to the citywide sealed sites per park size class (°C):")
     print(classes.round(2).to_markdown(index=False))
+    print("\nDoes the baseline move the headline? Parks away from water, same scenes:")
+    print(comparison.round(2).to_markdown(index=False))
     print("\nSealed sites:")
-    print(summary.loc[summary["kind"] == "sealed",
-                      ["site", "scenes", "delta_median_c", "delta_q25_c", "delta_q75_c", "ndvi_s2"]]
+    print(site_summary.loc[site_summary["kind"] == "sealed",
+                           ["site", "baseline", "area_ha", "scenes", "delta_median_c",
+                            "delta_q25_c", "delta_q75_c", "ndvi_s2"]]
           .round(2).to_markdown(index=False))
-    for label in ("relation_all_parks", "relation_away_from_water"):
+    for label in ("relation_away_from_water", "relation_all_parks"):
         print(f"\n{label}: {json.dumps(stats[label])}")
     print(f"\nWrote results to {args.out}/")
 

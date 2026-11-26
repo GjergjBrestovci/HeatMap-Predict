@@ -53,17 +53,28 @@ def _save(fig, path: Path) -> None:
 
 
 def cooling_by_size(parks: pd.DataFrame, n_scenes: int, path: Path) -> None:
-    """Left: site medians per size class. Right: the same against park area."""
+    """Left: site medians per size class. Right: the same against park area.
+
+    Parks away from water are the headline (filled dots, class medians);
+    waterside parks are shown as open diamonds.
+    """
     fig, (ax1, ax2) = plt.subplots(
         1, 2, figsize=(10, 4.2), sharey=True, constrained_layout=True, width_ratios=[1, 1.4]
     )
     rng = np.random.default_rng(0)
+    near = parks["near_water"].astype(bool)
+    dry, wet = parks[~near], parks[near]
     for x, cls in enumerate(CLASS_ORDER):
-        d = parks[parks["size_class"] == cls]
+        d = dry[dry["size_class"] == cls]
+        w = wet[wet["size_class"] == cls]
         y = d["delta_median_c"].to_numpy()
         ax1.scatter(
             x + rng.uniform(-0.18, 0.18, len(y)), y, s=22, color=CLASS_COLOR[cls],
             alpha=0.75, edgecolor=SURFACE, linewidth=0.6,
+        )
+        ax1.scatter(
+            x + rng.uniform(-0.18, 0.18, len(w)), w["delta_median_c"], s=24, marker="D",
+            facecolor="none", edgecolor=CLASS_COLOR[cls], linewidth=1.1,
         )
         if len(y):
             q25, med, q75 = np.percentile(y, [25, 50, 75])
@@ -74,7 +85,17 @@ def cooling_by_size(parks: pd.DataFrame, n_scenes: int, path: Path) -> None:
             d["area_ha"], y, s=26, color=CLASS_COLOR[cls], alpha=0.8,
             edgecolor=SURFACE, linewidth=0.6, label=CLASS_LABEL[cls],
         )
-    ax1.set_xticks(range(3), [f"{c}\nn = {(parks['size_class'] == c).sum()}" for c in CLASS_ORDER])
+        ax2.scatter(
+            w["area_ha"], w["delta_median_c"], s=28, marker="D", facecolor="none",
+            edgecolor=CLASS_COLOR[cls], linewidth=1.1,
+        )
+    ax2.scatter([], [], s=28, marker="D", facecolor="none", edgecolor=MUTED, linewidth=1.1,
+                label="within 100 m of water")
+    ax1.set_xticks(
+        range(3),
+        [f"{c}\nn = {(dry['size_class'] == c).sum()} + {(wet['size_class'] == c).sum()}"
+         for c in CLASS_ORDER],
+    )
     ax1.set_xlim(-0.5, 2.75)
     ax1.set_ylabel(Y_LABEL)
     ax1.set_title("By size class")
@@ -89,14 +110,15 @@ def cooling_by_size(parks: pd.DataFrame, n_scenes: int, path: Path) -> None:
                 name, (row["area_ha"].iloc[0], row["delta_median_c"].iloc[0]),
                 xytext=(5, 5), textcoords="offset points", fontsize=8, color=MUTED,
             )
-    ax2.legend(loc="upper right", ncols=3, columnspacing=1.0, handletextpad=0.2)
+    ax2.legend(loc="upper right", ncols=4, columnspacing=0.8, handletextpad=0.2, fontsize=8)
     ax2.set_ylim(top=1.6)
     for ax in (ax1, ax2):
         _zero_line(ax)
     fig.suptitle(
-        f"Each dot is one park: its median over up to {n_scenes} summer Landsat scenes, 2013–2026. "
-        "Bar = median of the class, line = quartiles.",
-        x=0.01, ha="left", fontsize=9, color=MUTED,
+        f"Each mark is one park: its median over up to {n_scenes} summer Landsat scenes, "
+        "2013–2026. Bar and line = median and quartiles of the parks away from water "
+        "(n = away + near water).",
+        x=0.01, ha="left", fontsize=8, color=MUTED,
     )
     _save(fig, path)
 
@@ -165,6 +187,6 @@ def cooling_per_year(years: pd.DataFrame, path: Path) -> None:
     ax.set_xticks(counts["year"])
     _zero_line(ax)
     ax.set_ylabel(Y_LABEL)
-    ax.set_title("Median park cooling per summer")
+    ax.set_title("Median park cooling per summer, parks away from water")
     ax.legend(loc="upper right", ncols=3)
     _save(fig, path)
