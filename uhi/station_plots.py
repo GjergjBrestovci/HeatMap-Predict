@@ -72,14 +72,14 @@ def between_places(anomalies: pd.DataFrame, relation: dict, path: Path) -> None:
         xs = np.array([anomalies["lst_anom_c"].min(), anomalies["lst_anom_c"].max()])
         ax.plot(xs, slope * xs, color=INK, linewidth=1.5, linestyle="--")
         ax.annotate(
-            f"{slope:.2f} °C of air per °C of surface, r = {relation['r']:.2f}",
+            f"{slope:+.2f} °C of air per °C of surface, r = {relation['r']:.2f}",
             (xs[1], slope * xs[1]), xytext=(-4, 10), textcoords="offset points",
             ha="right", fontsize=9, color=INK,
         )
     ax.axhline(0, color=MUTED, linewidth=1)
     ax.axvline(0, color=MUTED, linewidth=1)
-    ax.set_xlabel("Surface temperature: station minus mean of all stations, same scene (°C)")
+    ax.set_xlabel("Surface temperature: station minus mean of these stations, same scene (°C)")
     ax.set_ylabel("Air temperature: same difference (°C)")
-    ax.set_title("How much of a surface difference shows up in the air")
+    ax.set_title("Differences between stations below 300 m: air against surface")
     ax.legend(loc="upper left")
     _save(fig, path)
