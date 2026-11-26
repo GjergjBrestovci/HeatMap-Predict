@@ -1,0 +1,8 @@
+station,id,altitude,green_share,station_class,scenes,air_median_c,lst_median_c,gap_median_c,gap_q25_c,gap_q75_c,r_over_scenes,scenes_pixel,gap_pixel_median_c,ndvi_ring
+Wien Innere Stadt,5925,177.0,0.06,urban,74,26.4,40.62,14.4,12.64,15.64,0.68,74,13.15,0.21
+Wien Donaufeld,5935,160.0,0.16,urban,74,27.38,37.32,10.88,9.46,11.99,0.72,75,12.77,0.45
+Wien Hohe Warte,105,198.0,0.26,urban,75,26.85,34.62,8.2,6.98,9.34,0.69,76,7.77,0.58
+Wien Unterlaa,107,200.0,0.33,urban,72,26.84,38.36,11.61,10.03,13.03,0.77,72,12.33,0.49
+Wien Mariabrunn,106,225.0,0.41,urban,52,26.95,34.32,7.8,6.81,8.68,0.56,54,7.73,0.64
+Wien Stammersdorf,4115,190.7,0.65,green,75,26.91,36.56,10.38,8.38,11.49,0.66,75,10.08,0.59
+Wien Jubiläumswarte,5802,450.0,0.97,green,72,25.32,27.91,2.8,1.93,3.59,0.73,73,3.79,0.87

@@ -143,22 +143,73 @@ without network. GitHub Actions runs them on every pull request.
 `python -m uhi.stations` asks how far the surface-temperature differences above can be read as
 air-temperature differences, which is what people feel and what the model will have to predict.
 
-**This has not been run on real data yet.** The code and its tests are in place; the run
-happens in GitHub Actions (`gh workflow run analysis.yml -f step=stations`) and the results
-and the answer follow in a later change.
+### Answer
 
-What it does:
+**Not directly.** At the late-morning Landsat overpass, the places that are hotter at the
+surface are not measurably warmer in the air at 2 m. The park results above are differences
+in surface temperature and should be reported as such.
 
-1. Takes the same summer Landsat overpasses as the park analysis (city at least 80 % clear).
+- **The surface is much hotter than the air:** by 9.6 °C in the median (middle half 7.0 to
+  12.0 °C) over 494 station–overpass pairs, from +2.8 °C at the forested Jubiläumswarte to
+  +14.4 °C at Innere Stadt.
+- **Between the six stations below 300 m, the surface differs a lot and the air hardly at
+  all.** Their median surface temperatures span 6.3 °C (34.3 °C at Mariabrunn to 40.6 °C at
+  Innere Stadt); their median air temperatures span about 1 °C, and Innere Stadt, the hottest
+  surface, has the coolest air of the six. Scene by scene, a station's surface deviation from
+  the group says nothing about its air deviation: slope 0.00 °C of air per °C of surface,
+  r = −0.02.
+- **The one apparent link is altitude.** With the Jubiläumswarte (450 m) included, the slope
+  is 0.10 and r = 0.58. But its air is about 1.6 °C cooler than at the other stations, which
+  is what 250 m of height gives on its own.
+- **Day to day the two do move together** at every station (r = 0.56 to 0.77 over scenes): a
+  hot day is hot at the surface and in the air. That is weather, not a difference between
+  places.
+
+![Differences between stations](results/stations/between_places.png)
+
+![Surface minus air per station](results/stations/gap_per_station.png)
+
+| Station | Altitude | Green within 300 m | Overpasses | Air (median) | Surface (median) | Surface − air |
+|---|---:|---:|---:|---:|---:|---:|
+| Innere Stadt | 177 m | 6 % | 74 | 26.4 °C | 40.6 °C | +14.4 °C |
+| Donaufeld | 160 m | 16 % | 74 | 27.4 °C | 37.3 °C | +10.9 °C |
+| Hohe Warte | 198 m | 26 % | 75 | 26.9 °C | 34.6 °C | +8.2 °C |
+| Unterlaa | 200 m | 33 % | 72 | 26.8 °C | 38.4 °C | +11.6 °C |
+| Mariabrunn | 225 m | 41 % | 52 | 27.0 °C | 34.3 °C | +7.8 °C |
+| Stammersdorf | 191 m | 65 % | 75 | 26.9 °C | 36.6 °C | +10.4 °C |
+| Jubiläumswarte | 450 m | 97 % | 72 | 25.3 °C | 27.9 °C | +2.8 °C |
+
+### What this does not show
+
+- **It does not show that parks fail to cool the air.** Weather stations are placed on open,
+  mostly grassed ground away from buildings, by design. None stands in a street canyon, on a
+  rail yard or inside a small park, so the stations do not sample the contrast the park
+  analysis is about. Seven stations cannot settle it.
+- **One time of day.** All overpasses are around 09:40 to 09:45 UTC, late morning, when the
+  air is well mixed. Air-temperature differences between city and green areas are largest in
+  the evening and at night, which Landsat does not see.
+- **The urban/green split is crude:** 50 % green land use within 300 m puts only Stammersdorf
+  and the Jubiläumswarte in the green class, so `urban_vs_green.csv` (surface 5.0 °C, air
+  0.6 °C) is mostly the hill station again.
+- For the model this means: surface temperature is a target it can be trained on, but a
+  claim about felt temperature needs air measurements inside the neighbourhoods, at the hours
+  that matter.
+
+### Method
+
+1. Takes the summer Landsat overpasses with at least 80 % of the city clear: 76 of them. (The
+   park analysis uses 59, because it also needs all sealed reference sites clear.)
 2. Loads the Vienna stations of GeoSphere Austria's 10-minute dataset (`klima-v2-10min`,
    open, no key, CC BY 4.0) and interpolates air temperature at 2 m to the minute of each
-   overpass.
+   overpass. Three stations are listed under two ids; each station is counted once.
 3. Reads the Landsat surface temperature at the station's pixel and as the mean within 300 m.
-   The 300 m value is the main one, since one thermal measurement is 100 m wide.
+   The 300 m value is the main one, since one thermal measurement is 100 m wide; the single
+   pixel gives the same picture.
 4. Classes each station as "urban" or "green" by the share of green land use within 300 m
    (2022 land-use map, 50 % threshold).
 
-What it reports, in `results/stations/`:
+Run it with `gh workflow run analysis.yml -f step=stations`, then
+`gh run download --name results-stations --dir results`. Outputs in `results/stations/`:
 
 | File | Content |
 |---|---|
@@ -166,16 +217,7 @@ What it reports, in `results/stations/`:
 | `station_summary.csv` | per station: surface minus air (median, quartiles), correlation over scenes, green share, altitude |
 | `urban_vs_green.csv` | per scene, urban stations minus green stations, for the surface and for the air |
 | `stats.json` | overall bias and correlation; how much of a surface difference between places shows up in the air |
-| `*.png` | surface against air, the gap per station, differences between places |
-
-The number to look at is `between_places_300m.air_per_lst`: for each overpass every station's
-deviation from the mean of all stations, at the surface and in the air, and the slope between
-the two. A value of 0.2 would mean that a place 5 °C hotter at the surface is 1 °C warmer in
-the air.
-
-Known limits before any result: there are fewer than ten stations, none of them inside a small
-park or on a railway yard, they sit at different altitudes (the statistic is also given for
-stations below 300 m only), and all overpasses are in the late morning.
+| `*.png` | surface against air, the gap per station, differences between stations below 300 m |
 
 ## Prototype: one Landsat scene
 

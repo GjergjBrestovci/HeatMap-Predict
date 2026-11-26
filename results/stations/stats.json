@@ -1,0 +1,45 @@
+{
+  "overpasses_used": 76,
+  "stations": [
+    "Wien Innere Stadt",
+    "Wien Donaufeld",
+    "Wien Hohe Warte",
+    "Wien Unterlaa",
+    "Wien Mariabrunn",
+    "Wien Stammersdorf",
+    "Wien Jubiläumswarte"
+  ],
+  "stations_dropped": [],
+  "station_scene_pairs": 494,
+  "surface_minus_air_median_c": 9.64,
+  "surface_minus_air_q25_c": 6.98,
+  "surface_minus_air_q75_c": 12.0,
+  "r_surface_vs_air_all_pairs": 0.544,
+  "between_places_300m": {
+    "n": 494,
+    "scenes": 76,
+    "stations": 7,
+    "air_per_lst": 0.095,
+    "r": 0.58,
+    "lst_anom_sd_c": 4.13,
+    "air_anom_sd_c": 0.68
+  },
+  "between_places_300m_below_300m_altitude": {
+    "n": 422,
+    "scenes": 76,
+    "stations": 6,
+    "air_per_lst": -0.004,
+    "r": -0.023,
+    "lst_anom_sd_c": 2.68,
+    "air_anom_sd_c": 0.44
+  },
+  "between_places_single_pixel": {
+    "n": 499,
+    "scenes": 76,
+    "stations": 7,
+    "air_per_lst": 0.102,
+    "r": 0.598,
+    "lst_anom_sd_c": 3.99,
+    "air_anom_sd_c": 0.68
+  }
+}

@@ -1,0 +1,500 @@
+scene,overpass_utc,station,station_id,air_c,lst_pixel_c,lst_ring_c,ndvi_ring,station_class
+2013-06-18_landsat-8_p190,2013-06-18T09:47,Wien Donaufeld,5935,29.79,42.9,40.01,0.52,urban
+2013-06-18_landsat-8_p190,2013-06-18T09:47,Wien Hohe Warte,105,29.94,37.15,37.42,0.6,urban
+2013-06-18_landsat-8_p190,2013-06-18T09:47,Wien Innere Stadt,5925,30.34,42.49,43.56,0.21,urban
+2013-06-18_landsat-8_p190,2013-06-18T09:47,Wien Jubiläumswarte,5802,28.1,31.76,30.76,0.88,green
+2013-06-18_landsat-8_p190,2013-06-18T09:47,Wien Mariabrunn,106,29.93,37.32,37.45,0.63,urban
+2013-06-18_landsat-8_p190,2013-06-18T09:47,Wien Stammersdorf,4115,29.79,36.93,37.26,0.63,green
+2013-06-18_landsat-8_p190,2013-06-18T09:47,Wien Unterlaa,107,29.27,35.75,35.02,0.68,urban
+2013-07-29_landsat-8_p189,2013-07-29T09:41,Wien Donaufeld,5935,29.28,42.54,41.04,0.44,urban
+2013-07-29_landsat-8_p189,2013-07-29T09:41,Wien Hohe Warte,105,27.68,36.17,37.21,0.57,urban
+2013-07-29_landsat-8_p189,2013-07-29T09:41,Wien Innere Stadt,5925,27.5,41.69,42.51,0.2,urban
+2013-07-29_landsat-8_p189,2013-07-29T09:41,Wien Jubiläumswarte,5802,25.51,29.67,28.77,0.85,green
+2013-07-29_landsat-8_p189,2013-07-29T09:41,Wien Mariabrunn,106,27.04,34.76,35.27,0.61,urban
+2013-07-29_landsat-8_p189,2013-07-29T09:41,Wien Stammersdorf,4115,27.56,39.48,39.33,0.59,green
+2013-07-29_landsat-8_p189,2013-07-29T09:41,Wien Unterlaa,107,27.61,40.17,39.88,0.39,urban
+2013-08-05_landsat-8_p190,2013-08-05T09:47,Wien Donaufeld,5935,26.37,39.01,37.36,0.44,urban
+2013-08-05_landsat-8_p190,2013-08-05T09:47,Wien Hohe Warte,105,26.24,33.47,34.45,0.58,urban
+2013-08-05_landsat-8_p190,2013-08-05T09:47,Wien Innere Stadt,5925,26.44,38.9,40.29,0.2,urban
+2013-08-05_landsat-8_p190,2013-08-05T09:47,Wien Jubiläumswarte,5802,24.68,29.23,28.17,0.88,green
+2013-08-05_landsat-8_p190,2013-08-05T09:47,Wien Mariabrunn,106,26.29,34.21,34.24,0.61,urban
+2013-08-05_landsat-8_p190,2013-08-05T09:47,Wien Stammersdorf,4115,25.86,34.46,34.29,0.58,green
+2013-08-05_landsat-8_p190,2013-08-05T09:47,Wien Unterlaa,107,25.32,36.97,36.37,0.38,urban
+2014-07-07_landsat-8_p190,2014-07-07T09:45,Wien Donaufeld,5935,27.95,43.48,40.83,0.46,urban
+2014-07-07_landsat-8_p190,2014-07-07T09:45,Wien Hohe Warte,105,27.3,35.64,36.68,0.59,urban
+2014-07-07_landsat-8_p190,2014-07-07T09:45,Wien Innere Stadt,5925,27.55,41.94,43.04,0.2,urban
+2014-07-07_landsat-8_p190,2014-07-07T09:45,Wien Jubiläumswarte,5802,26.4,29.4,28.45,0.88,green
+2014-07-07_landsat-8_p190,2014-07-07T09:45,Wien Mariabrunn,106,27.25,35.47,35.62,0.64,urban
+2014-07-07_landsat-8_p190,2014-07-07T09:45,Wien Stammersdorf,4115,27.7,39.68,39.48,0.54,green
+2014-07-07_landsat-8_p190,2014-07-07T09:45,Wien Unterlaa,107,27.6,38.73,38.7,0.46,urban
+2014-08-08_landsat-8_p190,2014-08-08T09:45,Wien Donaufeld,5935,25.95,38.12,36.08,0.47,urban
+2014-08-08_landsat-8_p190,2014-08-08T09:45,Wien Hohe Warte,105,25.36,32.12,33.2,0.59,urban
+2014-08-08_landsat-8_p190,2014-08-08T09:45,Wien Innere Stadt,5925,25.25,36.7,38.01,0.21,urban
+2014-08-08_landsat-8_p190,2014-08-08T09:45,Wien Jubiläumswarte,5802,23.5,26.78,25.88,0.85,green
+2014-08-08_landsat-8_p190,2014-08-08T09:45,Wien Mariabrunn,106,25.35,31.88,31.74,0.66,urban
+2014-08-08_landsat-8_p190,2014-08-08T09:45,Wien Stammersdorf,4115,25.06,34.54,34.76,0.58,green
+2014-08-08_landsat-8_p190,2014-08-08T09:45,Wien Unterlaa,107,25.5,35.56,35.3,0.49,urban
+2015-06-01_landsat-8_p189,2015-06-01T09:38,Wien Donaufeld,5935,23.88,31.05,29.09,0.47,urban
+2015-06-01_landsat-8_p189,2015-06-01T09:38,Wien Hohe Warte,105,24.31,28.06,28.96,0.57,urban
+2015-06-01_landsat-8_p189,2015-06-01T09:38,Wien Innere Stadt,5925,24.61,35.06,35.85,0.23,urban
+2015-06-01_landsat-8_p189,2015-06-01T09:38,Wien Jubiläumswarte,5802,22.46,17.09,16.85,0.81,green
+2015-06-01_landsat-8_p189,2015-06-01T09:38,Wien Stammersdorf,4115,23.46,31.36,31.38,0.6,green
+2015-06-01_landsat-8_p189,2015-06-01T09:38,Wien Unterlaa,107,23.46,32.4,31.33,0.59,urban
+2015-07-03_landsat-8_p189,2015-07-03T09:38,Wien Donaufeld,5935,27.85,41.15,39.02,0.43,urban
+2015-07-03_landsat-8_p189,2015-07-03T09:38,Wien Hohe Warte,105,28.62,36.81,36.94,0.56,urban
+2015-07-03_landsat-8_p189,2015-07-03T09:38,Wien Innere Stadt,5925,27.67,41.57,42.45,0.21,urban
+2015-07-03_landsat-8_p189,2015-07-03T09:38,Wien Jubiläumswarte,5802,25.77,30.78,29.67,0.87,green
+2015-07-03_landsat-8_p189,2015-07-03T09:38,Wien Mariabrunn,106,26.83,36.55,,,urban
+2015-07-03_landsat-8_p189,2015-07-03T09:38,Wien Stammersdorf,4115,28.08,39.15,38.47,0.56,green
+2015-07-03_landsat-8_p189,2015-07-03T09:38,Wien Unterlaa,107,27.1,39.85,38.85,0.44,urban
+2015-08-04_landsat-8_p189,2015-08-04T09:38,Wien Donaufeld,5935,28.97,41.51,40.26,0.41,urban
+2015-08-04_landsat-8_p189,2015-08-04T09:38,Wien Hohe Warte,105,29.37,36.0,36.8,0.55,urban
+2015-08-04_landsat-8_p189,2015-08-04T09:38,Wien Jubiläumswarte,5802,27.36,32.65,31.84,0.86,green
+2015-08-04_landsat-8_p189,2015-08-04T09:38,Wien Stammersdorf,4115,29.65,40.55,40.82,0.52,green
+2015-08-04_landsat-8_p189,2015-08-04T09:38,Wien Unterlaa,107,29.2,42.92,42.44,0.38,urban
+2015-08-11_landsat-8_p190,2015-08-11T09:44,Wien Donaufeld,5935,32.91,46.32,44.27,0.39,urban
+2015-08-11_landsat-8_p190,2015-08-11T09:44,Wien Hohe Warte,105,32.9,39.86,40.67,0.53,urban
+2015-08-11_landsat-8_p190,2015-08-11T09:44,Wien Innere Stadt,5925,31.99,41.69,42.98,0.19,urban
+2015-08-11_landsat-8_p190,2015-08-11T09:44,Wien Jubiläumswarte,5802,32.0,32.31,31.18,0.79,green
+2015-08-11_landsat-8_p190,2015-08-11T09:44,Wien Mariabrunn,106,33.16,32.9,32.29,0.57,urban
+2015-08-11_landsat-8_p190,2015-08-11T09:44,Wien Stammersdorf,4115,33.0,46.29,46.78,0.48,green
+2015-08-11_landsat-8_p190,2015-08-11T09:44,Wien Unterlaa,107,32.6,42.6,42.82,0.33,urban
+2016-07-05_landsat-8_p189,2016-07-05T09:38,Wien Donaufeld,5935,25.28,38.52,36.39,0.44,urban
+2016-07-05_landsat-8_p189,2016-07-05T09:38,Wien Hohe Warte,105,24.96,33.35,33.97,0.59,urban
+2016-07-05_landsat-8_p189,2016-07-05T09:38,Wien Innere Stadt,5925,24.89,40.47,41.21,0.21,urban
+2016-07-05_landsat-8_p189,2016-07-05T09:38,Wien Jubiläumswarte,5802,22.41,27.69,27.19,0.89,green
+2016-07-05_landsat-8_p189,2016-07-05T09:38,Wien Stammersdorf,4115,24.61,32.57,33.05,0.66,green
+2016-07-05_landsat-8_p189,2016-07-05T09:38,Wien Unterlaa,107,25.21,34.64,34.07,0.52,urban
+2016-07-21_landsat-8_p189,2016-07-21T09:39,Wien Donaufeld,5935,26.03,39.88,37.96,0.45,urban
+2016-07-21_landsat-8_p189,2016-07-21T09:39,Wien Hohe Warte,105,26.37,35.31,35.78,0.58,urban
+2016-07-21_landsat-8_p189,2016-07-21T09:39,Wien Innere Stadt,5925,25.89,40.88,41.94,0.21,urban
+2016-07-21_landsat-8_p189,2016-07-21T09:39,Wien Jubiläumswarte,5802,24.85,29.38,28.76,0.87,green
+2016-07-21_landsat-8_p189,2016-07-21T09:39,Wien Stammersdorf,4115,26.16,34.24,34.36,0.67,green
+2016-07-21_landsat-8_p189,2016-07-21T09:39,Wien Unterlaa,107,26.17,36.38,35.62,0.56,urban
+2017-06-13_landsat-8_p190,2017-06-13T09:44,Wien Donaufeld,5935,24.49,38.87,36.64,0.44,urban
+2017-06-13_landsat-8_p190,2017-06-13T09:44,Wien Hohe Warte,105,24.0,32.65,33.09,0.58,urban
+2017-06-13_landsat-8_p190,2017-06-13T09:44,Wien Innere Stadt,5925,24.14,38.47,39.7,0.21,urban
+2017-06-13_landsat-8_p190,2017-06-13T09:44,Wien Jubiläumswarte,5802,23.9,26.73,25.43,0.91,green
+2017-06-13_landsat-8_p190,2017-06-13T09:44,Wien Mariabrunn,106,24.25,32.22,32.99,0.66,urban
+2017-06-13_landsat-8_p190,2017-06-13T09:44,Wien Stammersdorf,4115,24.25,36.14,36.21,0.6,green
+2017-06-13_landsat-8_p190,2017-06-13T09:44,Wien Unterlaa,107,24.45,35.74,34.86,0.58,urban
+2017-07-31_landsat-8_p190,2017-07-31T09:45,Wien Donaufeld,5935,30.36,44.39,41.62,0.44,urban
+2017-07-31_landsat-8_p190,2017-07-31T09:45,Wien Hohe Warte,105,29.6,34.6,34.77,0.54,urban
+2017-07-31_landsat-8_p190,2017-07-31T09:45,Wien Innere Stadt,5925,29.35,43.73,44.64,0.21,urban
+2017-07-31_landsat-8_p190,2017-07-31T09:45,Wien Jubiläumswarte,5802,27.76,27.79,27.12,0.84,green
+2017-07-31_landsat-8_p190,2017-07-31T09:45,Wien Mariabrunn,106,29.0,33.45,33.83,0.65,urban
+2017-07-31_landsat-8_p190,2017-07-31T09:45,Wien Stammersdorf,4115,30.25,26.85,28.06,0.52,green
+2017-07-31_landsat-8_p190,2017-07-31T09:45,Wien Unterlaa,107,28.85,41.1,40.51,0.58,urban
+2017-08-16_landsat-8_p190,2017-08-16T09:45,Wien Donaufeld,5935,27.65,37.26,35.59,0.43,urban
+2017-08-16_landsat-8_p190,2017-08-16T09:45,Wien Hohe Warte,105,27.1,33.2,33.63,0.56,urban
+2017-08-16_landsat-8_p190,2017-08-16T09:45,Wien Innere Stadt,5925,26.6,33.69,34.87,0.21,urban
+2017-08-16_landsat-8_p190,2017-08-16T09:45,Wien Jubiläumswarte,5802,24.76,25.06,24.8,0.84,green
+2017-08-16_landsat-8_p190,2017-08-16T09:45,Wien Mariabrunn,106,26.1,29.7,29.78,0.66,urban
+2017-08-16_landsat-8_p190,2017-08-16T09:45,Wien Stammersdorf,4115,26.71,36.47,36.5,0.56,green
+2017-08-16_landsat-8_p190,2017-08-16T09:45,Wien Unterlaa,107,27.14,33.39,33.35,0.52,urban
+2017-08-25_landsat-8_p189,2017-08-25T09:39,Wien Donaufeld,5935,27.51,38.79,36.95,0.43,urban
+2017-08-25_landsat-8_p189,2017-08-25T09:39,Wien Hohe Warte,105,27.53,33.23,33.7,0.56,urban
+2017-08-25_landsat-8_p189,2017-08-25T09:39,Wien Innere Stadt,5925,26.86,37.44,38.51,0.21,urban
+2017-08-25_landsat-8_p189,2017-08-25T09:39,Wien Jubiläumswarte,5802,25.79,29.59,29.08,0.86,green
+2017-08-25_landsat-8_p189,2017-08-25T09:39,Wien Stammersdorf,4115,27.31,37.32,37.49,0.53,green
+2017-08-25_landsat-8_p189,2017-08-25T09:39,Wien Unterlaa,107,25.9,36.56,36.82,0.51,urban
+2018-07-02_landsat-8_p190,2018-07-02T09:44,Wien Donaufeld,5935,21.19,35.84,33.45,0.43,urban
+2018-07-02_landsat-8_p190,2018-07-02T09:44,Wien Hohe Warte,105,21.04,30.2,30.34,0.58,urban
+2018-07-02_landsat-8_p190,2018-07-02T09:44,Wien Innere Stadt,5925,20.81,34.59,36.04,0.19,urban
+2018-07-02_landsat-8_p190,2018-07-02T09:44,Wien Jubiläumswarte,5802,19.47,23.75,22.58,0.9,green
+2018-07-02_landsat-8_p190,2018-07-02T09:44,Wien Mariabrunn,106,20.96,29.13,29.68,0.64,urban
+2018-07-02_landsat-8_p190,2018-07-02T09:44,Wien Stammersdorf,4115,21.23,31.99,31.79,0.57,green
+2018-07-02_landsat-8_p190,2018-07-02T09:44,Wien Unterlaa,107,20.97,33.87,33.44,0.37,urban
+2018-07-27_landsat-8_p189,2018-07-27T09:38,Wien Donaufeld,5935,25.73,37.67,36.19,0.46,urban
+2018-07-27_landsat-8_p189,2018-07-27T09:38,Wien Hohe Warte,105,25.47,33.3,33.45,0.6,urban
+2018-07-27_landsat-8_p189,2018-07-27T09:38,Wien Innere Stadt,5925,25.53,38.98,40.43,0.19,urban
+2018-07-27_landsat-8_p189,2018-07-27T09:38,Wien Jubiläumswarte,5802,24.48,27.82,,,green
+2018-07-27_landsat-8_p189,2018-07-27T09:38,Wien Stammersdorf,4115,25.23,32.19,32.68,0.57,green
+2018-07-27_landsat-8_p189,2018-07-27T09:38,Wien Unterlaa,107,25.63,33.1,32.58,0.55,urban
+2018-08-03_landsat-8_p190,2018-08-03T09:44,Wien Donaufeld,5935,30.14,38.08,36.28,0.44,urban
+2018-08-03_landsat-8_p190,2018-08-03T09:44,Wien Hohe Warte,105,29.59,35.64,35.99,0.59,urban
+2018-08-03_landsat-8_p190,2018-08-03T09:44,Wien Innere Stadt,5925,29.5,40.28,41.83,0.2,urban
+2018-08-03_landsat-8_p190,2018-08-03T09:44,Wien Jubiläumswarte,5802,28.15,30.73,30.05,0.86,green
+2018-08-03_landsat-8_p190,2018-08-03T09:44,Wien Mariabrunn,106,28.72,34.95,34.25,0.65,urban
+2018-08-03_landsat-8_p190,2018-08-03T09:44,Wien Stammersdorf,4115,29.24,29.51,29.73,0.57,green
+2018-08-03_landsat-8_p190,2018-08-03T09:44,Wien Unterlaa,107,29.53,39.32,38.58,0.52,urban
+2018-08-12_landsat-8_p189,2018-08-12T09:38,Wien Donaufeld,5935,26.06,39.62,38.07,0.42,urban
+2018-08-12_landsat-8_p189,2018-08-12T09:38,Wien Hohe Warte,105,25.95,33.47,33.78,0.57,urban
+2018-08-12_landsat-8_p189,2018-08-12T09:38,Wien Innere Stadt,5925,25.2,37.8,39.23,0.19,urban
+2018-08-12_landsat-8_p189,2018-08-12T09:38,Wien Jubiläumswarte,5802,24.34,28.72,27.93,0.86,green
+2018-08-12_landsat-8_p189,2018-08-12T09:38,Wien Stammersdorf,4115,26.53,38.33,38.32,0.52,green
+2018-08-12_landsat-8_p189,2018-08-12T09:38,Wien Unterlaa,107,25.64,39.73,38.85,0.46,urban
+2018-08-19_landsat-8_p190,2018-08-19T09:44,Wien Donaufeld,5935,28.09,39.37,37.6,0.4,urban
+2018-08-19_landsat-8_p190,2018-08-19T09:44,Wien Hohe Warte,105,27.11,32.64,32.98,0.55,urban
+2018-08-19_landsat-8_p190,2018-08-19T09:44,Wien Innere Stadt,5925,27.76,38.13,39.37,0.2,urban
+2018-08-19_landsat-8_p190,2018-08-19T09:44,Wien Jubiläumswarte,5802,28.83,31.57,30.94,0.84,green
+2018-08-19_landsat-8_p190,2018-08-19T09:44,Wien Mariabrunn,106,30.16,36.22,35.51,0.63,urban
+2018-08-19_landsat-8_p190,2018-08-19T09:44,Wien Stammersdorf,4115,28.74,39.43,39.12,0.49,green
+2018-08-19_landsat-8_p190,2018-08-19T09:44,Wien Unterlaa,107,29.39,42.57,41.96,0.43,urban
+2018-08-28_landsat-8_p189,2018-08-28T09:38,Wien Donaufeld,5935,24.26,34.81,33.05,0.4,urban
+2018-08-28_landsat-8_p189,2018-08-28T09:38,Wien Hohe Warte,105,23.89,30.03,30.81,0.55,urban
+2018-08-28_landsat-8_p189,2018-08-28T09:38,Wien Innere Stadt,5925,23.41,34.36,35.72,0.2,urban
+2018-08-28_landsat-8_p189,2018-08-28T09:38,Wien Jubiläumswarte,5802,23.21,26.37,25.57,0.83,green
+2018-08-28_landsat-8_p189,2018-08-28T09:38,Wien Stammersdorf,4115,23.39,31.41,31.31,0.51,green
+2018-08-28_landsat-8_p189,2018-08-28T09:38,Wien Unterlaa,107,23.9,36.04,34.92,0.4,urban
+2019-06-03_landsat-8_p190,2019-06-03T09:44,Wien Donaufeld,5935,25.75,39.7,37.01,0.48,urban
+2019-06-03_landsat-8_p190,2019-06-03T09:44,Wien Hohe Warte,105,25.4,33.35,34.04,0.62,urban
+2019-06-03_landsat-8_p190,2019-06-03T09:44,Wien Innere Stadt,5925,25.0,39.67,40.78,0.21,urban
+2019-06-03_landsat-8_p190,2019-06-03T09:44,Wien Jubiläumswarte,5802,24.45,28.29,27.62,0.89,green
+2019-06-03_landsat-8_p190,2019-06-03T09:44,Wien Mariabrunn,106,26.1,33.15,33.39,0.67,urban
+2019-06-03_landsat-8_p190,2019-06-03T09:44,Wien Stammersdorf,4115,25.05,33.99,33.81,0.63,green
+2019-06-03_landsat-8_p190,2019-06-03T09:44,Wien Unterlaa,107,24.65,34.24,34.85,0.57,urban
+2019-06-28_landsat-8_p189,2019-06-28T09:38,Wien Donaufeld,5935,25.39,39.48,37.12,0.45,urban
+2019-06-28_landsat-8_p189,2019-06-28T09:38,Wien Hohe Warte,105,24.31,34.18,34.99,0.59,urban
+2019-06-28_landsat-8_p189,2019-06-28T09:38,Wien Jubiläumswarte,5802,24.12,27.66,26.03,0.86,green
+2019-06-28_landsat-8_p189,2019-06-28T09:38,Wien Stammersdorf,4115,24.59,35.42,35.21,0.63,green
+2019-06-28_landsat-8_p189,2019-06-28T09:38,Wien Unterlaa,107,24.89,36.3,36.35,0.55,urban
+2019-08-15_landsat-8_p189,2019-08-15T09:39,Wien Donaufeld,5935,22.71,34.26,32.65,0.45,urban
+2019-08-15_landsat-8_p189,2019-08-15T09:39,Wien Hohe Warte,105,22.77,30.39,30.54,0.59,urban
+2019-08-15_landsat-8_p189,2019-08-15T09:39,Wien Innere Stadt,5925,22.38,34.43,35.62,0.21,urban
+2019-08-15_landsat-8_p189,2019-08-15T09:39,Wien Jubiläumswarte,5802,21.29,25.76,24.62,0.84,green
+2019-08-15_landsat-8_p189,2019-08-15T09:39,Wien Stammersdorf,4115,22.34,30.49,30.73,0.61,green
+2019-08-15_landsat-8_p189,2019-08-15T09:39,Wien Unterlaa,107,22.26,34.88,34.65,0.4,urban
+2019-08-31_landsat-8_p189,2019-08-31T09:39,Wien Donaufeld,5935,28.28,37.49,35.87,0.45,urban
+2019-08-31_landsat-8_p189,2019-08-31T09:39,Wien Hohe Warte,105,27.88,33.3,33.81,0.6,urban
+2019-08-31_landsat-8_p189,2019-08-31T09:39,Wien Innere Stadt,5925,27.68,37.74,38.69,0.2,urban
+2019-08-31_landsat-8_p189,2019-08-31T09:39,Wien Jubiläumswarte,5802,26.81,30.94,30.26,0.84,green
+2019-08-31_landsat-8_p189,2019-08-31T09:39,Wien Stammersdorf,4115,28.45,36.8,36.84,0.57,green
+2019-08-31_landsat-8_p189,2019-08-31T09:39,Wien Unterlaa,107,28.16,41.09,41.18,0.38,urban
+2020-06-30_landsat-8_p189,2020-06-30T09:38,Wien Donaufeld,5935,25.46,38.23,36.58,0.49,urban
+2020-06-30_landsat-8_p189,2020-06-30T09:38,Wien Hohe Warte,105,25.04,33.22,33.9,0.63,urban
+2020-06-30_landsat-8_p189,2020-06-30T09:38,Wien Innere Stadt,5925,24.58,38.22,39.52,0.21,urban
+2020-06-30_landsat-8_p189,2020-06-30T09:38,Wien Jubiläumswarte,5802,22.79,27.2,26.42,0.89,green
+2020-06-30_landsat-8_p189,2020-06-30T09:38,Wien Stammersdorf,4115,24.64,34.45,34.08,0.67,green
+2020-08-01_landsat-8_p189,2020-08-01T09:38,Wien Donaufeld,5935,26.61,39.5,37.39,0.47,urban
+2020-08-01_landsat-8_p189,2020-08-01T09:38,Wien Hohe Warte,105,25.98,33.84,34.63,0.59,urban
+2020-08-01_landsat-8_p189,2020-08-01T09:38,Wien Innere Stadt,5925,25.82,40.18,41.09,0.2,urban
+2020-08-01_landsat-8_p189,2020-08-01T09:38,Wien Jubiläumswarte,5802,24.55,28.56,27.59,0.88,green
+2020-08-01_landsat-8_p189,2020-08-01T09:38,Wien Stammersdorf,4115,27.48,36.81,37.14,0.61,green
+2020-08-01_landsat-8_p189,2020-08-01T09:38,Wien Unterlaa,107,26.03,39.45,39.0,0.5,urban
+2020-08-08_landsat-8_p190,2020-08-08T09:45,Wien Donaufeld,5935,28.5,39.0,37.04,0.47,urban
+2020-08-08_landsat-8_p190,2020-08-08T09:45,Wien Hohe Warte,105,28.16,34.07,34.77,0.59,urban
+2020-08-08_landsat-8_p190,2020-08-08T09:45,Wien Innere Stadt,5925,28.8,39.36,40.61,0.2,urban
+2020-08-08_landsat-8_p190,2020-08-08T09:45,Wien Jubiläumswarte,5802,27.76,29.6,29.03,0.86,green
+2020-08-08_landsat-8_p190,2020-08-08T09:45,Wien Mariabrunn,106,27.96,33.53,33.24,0.66,urban
+2020-08-08_landsat-8_p190,2020-08-08T09:45,Wien Stammersdorf,4115,28.29,34.92,35.56,0.63,green
+2020-08-08_landsat-8_p190,2020-08-08T09:45,Wien Unterlaa,107,29.54,37.39,37.43,0.53,urban
+2021-06-08_landsat-8_p190,2021-06-08T09:45,Wien Donaufeld,5935,26.0,40.37,37.67,0.48,urban
+2021-06-08_landsat-8_p190,2021-06-08T09:45,Wien Hohe Warte,105,25.55,34.04,34.73,0.59,urban
+2021-06-08_landsat-8_p190,2021-06-08T09:45,Wien Innere Stadt,5925,25.6,39.74,40.92,0.22,urban
+2021-06-08_landsat-8_p190,2021-06-08T09:45,Wien Jubiläumswarte,5802,25.2,27.78,26.75,0.87,green
+2021-06-08_landsat-8_p190,2021-06-08T09:45,Wien Mariabrunn,106,26.15,33.01,33.86,0.68,urban
+2021-06-08_landsat-8_p190,2021-06-08T09:45,Wien Stammersdorf,4115,25.7,36.37,36.63,0.6,green
+2021-06-08_landsat-8_p190,2021-06-08T09:45,Wien Unterlaa,107,26.2,38.13,37.0,0.54,urban
+2021-06-17_landsat-8_p189,2021-06-17T09:38,Wien Donaufeld,5935,28.51,43.92,41.41,0.45,urban
+2021-06-17_landsat-8_p189,2021-06-17T09:38,Wien Hohe Warte,105,28.57,37.84,38.14,0.57,urban
+2021-06-17_landsat-8_p189,2021-06-17T09:38,Wien Innere Stadt,5925,28.37,42.66,43.52,0.2,urban
+2021-06-17_landsat-8_p189,2021-06-17T09:38,Wien Jubiläumswarte,5802,26.48,30.86,29.99,0.88,green
+2021-06-17_landsat-8_p189,2021-06-17T09:38,Wien Mariabrunn,106,28.07,36.26,36.59,0.66,urban
+2021-06-17_landsat-8_p189,2021-06-17T09:38,Wien Stammersdorf,4115,29.09,41.38,40.9,0.58,green
+2021-06-17_landsat-8_p189,2021-06-17T09:38,Wien Unterlaa,107,28.11,41.84,41.01,0.5,urban
+2021-06-24_landsat-8_p190,2021-06-24T09:45,Wien Donaufeld,5935,27.75,45.5,42.6,0.43,urban
+2021-06-24_landsat-8_p190,2021-06-24T09:45,Wien Hohe Warte,105,26.45,37.87,37.78,0.56,urban
+2021-06-24_landsat-8_p190,2021-06-24T09:45,Wien Innere Stadt,5925,26.9,43.39,44.53,0.2,urban
+2021-06-24_landsat-8_p190,2021-06-24T09:45,Wien Mariabrunn,106,27.61,38.98,38.83,0.64,urban
+2021-06-24_landsat-8_p190,2021-06-24T09:45,Wien Stammersdorf,4115,27.95,40.06,41.06,0.52,green
+2021-06-24_landsat-8_p190,2021-06-24T09:45,Wien Unterlaa,107,27.66,44.43,43.74,0.46,urban
+2021-07-10_landsat-8_p190,2021-07-10T09:45,Wien Donaufeld,5935,24.1,39.85,37.51,0.42,urban
+2021-07-10_landsat-8_p190,2021-07-10T09:45,Wien Hohe Warte,105,23.4,34.01,33.94,0.58,urban
+2021-07-10_landsat-8_p190,2021-07-10T09:45,Wien Innere Stadt,5925,23.15,37.38,38.8,0.21,urban
+2021-07-10_landsat-8_p190,2021-07-10T09:45,Wien Jubiläumswarte,5802,23.51,27.37,26.07,0.9,green
+2021-07-10_landsat-8_p190,2021-07-10T09:45,Wien Mariabrunn,106,23.6,36.21,34.85,0.6,urban
+2021-07-10_landsat-8_p190,2021-07-10T09:45,Wien Stammersdorf,4115,24.3,39.85,39.54,0.51,green
+2021-07-10_landsat-8_p190,2021-07-10T09:45,Wien Unterlaa,107,23.9,39.97,39.4,0.4,urban
+2021-07-26_landsat-8_p190,2021-07-26T09:45,Wien Donaufeld,5935,27.0,39.55,37.28,0.46,urban
+2021-07-26_landsat-8_p190,2021-07-26T09:45,Wien Hohe Warte,105,26.9,34.5,34.62,0.59,urban
+2021-07-26_landsat-8_p190,2021-07-26T09:45,Wien Innere Stadt,5925,27.1,38.82,40.58,0.22,urban
+2021-07-26_landsat-8_p190,2021-07-26T09:45,Wien Jubiläumswarte,5802,24.9,28.79,27.89,0.86,green
+2021-07-26_landsat-8_p190,2021-07-26T09:45,Wien Mariabrunn,106,26.7,34.6,34.27,0.64,urban
+2021-07-26_landsat-8_p190,2021-07-26T09:45,Wien Stammersdorf,4115,26.91,24.88,26.2,0.58,green
+2021-07-26_landsat-8_p190,2021-07-26T09:45,Wien Unterlaa,107,26.5,38.75,38.41,0.45,urban
+2021-08-11_landsat-8_p190,2021-08-11T09:45,Wien Donaufeld,5935,25.91,37.21,35.0,0.48,urban
+2021-08-11_landsat-8_p190,2021-08-11T09:45,Wien Hohe Warte,105,26.09,32.69,33.32,0.61,urban
+2021-08-11_landsat-8_p190,2021-08-11T09:45,Wien Innere Stadt,5925,25.99,37.05,38.41,0.22,urban
+2021-08-11_landsat-8_p190,2021-08-11T09:45,Wien Jubiläumswarte,5802,24.21,27.47,26.73,0.88,green
+2021-08-11_landsat-8_p190,2021-08-11T09:45,Wien Mariabrunn,106,25.79,32.3,32.66,0.69,urban
+2021-08-11_landsat-8_p190,2021-08-11T09:45,Wien Stammersdorf,4115,24.97,31.05,30.97,0.71,green
+2021-08-11_landsat-8_p190,2021-08-11T09:45,Wien Unterlaa,107,26.11,33.69,34.27,0.6,urban
+2022-06-03_landsat-9_p190,2022-06-03T09:44,Wien Donaufeld,5935,25.3,39.92,37.6,0.47,urban
+2022-06-03_landsat-9_p190,2022-06-03T09:44,Wien Hohe Warte,105,25.29,33.02,33.49,0.58,urban
+2022-06-03_landsat-9_p190,2022-06-03T09:44,Wien Innere Stadt,5925,25.64,38.82,40.51,0.21,urban
+2022-06-03_landsat-9_p190,2022-06-03T09:44,Wien Jubiläumswarte,5802,22.81,27.84,27.09,0.89,green
+2022-06-03_landsat-9_p190,2022-06-03T09:44,Wien Mariabrunn,106,24.95,33.51,33.16,0.66,urban
+2022-06-03_landsat-9_p190,2022-06-03T09:44,Wien Stammersdorf,4115,24.89,35.08,35.38,0.6,green
+2022-06-03_landsat-9_p190,2022-06-03T09:44,Wien Unterlaa,107,24.96,37.64,36.22,0.52,urban
+2022-06-04_landsat-8_p189,2022-06-04T09:39,Wien Donaufeld,5935,27.3,44.66,42.36,0.47,urban
+2022-06-04_landsat-8_p189,2022-06-04T09:39,Wien Hohe Warte,105,26.88,39.27,39.59,0.59,urban
+2022-06-04_landsat-8_p189,2022-06-04T09:39,Wien Innere Stadt,5925,26.56,44.35,45.54,0.21,urban
+2022-06-04_landsat-8_p189,2022-06-04T09:39,Wien Jubiläumswarte,5802,25.47,30.53,29.74,0.89,green
+2022-06-04_landsat-8_p189,2022-06-04T09:39,Wien Mariabrunn,106,26.66,37.07,36.94,0.66,urban
+2022-06-04_landsat-8_p189,2022-06-04T09:39,Wien Stammersdorf,4115,25.92,39.87,40.48,0.59,green
+2022-06-04_landsat-8_p189,2022-06-04T09:39,Wien Unterlaa,107,26.9,42.68,41.53,0.52,urban
+2022-06-12_landsat-9_p189,2022-06-12T09:38,Wien Donaufeld,5935,25.5,39.66,37.56,0.48,urban
+2022-06-12_landsat-9_p189,2022-06-12T09:38,Wien Hohe Warte,105,25.59,34.91,35.67,0.59,urban
+2022-06-12_landsat-9_p189,2022-06-12T09:38,Wien Innere Stadt,5925,24.83,41.27,42.35,0.21,urban
+2022-06-12_landsat-9_p189,2022-06-12T09:38,Wien Jubiläumswarte,5802,24.19,28.15,27.3,0.87,green
+2022-06-12_landsat-9_p189,2022-06-12T09:38,Wien Stammersdorf,4115,24.8,33.56,33.72,0.64,green
+2022-06-12_landsat-9_p189,2022-06-12T09:38,Wien Unterlaa,107,25.22,34.84,33.27,0.56,urban
+2022-06-19_landsat-9_p190,2022-06-19T09:44,Wien Donaufeld,5935,28.3,39.06,36.78,0.47,urban
+2022-06-19_landsat-9_p190,2022-06-19T09:44,Wien Hohe Warte,105,28.61,34.09,34.84,0.59,urban
+2022-06-19_landsat-9_p190,2022-06-19T09:44,Wien Innere Stadt,5925,28.65,38.26,39.82,0.21,urban
+2022-06-19_landsat-9_p190,2022-06-19T09:44,Wien Jubiläumswarte,5802,25.9,29.28,28.5,0.89,green
+2022-06-19_landsat-9_p190,2022-06-19T09:44,Wien Mariabrunn,106,28.0,34.96,35.03,0.65,urban
+2022-06-19_landsat-9_p190,2022-06-19T09:44,Wien Stammersdorf,4115,27.85,34.02,34.19,0.64,green
+2022-06-19_landsat-9_p190,2022-06-19T09:44,Wien Unterlaa,107,27.4,34.5,33.74,0.6,urban
+2022-06-20_landsat-8_p189,2022-06-20T09:39,Wien Donaufeld,5935,28.18,38.76,36.58,0.47,urban
+2022-06-20_landsat-8_p189,2022-06-20T09:39,Wien Hohe Warte,105,27.58,33.9,34.7,0.58,urban
+2022-06-20_landsat-8_p189,2022-06-20T09:39,Wien Innere Stadt,5925,27.4,40.23,41.05,0.22,urban
+2022-06-20_landsat-8_p189,2022-06-20T09:39,Wien Jubiläumswarte,5802,25.78,28.24,27.43,0.86,green
+2022-06-20_landsat-8_p189,2022-06-20T09:39,Wien Mariabrunn,106,27.37,34.44,34.38,0.66,urban
+2022-06-20_landsat-8_p189,2022-06-20T09:39,Wien Stammersdorf,4115,28.07,33.2,33.46,0.64,green
+2022-07-13_landsat-8_p190,2022-07-13T09:45,Wien Donaufeld,5935,27.45,38.99,37.01,0.45,urban
+2022-07-13_landsat-8_p190,2022-07-13T09:45,Wien Hohe Warte,105,27.21,34.23,34.44,0.57,urban
+2022-07-13_landsat-8_p190,2022-07-13T09:45,Wien Innere Stadt,5925,26.27,37.57,39.02,0.2,urban
+2022-07-13_landsat-8_p190,2022-07-13T09:45,Wien Jubiläumswarte,5802,25.79,28.79,27.88,0.9,green
+2022-07-13_landsat-8_p190,2022-07-13T09:45,Wien Mariabrunn,106,26.69,34.36,33.73,0.64,urban
+2022-07-13_landsat-8_p190,2022-07-13T09:45,Wien Stammersdorf,4115,26.46,36.46,37.04,0.59,green
+2022-07-13_landsat-8_p190,2022-07-13T09:45,Wien Unterlaa,107,27.0,41.2,40.98,0.4,urban
+2022-07-14_landsat-9_p189,2022-07-14T09:38,Wien Donaufeld,5935,32.65,44.82,42.85,0.44,urban
+2022-07-14_landsat-9_p189,2022-07-14T09:38,Wien Hohe Warte,105,31.85,40.27,40.58,0.56,urban
+2022-07-14_landsat-9_p189,2022-07-14T09:38,Wien Innere Stadt,5925,30.95,43.43,45.01,0.21,urban
+2022-07-14_landsat-9_p189,2022-07-14T09:38,Wien Jubiläumswarte,5802,30.3,34.17,33.6,0.87,green
+2022-07-14_landsat-9_p189,2022-07-14T09:38,Wien Stammersdorf,4115,31.64,41.86,42.18,0.57,green
+2022-07-14_landsat-9_p189,2022-07-14T09:38,Wien Unterlaa,107,32.15,46.9,46.34,0.39,urban
+2022-07-21_landsat-9_p190,2022-07-21T09:45,Wien Donaufeld,5935,32.45,43.73,41.7,0.42,urban
+2022-07-21_landsat-9_p190,2022-07-21T09:45,Wien Hohe Warte,105,31.75,37.87,38.32,0.54,urban
+2022-07-21_landsat-9_p190,2022-07-21T09:45,Wien Innere Stadt,5925,31.2,41.31,42.55,0.2,urban
+2022-07-21_landsat-9_p190,2022-07-21T09:45,Wien Jubiläumswarte,5802,30.3,33.04,32.08,0.85,green
+2022-07-21_landsat-9_p190,2022-07-21T09:45,Wien Mariabrunn,106,31.25,38.84,38.99,0.62,urban
+2022-07-21_landsat-9_p190,2022-07-21T09:45,Wien Stammersdorf,4115,31.45,41.68,41.92,0.53,green
+2022-07-21_landsat-9_p190,2022-07-21T09:45,Wien Unterlaa,107,31.7,46.58,46.31,0.36,urban
+2022-08-30_landsat-8_p190,2022-08-30T09:45,Wien Donaufeld,5935,24.46,34.19,32.81,0.45,urban
+2022-08-30_landsat-8_p190,2022-08-30T09:45,Wien Hohe Warte,105,23.8,30.08,30.68,0.56,urban
+2022-08-30_landsat-8_p190,2022-08-30T09:45,Wien Innere Stadt,5925,23.53,33.38,34.84,0.2,urban
+2022-08-30_landsat-8_p190,2022-08-30T09:45,Wien Jubiläumswarte,5802,22.73,25.98,25.16,0.85,green
+2022-08-30_landsat-8_p190,2022-08-30T09:45,Wien Mariabrunn,106,24.46,32.02,30.62,0.62,urban
+2022-08-30_landsat-8_p190,2022-08-30T09:45,Wien Stammersdorf,4115,24.31,31.99,31.69,0.59,green
+2022-08-30_landsat-8_p190,2022-08-30T09:45,Wien Unterlaa,107,24.37,37.28,36.92,0.36,urban
+2023-06-14_landsat-8_p190,2023-06-14T09:44,Wien Donaufeld,5935,20.8,35.72,33.44,0.5,urban
+2023-06-14_landsat-8_p190,2023-06-14T09:44,Wien Hohe Warte,105,20.19,30.21,31.07,0.61,urban
+2023-06-14_landsat-8_p190,2023-06-14T09:44,Wien Innere Stadt,5925,19.99,35.24,36.87,0.23,urban
+2023-06-14_landsat-8_p190,2023-06-14T09:44,Wien Mariabrunn,106,20.44,29.71,29.87,0.68,urban
+2023-06-14_landsat-8_p190,2023-06-14T09:44,Wien Stammersdorf,4115,20.55,30.82,31.51,0.64,green
+2023-06-15_landsat-9_p189,2023-06-15T09:38,Wien Donaufeld,5935,21.57,34.59,,,urban
+2023-06-15_landsat-9_p189,2023-06-15T09:38,Wien Hohe Warte,105,20.72,30.53,31.42,0.61,urban
+2023-06-15_landsat-9_p189,2023-06-15T09:38,Wien Innere Stadt,5925,20.52,38.1,38.98,0.22,urban
+2023-06-15_landsat-9_p189,2023-06-15T09:38,Wien Jubiläumswarte,5802,20.33,25.07,23.94,0.88,green
+2023-06-15_landsat-9_p189,2023-06-15T09:38,Wien Mariabrunn,106,21.78,30.76,31.03,0.66,urban
+2023-06-15_landsat-9_p189,2023-06-15T09:38,Wien Unterlaa,107,21.48,31.16,30.31,0.61,urban
+2023-06-22_landsat-9_p190,2023-06-22T09:44,Wien Donaufeld,5935,28.53,41.64,39.07,0.48,urban
+2023-06-22_landsat-9_p190,2023-06-22T09:44,Wien Hohe Warte,105,27.83,36.18,36.07,0.59,urban
+2023-06-22_landsat-9_p190,2023-06-22T09:44,Wien Innere Stadt,5925,27.52,39.37,40.61,0.23,urban
+2023-06-22_landsat-9_p190,2023-06-22T09:44,Wien Jubiläumswarte,5802,25.8,28.48,27.9,0.84,green
+2023-06-22_landsat-9_p190,2023-06-22T09:44,Wien Mariabrunn,106,28.16,36.52,36.41,0.66,urban
+2023-06-22_landsat-9_p190,2023-06-22T09:44,Wien Stammersdorf,4115,27.77,36.07,35.72,0.62,green
+2023-06-22_landsat-9_p190,2023-06-22T09:44,Wien Unterlaa,107,27.7,33.81,33.17,0.55,urban
+2023-06-30_landsat-8_p190,2023-06-30T09:44,Wien Donaufeld,5935,25.24,39.06,36.44,0.47,urban
+2023-06-30_landsat-8_p190,2023-06-30T09:44,Wien Hohe Warte,105,24.89,32.4,32.74,0.58,urban
+2023-06-30_landsat-8_p190,2023-06-30T09:44,Wien Innere Stadt,5925,24.9,39.35,40.62,0.24,urban
+2023-06-30_landsat-8_p190,2023-06-30T09:44,Wien Jubiläumswarte,5802,23.4,26.17,25.36,0.85,green
+2023-06-30_landsat-8_p190,2023-06-30T09:44,Wien Mariabrunn,106,26.05,33.54,33.32,0.66,urban
+2023-06-30_landsat-8_p190,2023-06-30T09:44,Wien Stammersdorf,4115,25.44,33.66,33.57,0.59,green
+2023-06-30_landsat-8_p190,2023-06-30T09:44,Wien Unterlaa,107,24.93,37.82,36.65,0.5,urban
+2023-07-08_landsat-9_p190,2023-07-08T09:44,Wien Donaufeld,5935,27.75,36.58,34.23,0.45,urban
+2023-07-08_landsat-9_p190,2023-07-08T09:44,Wien Hohe Warte,105,26.85,29.67,29.78,0.56,urban
+2023-07-08_landsat-9_p190,2023-07-08T09:44,Wien Innere Stadt,5925,26.24,39.62,40.7,0.21,urban
+2023-07-08_landsat-9_p190,2023-07-08T09:44,Wien Jubiläumswarte,5802,24.74,29.58,28.23,0.89,green
+2023-07-08_landsat-9_p190,2023-07-08T09:44,Wien Mariabrunn,106,26.9,35.92,35.39,0.65,urban
+2023-07-08_landsat-9_p190,2023-07-08T09:44,Wien Stammersdorf,4115,27.83,40.26,40.27,0.59,green
+2023-07-08_landsat-9_p190,2023-07-08T09:44,Wien Unterlaa,107,26.78,40.62,39.22,0.41,urban
+2023-07-09_landsat-8_p189,2023-07-09T09:38,Wien Donaufeld,5935,29.43,45.26,42.87,0.45,urban
+2023-07-09_landsat-8_p189,2023-07-09T09:38,Wien Hohe Warte,105,28.5,38.82,39.47,0.59,urban
+2023-07-09_landsat-8_p189,2023-07-09T09:38,Wien Innere Stadt,5925,28.72,44.9,45.85,0.21,urban
+2023-07-09_landsat-8_p189,2023-07-09T09:38,Wien Jubiläumswarte,5802,27.33,32.47,31.48,0.87,green
+2023-07-09_landsat-8_p189,2023-07-09T09:38,Wien Stammersdorf,4115,29.02,42.48,42.65,0.58,green
+2023-07-09_landsat-8_p189,2023-07-09T09:38,Wien Unterlaa,107,28.69,43.24,41.85,0.41,urban
+2024-06-17_landsat-9_p189,2024-06-17T09:38,Wien Donaufeld,5935,24.67,40.96,39.3,0.5,urban
+2024-06-17_landsat-9_p189,2024-06-17T09:38,Wien Hohe Warte,105,24.6,35.86,36.51,0.61,urban
+2024-06-17_landsat-9_p189,2024-06-17T09:38,Wien Innere Stadt,5925,24.36,42.79,43.61,0.21,urban
+2024-06-17_landsat-9_p189,2024-06-17T09:38,Wien Jubiläumswarte,5802,23.66,29.04,28.19,0.89,green
+2024-06-17_landsat-9_p189,2024-06-17T09:38,Wien Mariabrunn,106,25.3,35.13,35.82,0.65,urban
+2024-06-17_landsat-9_p189,2024-06-17T09:38,Wien Stammersdorf,4115,25.21,34.76,35.17,0.67,green
+2024-06-17_landsat-9_p189,2024-06-17T09:38,Wien Unterlaa,107,24.26,34.63,34.64,0.6,urban
+2024-06-25_landsat-8_p189,2024-06-25T09:38,Wien Donaufeld,5935,24.6,39.2,37.12,0.48,urban
+2024-06-25_landsat-8_p189,2024-06-25T09:38,Wien Hohe Warte,105,24.43,33.47,34.3,0.59,urban
+2024-06-25_landsat-8_p189,2024-06-25T09:38,Wien Innere Stadt,5925,24.75,40.3,41.08,0.22,urban
+2024-06-25_landsat-8_p189,2024-06-25T09:38,Wien Jubiläumswarte,5802,22.4,26.77,25.95,0.86,green
+2024-06-25_landsat-8_p189,2024-06-25T09:38,Wien Stammersdorf,4115,24.6,34.01,34.43,0.65,green
+2024-06-25_landsat-8_p189,2024-06-25T09:38,Wien Unterlaa,107,24.5,37.13,36.6,0.53,urban
+2024-07-10_landsat-9_p190,2024-07-10T09:44,Wien Donaufeld,5935,32.59,44.48,42.38,0.47,urban
+2024-07-10_landsat-9_p190,2024-07-10T09:44,Wien Hohe Warte,105,33.05,39.63,40.08,0.58,urban
+2024-07-10_landsat-9_p190,2024-07-10T09:44,Wien Innere Stadt,5925,32.7,44.74,46.07,0.21,urban
+2024-07-10_landsat-9_p190,2024-07-10T09:44,Wien Jubiläumswarte,5802,30.64,33.59,32.45,0.86,green
+2024-07-10_landsat-9_p190,2024-07-10T09:44,Wien Mariabrunn,106,32.3,39.71,40.37,0.63,urban
+2024-07-10_landsat-9_p190,2024-07-10T09:44,Wien Stammersdorf,4115,32.99,40.52,40.56,0.63,green
+2024-07-10_landsat-9_p190,2024-07-10T09:44,Wien Unterlaa,107,32.08,43.02,42.24,0.53,urban
+2024-07-18_landsat-8_p190,2024-07-18T09:44,Wien Donaufeld,5935,27.99,40.52,39.52,0.46,urban
+2024-07-18_landsat-8_p190,2024-07-18T09:44,Wien Hohe Warte,105,27.0,35.41,35.63,0.55,urban
+2024-07-18_landsat-8_p190,2024-07-18T09:44,Wien Innere Stadt,5925,26.35,40.72,41.93,0.23,urban
+2024-07-18_landsat-8_p190,2024-07-18T09:44,Wien Jubiläumswarte,5802,25.44,28.97,27.94,0.86,green
+2024-07-18_landsat-8_p190,2024-07-18T09:44,Wien Mariabrunn,106,27.0,35.14,35.72,0.65,urban
+2024-07-18_landsat-8_p190,2024-07-18T09:44,Wien Stammersdorf,4115,27.55,38.0,38.61,0.61,green
+2024-07-18_landsat-8_p190,2024-07-18T09:44,Wien Unterlaa,107,27.1,39.98,39.21,0.51,urban
+2024-07-19_landsat-9_p189,2024-07-19T09:38,Wien Donaufeld,5935,29.29,43.94,42.41,0.46,urban
+2024-07-19_landsat-9_p189,2024-07-19T09:38,Wien Hohe Warte,105,28.27,39.02,39.53,0.57,urban
+2024-07-19_landsat-9_p189,2024-07-19T09:38,Wien Innere Stadt,5925,28.24,44.4,45.53,0.22,urban
+2024-07-19_landsat-9_p189,2024-07-19T09:38,Wien Jubiläumswarte,5802,26.89,32.56,30.86,0.86,green
+2024-07-19_landsat-9_p189,2024-07-19T09:38,Wien Mariabrunn,106,28.74,36.49,37.12,0.64,urban
+2024-07-19_landsat-9_p189,2024-07-19T09:38,Wien Stammersdorf,4115,28.68,40.68,41.43,0.6,green
+2024-07-19_landsat-9_p189,2024-07-19T09:38,Wien Unterlaa,107,28.52,42.95,42.55,0.51,urban
+2024-07-26_landsat-9_p190,2024-07-26T09:44,Wien Donaufeld,5935,26.49,29.28,27.97,0.42,urban
+2024-07-26_landsat-9_p190,2024-07-26T09:44,Wien Hohe Warte,105,26.49,32.64,33.07,0.56,urban
+2024-07-26_landsat-9_p190,2024-07-26T09:44,Wien Innere Stadt,5925,25.44,35.54,36.74,0.22,urban
+2024-07-26_landsat-9_p190,2024-07-26T09:44,Wien Jubiläumswarte,5802,24.85,27.46,26.09,0.85,green
+2024-07-26_landsat-9_p190,2024-07-26T09:44,Wien Mariabrunn,106,26.31,29.94,29.57,0.61,urban
+2024-07-26_landsat-9_p190,2024-07-26T09:44,Wien Stammersdorf,4115,26.72,33.63,33.83,0.58,green
+2024-07-26_landsat-9_p190,2024-07-26T09:44,Wien Unterlaa,107,26.24,38.23,37.79,0.49,urban
+2024-07-27_landsat-8_p189,2024-07-27T09:38,Wien Donaufeld,5935,29.46,42.52,40.95,0.46,urban
+2024-07-27_landsat-8_p189,2024-07-27T09:38,Wien Hohe Warte,105,29.93,38.14,38.78,0.57,urban
+2024-07-27_landsat-8_p189,2024-07-27T09:38,Wien Innere Stadt,5925,29.26,42.91,43.79,0.22,urban
+2024-07-27_landsat-8_p189,2024-07-27T09:38,Wien Jubiläumswarte,5802,28.27,33.52,32.51,0.86,green
+2024-07-27_landsat-8_p189,2024-07-27T09:38,Wien Mariabrunn,106,29.16,37.31,37.59,0.63,urban
+2024-07-27_landsat-8_p189,2024-07-27T09:38,Wien Stammersdorf,4115,30.07,39.75,40.28,0.58,green
+2024-07-27_landsat-8_p189,2024-07-27T09:38,Wien Unterlaa,107,29.59,42.99,42.66,0.48,urban
+2024-08-11_landsat-9_p190,2024-08-11T09:44,Wien Donaufeld,5935,30.95,45.22,43.66,0.44,urban
+2024-08-11_landsat-9_p190,2024-08-11T09:44,Wien Hohe Warte,105,30.75,38.56,39.23,0.57,urban
+2024-08-11_landsat-9_p190,2024-08-11T09:44,Wien Innere Stadt,5925,30.25,42.26,43.35,0.21,urban
+2024-08-11_landsat-9_p190,2024-08-11T09:44,Wien Jubiläumswarte,5802,29.79,33.99,32.73,0.88,green
+2024-08-11_landsat-9_p190,2024-08-11T09:44,Wien Mariabrunn,106,31.74,40.01,39.59,0.61,urban
+2024-08-11_landsat-9_p190,2024-08-11T09:44,Wien Stammersdorf,4115,30.9,41.98,42.0,0.56,green
+2024-08-11_landsat-9_p190,2024-08-11T09:44,Wien Unterlaa,107,30.2,46.8,45.84,0.41,urban
+2024-08-12_landsat-8_p189,2024-08-12T09:38,Wien Donaufeld,5935,29.31,41.47,39.73,0.43,urban
+2024-08-12_landsat-8_p189,2024-08-12T09:38,Wien Hohe Warte,105,29.53,37.93,38.4,0.56,urban
+2024-08-12_landsat-8_p189,2024-08-12T09:38,Wien Innere Stadt,5925,28.09,41.23,42.28,0.21,urban
+2024-08-12_landsat-8_p189,2024-08-12T09:38,Wien Jubiläumswarte,5802,27.23,32.47,31.19,0.85,green
+2024-08-12_landsat-8_p189,2024-08-12T09:38,Wien Stammersdorf,4115,30.2,41.29,41.37,0.54,green
+2024-08-12_landsat-8_p189,2024-08-12T09:38,Wien Unterlaa,107,28.07,43.79,43.3,0.39,urban
+2025-06-12_landsat-8_p189,2025-06-12T09:38,Wien Donaufeld,5935,20.46,35.47,33.46,0.51,urban
+2025-06-12_landsat-8_p189,2025-06-12T09:38,Wien Hohe Warte,105,19.81,30.39,30.95,0.61,urban
+2025-06-12_landsat-8_p189,2025-06-12T09:38,Wien Innere Stadt,5925,19.54,36.26,37.32,0.23,urban
+2025-06-12_landsat-8_p189,2025-06-12T09:38,Wien Jubiläumswarte,5802,18.14,23.24,22.69,0.89,green
+2025-06-12_landsat-8_p189,2025-06-12T09:38,Wien Mariabrunn,106,20.22,30.58,,,urban
+2025-06-12_landsat-8_p189,2025-06-12T09:38,Wien Stammersdorf,4115,20.8,32.19,31.93,0.65,green
+2025-06-12_landsat-8_p189,2025-06-12T09:38,Wien Unterlaa,107,19.41,30.74,30.2,0.58,urban
+2025-06-19_landsat-8_p190,2025-06-19T09:44,Wien Donaufeld,5935,27.95,41.26,39.3,0.5,urban
+2025-06-19_landsat-8_p190,2025-06-19T09:44,Wien Hohe Warte,105,27.3,36.26,36.47,0.6,urban
+2025-06-19_landsat-8_p190,2025-06-19T09:44,Wien Innere Stadt,5925,27.26,41.86,43.28,0.23,urban
+2025-06-19_landsat-8_p190,2025-06-19T09:44,Wien Jubiläumswarte,5802,26.14,29.13,28.02,0.88,green
+2025-06-19_landsat-8_p190,2025-06-19T09:44,Wien Mariabrunn,106,27.2,35.54,35.92,0.63,urban
+2025-06-19_landsat-8_p190,2025-06-19T09:44,Wien Stammersdorf,4115,27.1,38.77,38.3,0.64,green
+2025-06-19_landsat-8_p190,2025-06-19T09:44,Wien Unterlaa,107,27.85,38.64,38.3,0.57,urban
+2025-06-20_landsat-9_p189,2025-06-20T09:38,Wien Donaufeld,5935,22.67,35.45,34.61,0.49,urban
+2025-06-20_landsat-9_p189,2025-06-20T09:38,Wien Hohe Warte,105,22.01,32.68,33.2,0.6,urban
+2025-06-20_landsat-9_p189,2025-06-20T09:38,Wien Innere Stadt,5925,21.39,38.98,39.8,0.22,urban
+2025-06-20_landsat-9_p189,2025-06-20T09:38,Wien Jubiläumswarte,5802,21.71,25.27,23.97,0.89,green
+2025-06-20_landsat-9_p189,2025-06-20T09:38,Wien Mariabrunn,106,22.03,33.0,33.25,0.62,urban
+2025-06-20_landsat-9_p189,2025-06-20T09:38,Wien Stammersdorf,4115,22.37,35.12,35.05,0.62,green
+2025-06-20_landsat-9_p189,2025-06-20T09:38,Wien Unterlaa,107,22.51,35.78,34.98,0.55,urban
+2025-06-27_landsat-9_p190,2025-06-27T09:44,Wien Hohe Warte,105,27.14,34.21,,,urban
+2025-06-27_landsat-9_p190,2025-06-27T09:44,Wien Innere Stadt,5925,27.0,39.67,40.64,0.23,urban
+2025-06-27_landsat-9_p190,2025-06-27T09:44,Wien Jubiläumswarte,5802,26.05,28.59,26.84,0.88,green
+2025-06-27_landsat-9_p190,2025-06-27T09:44,Wien Mariabrunn,106,27.25,34.56,34.68,0.62,urban
+2025-06-27_landsat-9_p190,2025-06-27T09:44,Wien Stammersdorf,4115,26.7,38.31,37.62,0.61,green
+2025-06-27_landsat-9_p190,2025-06-27T09:44,Wien Unterlaa,107,26.95,39.34,38.26,0.5,urban
+2025-07-05_landsat-8_p190,2025-07-05T09:44,Wien Donaufeld,5935,26.65,37.81,36.1,0.45,urban
+2025-07-05_landsat-8_p190,2025-07-05T09:44,Wien Hohe Warte,105,26.85,33.26,33.6,0.58,urban
+2025-07-05_landsat-8_p190,2025-07-05T09:44,Wien Innere Stadt,5925,26.35,37.75,38.95,0.22,urban
+2025-07-05_landsat-8_p190,2025-07-05T09:44,Wien Jubiläumswarte,5802,24.45,28.2,26.88,0.89,green
+2025-07-05_landsat-8_p190,2025-07-05T09:44,Wien Mariabrunn,106,25.7,32.46,32.76,0.62,urban
+2025-07-05_landsat-8_p190,2025-07-05T09:44,Wien Stammersdorf,4115,27.5,37.58,37.96,0.56,green
+2025-07-05_landsat-8_p190,2025-07-05T09:44,Wien Unterlaa,107,25.95,39.42,38.17,0.39,urban
+2025-07-06_landsat-9_p189,2025-07-06T09:38,Wien Donaufeld,5935,30.63,45.74,44.1,0.45,urban
+2025-07-06_landsat-9_p189,2025-07-06T09:38,Wien Hohe Warte,105,31.0,40.47,40.63,0.58,urban
+2025-07-06_landsat-9_p189,2025-07-06T09:38,Wien Innere Stadt,5925,30.4,46.26,47.07,0.22,urban
+2025-07-06_landsat-9_p189,2025-07-06T09:38,Wien Jubiläumswarte,5802,28.76,35.22,33.81,0.88,green
+2025-07-06_landsat-9_p189,2025-07-06T09:38,Wien Stammersdorf,4115,30.88,45.17,45.3,0.54,green
+2025-07-06_landsat-9_p189,2025-07-06T09:38,Wien Unterlaa,107,30.42,46.28,45.06,0.38,urban
+2025-07-13_landsat-9_p190,2025-07-13T09:44,Wien Donaufeld,5935,25.7,37.16,35.61,0.47,urban
+2025-07-13_landsat-9_p190,2025-07-13T09:44,Wien Hohe Warte,105,25.1,32.55,32.8,0.6,urban
+2025-07-13_landsat-9_p190,2025-07-13T09:44,Wien Innere Stadt,5925,24.8,37.8,39.17,0.22,urban
+2025-07-13_landsat-9_p190,2025-07-13T09:44,Wien Jubiläumswarte,5802,23.7,26.95,26.13,0.9,green
+2025-07-13_landsat-9_p190,2025-07-13T09:44,Wien Mariabrunn,106,25.4,31.94,32.37,0.64,urban
+2025-07-13_landsat-9_p190,2025-07-13T09:44,Wien Stammersdorf,4115,25.8,33.95,34.17,0.59,green
+2025-07-13_landsat-9_p190,2025-07-13T09:44,Wien Unterlaa,107,25.55,36.51,35.19,0.43,urban
+2025-07-14_landsat-8_p189,2025-07-14T09:38,Wien Donaufeld,5935,29.5,41.12,39.99,0.47,urban
+2025-07-14_landsat-8_p189,2025-07-14T09:38,Wien Hohe Warte,105,28.89,37.55,38.17,0.6,urban
+2025-07-14_landsat-8_p189,2025-07-14T09:38,Wien Innere Stadt,5925,28.77,42.13,43.54,0.22,urban
+2025-07-14_landsat-8_p189,2025-07-14T09:38,Wien Jubiläumswarte,5802,27.27,30.05,29.36,0.88,green
+2025-07-14_landsat-8_p189,2025-07-14T09:38,Wien Stammersdorf,4115,28.65,39.03,39.39,0.58,green
+2025-07-14_landsat-8_p189,2025-07-14T09:38,Wien Unterlaa,107,29.19,40.21,38.9,0.41,urban
+2025-07-22_landsat-9_p189,2025-07-22T09:38,Wien Donaufeld,5935,25.48,35.21,34.17,0.49,urban
+2025-07-22_landsat-9_p189,2025-07-22T09:38,Wien Hohe Warte,105,24.89,32.3,32.92,0.61,urban
+2025-07-22_landsat-9_p189,2025-07-22T09:38,Wien Innere Stadt,5925,24.4,36.63,37.9,0.22,urban
+2025-07-22_landsat-9_p189,2025-07-22T09:38,Wien Jubiläumswarte,5802,22.98,27.23,26.04,0.9,green
+2025-07-22_landsat-9_p189,2025-07-22T09:38,Wien Stammersdorf,4115,24.42,32.97,33.31,0.63,green
+2025-07-22_landsat-9_p189,2025-07-22T09:38,Wien Unterlaa,107,24.52,32.44,31.84,0.46,urban
+2025-08-07_landsat-9_p189,2025-08-07T09:39,Wien Donaufeld,5935,23.0,32.95,31.61,0.49,urban
+2025-08-07_landsat-9_p189,2025-08-07T09:39,Wien Hohe Warte,105,23.38,29.5,29.8,0.59,urban
+2025-08-07_landsat-9_p189,2025-08-07T09:39,Wien Innere Stadt,5925,22.96,33.41,34.56,0.24,urban
+2025-08-07_landsat-9_p189,2025-08-07T09:39,Wien Jubiläumswarte,5802,20.97,23.11,22.58,0.86,green
+2025-08-07_landsat-9_p189,2025-08-07T09:39,Wien Mariabrunn,106,22.4,28.38,28.78,0.64,urban
+2025-08-07_landsat-9_p189,2025-08-07T09:39,Wien Stammersdorf,4115,23.59,33.55,33.17,0.61,green
+2025-08-07_landsat-9_p189,2025-08-07T09:39,Wien Unterlaa,107,22.44,27.38,27.34,0.52,urban
+2025-08-14_landsat-9_p190,2025-08-14T09:45,Wien Donaufeld,5935,30.51,40.22,39.1,0.46,urban
+2025-08-14_landsat-9_p190,2025-08-14T09:45,Wien Hohe Warte,105,30.57,35.29,35.99,0.57,urban
+2025-08-14_landsat-9_p190,2025-08-14T09:45,Wien Innere Stadt,5925,30.06,38.69,39.99,0.22,urban
+2025-08-14_landsat-9_p190,2025-08-14T09:45,Wien Jubiläumswarte,5802,28.66,31.5,30.59,0.85,green
+2025-08-14_landsat-9_p190,2025-08-14T09:45,Wien Mariabrunn,106,29.86,35.18,35.04,0.63,urban
+2025-08-14_landsat-9_p190,2025-08-14T09:45,Wien Stammersdorf,4115,31.63,40.94,40.62,0.56,green
+2025-08-14_landsat-9_p190,2025-08-14T09:45,Wien Unterlaa,107,30.22,40.98,40.32,0.48,urban
+2025-08-15_landsat-8_p189,2025-08-15T09:39,Wien Donaufeld,5935,30.97,42.22,40.92,0.46,urban
+2025-08-15_landsat-8_p189,2025-08-15T09:39,Wien Hohe Warte,105,29.91,37.14,37.91,0.57,urban
+2025-08-15_landsat-8_p189,2025-08-15T09:39,Wien Innere Stadt,5925,29.78,42.17,43.16,0.22,urban
+2025-08-15_landsat-8_p189,2025-08-15T09:39,Wien Jubiläumswarte,5802,30.0,34.7,34.08,0.86,green
+2025-08-15_landsat-8_p189,2025-08-15T09:39,Wien Mariabrunn,106,31.2,37.82,37.84,0.64,urban
+2025-08-15_landsat-8_p189,2025-08-15T09:39,Wien Stammersdorf,4115,31.08,41.82,41.76,0.56,green
+2025-08-15_landsat-8_p189,2025-08-15T09:39,Wien Unterlaa,107,30.48,43.0,42.32,0.47,urban
+2026-06-06_landsat-8_p190,2026-06-06T09:44,Wien Donaufeld,5935,22.29,36.64,34.94,0.49,urban
+2026-06-06_landsat-8_p190,2026-06-06T09:44,Wien Hohe Warte,105,21.99,31.33,31.74,0.61,urban
+2026-06-06_landsat-8_p190,2026-06-06T09:44,Wien Innere Stadt,5925,21.1,35.6,36.74,0.24,urban
+2026-06-06_landsat-8_p190,2026-06-06T09:44,Wien Mariabrunn,106,22.2,30.76,30.63,0.64,urban
+2026-06-06_landsat-8_p190,2026-06-06T09:44,Wien Stammersdorf,4115,22.84,35.05,35.03,0.61,green
+2026-06-30_landsat-9_p190,2026-06-30T09:44,Wien Donaufeld,5935,30.89,44.57,42.71,0.45,urban
+2026-06-30_landsat-9_p190,2026-06-30T09:44,Wien Hohe Warte,105,30.35,39.72,39.57,0.56,urban
+2026-06-30_landsat-9_p190,2026-06-30T09:44,Wien Innere Stadt,5925,29.64,44.53,45.44,0.22,urban
+2026-06-30_landsat-9_p190,2026-06-30T09:44,Wien Jubiläumswarte,5802,29.94,32.6,31.39,0.87,green
+2026-06-30_landsat-9_p190,2026-06-30T09:44,Wien Mariabrunn,106,30.05,39.13,39.65,0.64,urban
+2026-06-30_landsat-9_p190,2026-06-30T09:44,Wien Stammersdorf,4115,30.91,43.75,43.83,0.52,green
+2026-06-30_landsat-9_p190,2026-06-30T09:44,Wien Unterlaa,107,30.21,47.4,45.78,0.37,urban
+2026-07-25_landsat-9_p189,2026-07-25T09:38,Wien Donaufeld,5935,25.4,36.35,35.24,0.45,urban
+2026-07-25_landsat-9_p189,2026-07-25T09:38,Wien Hohe Warte,105,25.63,34.09,33.86,0.57,urban
+2026-07-25_landsat-9_p189,2026-07-25T09:38,Wien Innere Stadt,5925,24.8,38.35,39.23,0.21,urban
+2026-07-25_landsat-9_p189,2026-07-25T09:38,Wien Jubiläumswarte,5802,23.85,29.51,28.61,0.87,green
+2026-07-25_landsat-9_p189,2026-07-25T09:38,Wien Mariabrunn,106,25.3,35.23,34.81,0.61,urban
+2026-07-25_landsat-9_p189,2026-07-25T09:38,Wien Stammersdorf,4115,26.44,39.8,39.56,0.48,green
+2026-07-25_landsat-9_p189,2026-07-25T09:38,Wien Unterlaa,107,24.96,41.5,41.13,0.3,urban
+2026-08-01_landsat-9_p190,2026-08-01T09:44,Wien Donaufeld,5935,33.05,36.78,35.17,0.43,urban
+2026-08-01_landsat-9_p190,2026-08-01T09:44,Wien Hohe Warte,105,32.7,27.91,28.1,0.54,urban
+2026-08-01_landsat-9_p190,2026-08-01T09:44,Wien Innere Stadt,5925,32.4,39.44,40.62,0.23,urban
+2026-08-01_landsat-9_p190,2026-08-01T09:44,Wien Jubiläumswarte,5802,31.5,22.72,21.08,0.8,green
+2026-08-01_landsat-9_p190,2026-08-01T09:44,Wien Mariabrunn,106,33.2,27.22,28.04,0.59,urban
+2026-08-01_landsat-9_p190,2026-08-01T09:44,Wien Stammersdorf,4115,32.6,36.5,36.56,0.44,green
+2026-08-01_landsat-9_p190,2026-08-01T09:44,Wien Unterlaa,107,33.05,43.5,43.23,0.3,urban
+2026-08-09_landsat-8_p190,2026-08-09T09:44,Wien Donaufeld,5935,28.19,40.0,38.53,0.43,urban
+2026-08-09_landsat-8_p190,2026-08-09T09:44,Wien Hohe Warte,105,28.54,35.12,35.33,0.57,urban
+2026-08-09_landsat-8_p190,2026-08-09T09:44,Wien Innere Stadt,5925,28.05,38.47,39.62,0.22,urban
+2026-08-09_landsat-8_p190,2026-08-09T09:44,Wien Jubiläumswarte,5802,27.15,31.32,30.24,0.85,green
+2026-08-09_landsat-8_p190,2026-08-09T09:44,Wien Mariabrunn,106,28.19,37.08,36.86,0.56,urban
+2026-08-09_landsat-8_p190,2026-08-09T09:44,Wien Stammersdorf,4115,29.34,43.2,42.54,0.43,green
+2026-08-09_landsat-8_p190,2026-08-09T09:44,Wien Unterlaa,107,27.79,43.78,42.88,0.28,urban
+2026-08-26_landsat-9_p189,2026-08-26T09:39,Wien Donaufeld,5935,23.89,35.84,34.61,0.45,urban
+2026-08-26_landsat-9_p189,2026-08-26T09:39,Wien Hohe Warte,105,24.57,32.15,32.63,0.58,urban
+2026-08-26_landsat-9_p189,2026-08-26T09:39,Wien Innere Stadt,5925,23.86,36.46,37.55,0.21,urban
+2026-08-26_landsat-9_p189,2026-08-26T09:39,Wien Jubiläumswarte,5802,23.67,28.28,27.38,0.84,green
+2026-08-26_landsat-9_p189,2026-08-26T09:39,Wien Stammersdorf,4115,23.21,36.02,35.85,0.46,green
+2026-08-26_landsat-9_p189,2026-08-26T09:39,Wien Unterlaa,107,24.15,40.9,39.31,0.29,urban
