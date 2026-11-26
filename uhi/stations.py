@@ -165,6 +165,9 @@ def main() -> None:
     table = table.merge(stations[["id", "station_class"]], left_on="station_id", right_on="id")
     table = table.drop(columns="id")
     table = ss.one_series_per_station(table)
+    suspect = ss.surface_colder_than_air(table, ("lst_pixel_c", "lst_ring_c"))
+    suspect_by_station = table.loc[suspect, "station"].value_counts().to_dict()
+    table = table[~suspect]
     counts = table.groupby("station")["scene"].count()
     keep = counts[counts >= MIN_SCENES_PER_STATION].index
     dropped = sorted(set(stations["name"]) - set(keep))
@@ -192,6 +195,8 @@ def main() -> None:
         "overpasses_used": int(table["scene"].nunique()),
         "stations": summary["station"].tolist(),
         "stations_dropped": dropped,
+        "pairs_dropped_surface_colder_than_air": int(suspect.sum()),
+        "pairs_dropped_by_station": suspect_by_station,
         "station_scene_pairs": len(both),
         "surface_minus_air_median_c": round(float(overall_gap.median()), 2),
         "surface_minus_air_q25_c": round(float(overall_gap.quantile(0.25)), 2),
@@ -223,6 +228,8 @@ def main() -> None:
 
     print(f"\nOverpasses used: {stats['overpasses_used']}; stations: {len(summary)}; "
           f"dropped: {dropped}")
+    print(f"Pairs dropped because the surface read colder than the air: {int(suspect.sum())} "
+          f"{suspect_by_station}")
     print(summary.round(2).to_markdown(index=False))
     print("\nUrban minus green stations, per scene:")
     print(classes.round(2).to_markdown(index=False))

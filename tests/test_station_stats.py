@@ -147,3 +147,16 @@ def test_one_series_per_station_prefers_the_fuller_id_and_fills_holes():
     assert hw.loc["s1", "station_id"] == "5904"
     assert hw.loc["s4", "station_id"] == "105"
     assert not out.duplicated(["scene", "station"]).any()
+
+
+def test_surface_colder_than_air():
+    df = pd.DataFrame(
+        {
+            "air_c": [25.0, 25.0, 25.0, 25.0, 25.0],
+            "lst_pixel_c": [30.0, 24.0, 30.0, np.nan, 25.0],
+            "lst_ring_c": [31.0, 31.0, 20.0, 30.0, np.nan],
+        }
+    )
+    out = ss.surface_colder_than_air(df, ("lst_pixel_c", "lst_ring_c"))
+    # fine, pixel colder, ring colder, missing pixel is not "colder", equal is not colder
+    assert out.tolist() == [False, True, True, False, False]

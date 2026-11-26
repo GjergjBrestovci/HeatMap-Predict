@@ -64,6 +64,19 @@ def one_series_per_station(df: pd.DataFrame) -> pd.DataFrame:
     return ranked.drop_duplicates(["scene", "station"]).drop(columns="rank").reset_index(drop=True)
 
 
+def surface_colder_than_air(df: pd.DataFrame, lst_cols: tuple[str, ...]) -> pd.Series:
+    """True for rows where a surface temperature reads below the air temperature.
+
+    Around a late-morning summer overpass the ground is warmer than the air,
+    so such a reading is most likely cloud or cloud shadow the mask missed.
+    Missing surface values do not count.
+    """
+    colder = pd.Series(False, index=df.index)
+    for col in lst_cols:
+        colder |= df[col] < df["air_c"]
+    return colder
+
+
 def station_class(green_share: float) -> str:
     return "green" if green_share >= GREEN_SHARE_MIN else "urban"
 
