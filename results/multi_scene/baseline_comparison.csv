@@ -1,0 +1,4 @@
+size_class,sites,delta_median_c,delta_west_median_c,shift_c,scenes
+small,43,-3.05,-3.34,0.3,59
+medium,20,-3.86,-4.2,0.34,59
+large,1,-5.67,-5.93,0.26,59
