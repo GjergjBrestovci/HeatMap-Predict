@@ -66,6 +66,19 @@ def s2_clear(scl: np.ndarray) -> np.ndarray:
     return ~np.isin(np.asarray(scl), S2_BAD_SCL)
 
 
+def permanent_gap(n_clear: np.ndarray, n_missing: np.ndarray, min_share: float = 0.5) -> np.ndarray:
+    """Pixels that usually have no temperature although the sky is clear.
+
+    `n_clear` counts the scenes in which a pixel is clear, `n_missing` those in
+    which it is clear but has no temperature. Pixels never seen clear are not
+    called gaps.
+    """
+    n_clear = np.asarray(n_clear)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        share = np.where(n_clear > 0, np.asarray(n_missing) / n_clear, 0.0)
+    return share > min_share
+
+
 def size_class(area_ha: float) -> str:
     """Park size class for an area in hectares."""
     for label, lower in SIZE_CLASSES:

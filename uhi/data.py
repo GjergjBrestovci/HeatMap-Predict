@@ -150,27 +150,96 @@ PARK_EXCLUDE_PREFIXES = ("Donauinsel", "Donaukanal", "Handelskai", "Neue Donau")
 PARK_WHOLE_NAMES = ("Prater", "Schlosspark Schönbrunn")
 
 
-def sealed_sites(cache: Path) -> gpd.GeoDataFrame:
+# Citywide sealed reference sites, chosen by rule from the 2022 land-use map:
+# in the given district, the largest connected area of the given class that is
+# usable (see `largest_usable_cluster`). (name, class label, land-use class, district)
+SEALED_RULES = (
+    ("Favoriten dense housing", "housing", "dichtes Wohn(misch)gebiet", "10"),
+    ("Brigittenau dense housing", "housing", "dichtes Wohn(misch)gebiet", "20"),
+    ("Favoriten rail yard", "railway", "Bahnhöfe und Bahnanlagen", "10"),
+    ("Favoriten logistics", "logistics", "Transport und Logistik inkl. Lager", "10"),
+    ("Liesing industry", "industry", "Industrie, prod. Gewerbe, Großhandel inkl. Lager", "23"),
+    ("Simmering industry", "industry", "Industrie, prod. Gewerbe, Großhandel inkl. Lager", "11"),
+    ("Floridsdorf industry", "industry", "Industrie, prod. Gewerbe, Großhandel inkl. Lager", "21"),
+    ("Donaustadt retail", "retail", "solitäre Handelsstrukturen", "22"),
+)
+SEALED_CLUSTER_GAP_M = 30.0
+SEALED_MIN_HA = 5.0
+SEALED_MAX_WATER_SHARE = 0.10  # share of the area within NEAR_WATER_M of water
+SEALED_MAX_GAP_SHARE = 0.10  # share of pixels without a temperature in the product
+BASELINE_WEST = "west"  # the three original sites
+BASELINE_CITYWIDE = "citywide"  # the original sites plus the rule-based ones
+
+
+def clusters(polygons: gpd.GeoSeries, gap_m: float) -> list:
+    """Merge polygons that lie within `gap_m` of each other; largest first."""
+    polygons = polygons[~polygons.is_empty]
+    if polygons.empty:
+        return []
+    merged = polygons.buffer(gap_m / 2).union_all()
+    out = [
+        polygons[polygons.intersects(blob)].union_all()
+        for blob in getattr(merged, "geoms", [merged])
+    ]
+    return sorted(out, key=lambda g: -g.area)
+
+
+def largest_usable_cluster(polygons: gpd.GeoSeries, water, gap_mask: np.ndarray, grid: Grid):
+    """The largest cluster that can serve as a reference site, or None.
+
+    Usable means: at least `SEALED_MIN_HA`, at most `SEALED_MAX_WATER_SHARE` of
+    its area within `NEAR_WATER_M` of water, and at most `SEALED_MAX_GAP_SHARE`
+    of its pixels in permanent gaps of the temperature product.
+    """
+    near_water = water.buffer(NEAR_WATER_M)
+    for geom in clusters(polygons, SEALED_CLUSTER_GAP_M):
+        if geom.area / 1e4 < SEALED_MIN_HA:
+            break  # sorted by area: nothing larger follows
+        if geom.intersection(near_water).area / geom.area > SEALED_MAX_WATER_SHARE:
+            continue
+        inside = geometry_mask([geom], grid.shape, grid.transform, invert=True)
+        if not inside.any() or gap_mask[inside].mean() > SEALED_MAX_GAP_SHARE:
+            continue
+        return geom
+    return None
+
+
+def sealed_sites(cache: Path, grid: Grid, gap_mask: np.ndarray) -> gpd.GeoDataFrame:
+    """Sealed reference sites: three in the western inner city, the rest by rule.
+
+    The `baseline` column says which reference a site belongs to: the "west"
+    sites are also part of the "citywide" one.
+    """
     landuse = wfs("REALNUT2022OGD", cache)
-    rail = landuse[landuse["NUTZUNG_LEVEL3"] == "Bahnhöfe und Bahnanlagen"].union_all()
+    level3 = landuse["NUTZUNG_LEVEL3"]
+    rail = landuse[level3 == "Bahnhöfe und Bahnanlagen"].union_all()
     streets = landuse[landuse["NUTZUNG_LEVEL2"] == "Straßenraum"].union_all()
-    dense = landuse[
-        (landuse["NUTZUNG_LEVEL3"] == "dichtes Wohn(misch)gebiet") & (landuse["BEZ"] == "07")
-    ].union_all()
+    dense = landuse[(level3 == "dichtes Wohn(misch)gebiet") & (landuse["BEZ"] == "07")].union_all()
     rows = [
-        ("Westbahn rail corridor", "railway", rail.intersection(_metric(WESTBAHN_AOI))),
+        ("Westbahn rail corridor", "railway", rail.intersection(_metric(WESTBAHN_AOI)), BASELINE_WEST),
         (
             "Westgürtel (road)",
             "road",
             _metric(GUERTEL_LINE).buffer(GUERTEL_HALF_WIDTH_M).intersection(streets),
+            BASELINE_WEST,
         ),
-        ("Neubau dense housing", "housing", dense),
+        ("Neubau dense housing", "housing", dense, BASELINE_WEST),
     ]
-    out = gpd.GeoDataFrame(
-        [{"site": n, "kind": "sealed", "size_class": c, "geometry": g} for n, c, g in rows],
+    water = landuse[landuse["NUTZUNG_LEVEL2"] == "Gewässer"].union_all()
+    for name, label, land_use, district in SEALED_RULES:
+        candidates = landuse[(level3 == land_use) & (landuse["BEZ"] == district)].geometry
+        geom = largest_usable_cluster(candidates, water, gap_mask, grid)
+        if geom is None:
+            print(f"Sealed site '{name}': no usable area of this class in district {district}")
+            continue
+        rows.append((name, label, geom, BASELINE_CITYWIDE))
+    return gpd.GeoDataFrame(
+        [
+            {"site": n, "kind": "sealed", "size_class": c, "baseline": b, "geometry": g}
+            for n, c, g, b in rows
+        ],
         crs=CRS,
     )
-    return out
 
 
 def park_sites(cache: Path) -> gpd.GeoDataFrame:
@@ -207,8 +276,10 @@ def park_sites(cache: Path) -> gpd.GeoDataFrame:
     return parks
 
 
-def build_sites(cache: Path) -> gpd.GeoDataFrame:
-    sites = pd.concat([park_sites(cache), sealed_sites(cache)], ignore_index=True)
+def build_sites(cache: Path, grid: Grid, gap_mask: np.ndarray) -> gpd.GeoDataFrame:
+    sites = pd.concat(
+        [park_sites(cache), sealed_sites(cache, grid, gap_mask)], ignore_index=True
+    )
     sites = gpd.GeoDataFrame(sites, crs=CRS)
     sites["area_ha"] = (sites.area / 1e4).round(2)
     landuse = wfs("REALNUT2022OGD", cache)
@@ -308,6 +379,28 @@ def landsat_passes(items: list[pystac.Item]) -> dict[str, list[pystac.Item]]:
         key = f"{item.datetime:%Y-%m-%d}_{p['platform']}_p{p['landsat:wrs_path']}"
         passes.setdefault(key, []).append(item)
     return dict(sorted(passes.items()))
+
+
+def landsat_gap_mask(passes: dict[str, list[pystac.Item]], grid: Grid, cache: Path) -> np.ndarray:
+    """Pixels that have no surface temperature in most clear observations.
+
+    The Landsat temperature product has permanent holes over Vienna; a site
+    that sits in one can never be measured.
+    """
+    path = cache / "landsat" / f"gap_mask_{len(passes)}passes.npy"
+    if path.exists():
+        return np.load(path)
+    n_clear = np.zeros(grid.shape, dtype="int32")
+    n_missing = np.zeros(grid.shape, dtype="int32")
+    for items in passes.values():
+        raw = load_landsat_pass(items, grid, cache)
+        clear = core.landsat_clear(raw["qa_pixel"])
+        n_clear += clear
+        n_missing += clear & (raw["lwir11"] == 0)
+    mask = core.permanent_gap(n_clear, n_missing)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    np.save(path, mask)
+    return mask
 
 
 def load_landsat_pass(items: list[pystac.Item], grid: Grid, cache: Path) -> dict[str, np.ndarray]:

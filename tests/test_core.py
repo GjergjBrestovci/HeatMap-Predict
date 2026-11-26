@@ -181,3 +181,10 @@ def test_summarize_groups_per_scene():
     assert out["scene_q75_c"] == pytest.approx(-0.5)
     assert out["scene_max_c"] == pytest.approx(1.0)
     assert out["scenes_cooler_share"] == pytest.approx(2 / 3)
+
+
+def test_permanent_gap():
+    n_clear = np.array([10, 10, 10, 0])
+    n_missing = np.array([10, 4, 6, 0])
+    # always missing, sometimes missing, mostly missing, never seen clear
+    assert core.permanent_gap(n_clear, n_missing).tolist() == [True, False, True, False]

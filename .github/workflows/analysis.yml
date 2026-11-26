@@ -1,0 +1,82 @@
+name: analysis
+
+# Runs the data-heavy steps on a GitHub runner instead of a local machine.
+# Start it by hand (Actions tab or `gh workflow run analysis.yml`). It only reads
+# the repository; the small result files are uploaded as an artifact and are
+# committed through a normal pull request.
+
+on:
+  workflow_dispatch:
+    inputs:
+      step:
+        description: Which analysis to run
+        type: choice
+        options: [multi-scene]
+        default: multi-scene
+      years:
+        description: First and last summer, e.g. 2013-2026
+        default: "2013-2026"
+      refresh:
+        description: Repeat the catalogue searches to pick up new scenes
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: analysis-${{ inputs.step }}-${{ inputs.years }}
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - run: pip install -r requirements.txt
+
+      # Raw satellite windows and city layers, about 1.1 GB for 2013-2026.
+      # The newest cache for these years is restored; a new one is saved only
+      # when the list of cached scenes changed.
+      - name: Restore data cache
+        id: restore
+        uses: actions/cache/restore@v4
+        with:
+          path: data/cache
+          key: uhi-data-v1-${{ inputs.years }}-none
+          restore-keys: uhi-data-v1-${{ inputs.years }}-
+
+      - name: Multi-scene analysis
+        if: inputs.step == 'multi-scene'
+        env:
+          YEARS: ${{ inputs.years }}
+          REFRESH: ${{ inputs.refresh && '--refresh' || '' }}
+        run: python -m uhi.multi_scene --years "$YEARS" $REFRESH
+
+      - name: Key the cache by its scene list
+        id: scenes
+        run: |
+          hash=$(find data/cache -type f \( -name '*.npz' -o -name '*.geojson' \) -printf '%P\n' | sort | sha256sum | cut -c1-16)
+          echo "key=uhi-data-v1-${{ inputs.years }}-$hash" >> "$GITHUB_OUTPUT"
+          du -sh data/cache
+
+      - name: Save data cache
+        if: steps.restore.outputs.cache-matched-key != steps.scenes.outputs.key
+        uses: actions/cache/save@v4
+        with:
+          path: data/cache
+          key: ${{ steps.scenes.outputs.key }}
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-${{ inputs.step }}
+          path: results/
+          if-no-files-found: error
+          retention-days: 30
