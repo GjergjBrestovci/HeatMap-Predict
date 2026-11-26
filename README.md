@@ -14,63 +14,85 @@ instead of one morning, for 95 parks instead of six.
 
 ### Result
 
-Surface temperature of parks minus the mean of the sealed reference sites in the same scene.
-Negative means the park is cooler. The headline is for **parks away from water**:
+Surface temperature of parks minus the mean of eleven sealed reference sites across the city,
+in the same scene. Negative means the park is cooler. The headline is for **parks away from
+water**:
 
 | Park size | Parks | Median difference | Middle half of the parks | Middle half of the scenes |
 |---|---:|---:|---:|---:|
-| small (1–3 ha) | 43 | −3.3 °C | −4.1 to −2.5 °C | −3.7 to −2.8 °C |
-| medium (3–30 ha) | 20 | −4.2 °C | −5.6 to −3.2 °C | −4.9 to −3.7 °C |
-| large (≥ 30 ha) | 1 | −5.9 °C | Augarten only | −7.0 to −5.2 °C |
+| small (1–3 ha) | 43 | −3.1 °C | −3.7 to −2.2 °C | −3.3 to −2.8 °C |
+| medium (3–30 ha) | 20 | −3.9 °C | −5.2 to −2.9 °C | −4.4 to −3.7 °C |
+| large (≥ 30 ha) | 1 | −5.7 °C | Augarten only | −6.4 to −5.2 °C |
 
-Every size class was cooler than the sealed sites in every scene.
+Every size class was cooler than the sealed sites in all 59 scenes.
 
 **Water bodies cool more than vegetation.** The 31 parks within 100 m of mapped water (Danube,
-Alte Donau, Donaukanal, Wienfluss) are reported separately: their median is −7.3 °C, against
-−3.5 °C for the 64 parks away from water, and it hardly depends on size (−6.9 °C small,
-−6.8 °C medium, −7.7 °C large). They are cool even with little vegetation, because a 100 m
+Alte Donau, Donaukanal, Wienfluss) are reported separately: their median is −7.0 °C, against
+−3.2 °C for the 64 parks away from water, and it hardly depends on size (−6.6 °C small,
+−6.6 °C medium, −7.4 °C large). They are cool even with little vegetation, because a 100 m
 thermal pixel at the bank is partly water. Mixed in with the others they hide the effect of
-greenness (r = −0.06 over all 95 parks); among the parks away from water it is clear:
-r = −0.67, about 1.2 °C cooler per 0.1 NDVI.
+greenness (r = −0.04 over all 95 parks); among the parks away from water it is clear:
+r = −0.66, about 1.2 °C cooler per 0.1 NDVI.
 
 ![Cooling by park size](results/multi_scene/cooling_by_size.png)
 
 ![Cooling against NDVI](results/multi_scene/cooling_vs_ndvi.png)
 
-> **State of these numbers.** They are from the run in PR #2, against three sealed sites in the
-> western inner city (Westbahn tracks, Westgürtel, dense housing in Neubau), which stay within
-> 1 °C of their common mean. The code now adds sealed sites across the city, chosen by rule
-> from the land-use map, and reports both baselines side by side
-> (`baseline_comparison.csv`). The numbers, plots and CSVs in this repository will be replaced
-> once that run has been done in GitHub Actions; until then the two plots above still show
-> the earlier layout.
+**The baseline hardly moves the headline.** With only the three original sealed sites in the
+western inner city (Westbahn tracks, Westgürtel, dense housing in Neubau), the same parks on
+the same 59 scenes come out 0.3 °C cooler:
 
-**Scenes.** 320 Landsat 8/9 scenes from June to August 2013–2026 make 175 overpasses (two
-scenes cut from the same overpass count once). 69 were used. 99 were dropped because less than
-80 % of the city was clear or covered, and 7 because a sealed reference site was masked.
-A site is skipped in a scene when less than 80 % of its pixels are usable.
+| Park size, away from water | Citywide baseline (11 sites) | Western baseline (3 sites) | Shift |
+|---|---:|---:|---:|
+| small | −3.1 °C | −3.3 °C | +0.3 °C |
+| medium | −3.9 °C | −4.2 °C | +0.3 °C |
+| large | −5.7 °C | −5.9 °C | +0.3 °C |
+
+The western sites are slightly hotter than sealed areas elsewhere, so parks looked slightly
+cooler against them. The eleven sealed sites all lie within about 1 °C of their common mean
+(−0.9 to +1.1 °C).
 
 **Sealed reference sites.** Besides the three western sites, the citywide baseline takes, per
-land-use class and district, the largest connected area that is at least 5 ha, has at most
-10 % of its area within 100 m of water and at most 10 % of its pixels in the permanent gaps of
-the temperature product: dense housing in Favoriten and Brigittenau, the rail yard and a
-logistics area in Favoriten, industry in Liesing, Simmering and Floridsdorf, and retail in
-Donaustadt. A rule that finds no usable area is skipped and reported. Much of Vienna's
-industrial land lies in the temperature gaps, so some of these may not qualify.
+land-use class and district (Realnutzungskartierung 2022), the largest connected area that is
+at least 5 ha, has at most 10 % of its area within 100 m of water and at most 10 % of its
+pixels in the permanent gaps of the temperature product. All eight rules found a site:
+
+| Site | Area |
+|---|---:|
+| Favoriten dense housing | 200 ha |
+| Favoriten rail yard | 62 ha |
+| Floridsdorf industry | 50 ha |
+| Brigittenau dense housing | 47 ha |
+| Liesing industry | 26 ha |
+| Favoriten logistics | 17 ha |
+| Donaustadt retail | 13 ha |
+| Simmering industry | 6 ha |
+
+No category dropped out, but industry is thinly represented for a reason: much of Vienna's
+industrial land has no temperature in the Landsat product. In Liesing and Simmering the rule
+had to pass over the largest industrial areas (150 ha and 41 ha, about half to all of their
+pixels in gaps) and took much smaller ones. Car parks have no site of their own: no area of
+that class is large enough, so retail in Donaustadt stands in for them.
+
+**Scenes.** 320 Landsat 8/9 scenes from June to August 2013–2026 make 175 overpasses (two
+scenes cut from the same overpass count once). 59 were used. 99 were dropped because less than
+80 % of the city was clear or covered, and 17 because one of the eleven sealed sites was
+masked (with three sites it was 7, leaving 69). A site is skipped in a scene when less than
+80 % of its pixels are usable.
 
 **Size and greenness together.** For the parks away from water, a fit with both gives 1.1 °C
-per 0.1 NDVI and 1.5 °C per tenfold area, and explains 56 % of the variation between parks.
+per 0.1 NDVI and 1.5 °C per tenfold area, and explains 55 % of the variation between parks.
 The two are nearly independent here (r = 0.13).
 
 **Per year.** No trend is visible, and none should be read into this plot: summers have
-between 2 and 11 scenes, and the dip in 2016 rests on two.
+between 1 and 10 scenes.
 
 ![Cooling per summer](results/multi_scene/cooling_per_year.png)
 
 ### What this can and cannot show
 
 - **Small parks.** Landsat measures temperature at 100 m and delivers it resampled to 30 m.
-  A 1 ha park is one real measurement that also sees the streets around it, so the −3.3 °C
+  A 1 ha park is one real measurement that also sees the streets around it, so the −3.1 °C
   for small parks is a lower bound on their true surface cooling, and part of the "larger is
   cooler" pattern is the sensor rather than the parks. Parks under 1 ha were left out for
   this reason. Sentinel-2 gives NDVI at 10 m, but that does not sharpen the temperature.

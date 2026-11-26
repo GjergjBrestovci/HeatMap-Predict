@@ -1,111 +1,111 @@
 scene,city_clear_frac,status,sealed_mean_c
-2013-06-18_landsat-8_p190,0.998,used,43.54
+2013-06-18_landsat-8_p190,0.998,used,42.23
 2013-06-27_landsat-8_p189,0.001,city too cloudy or not covered,
 2013-07-04_landsat-8_p190,0.459,city too cloudy or not covered,
 2013-07-13_landsat-8_p189,0.582,city too cloudy or not covered,
 2013-07-20_landsat-8_p190,0.35,city too cloudy or not covered,
 2013-07-29_landsat-8_p189,0.945,a sealed reference site is masked,
-2013-08-05_landsat-8_p190,0.999,used,39.55
+2013-08-05_landsat-8_p190,0.999,used,38.84
 2013-08-14_landsat-8_p189,0.25,city too cloudy or not covered,
 2013-08-21_landsat-8_p190,0.212,city too cloudy or not covered,
 2013-08-30_landsat-8_p189,0.372,city too cloudy or not covered,
 2014-06-14_landsat-8_p189,0.166,city too cloudy or not covered,
-2014-07-07_landsat-8_p190,0.996,used,42.46
+2014-07-07_landsat-8_p190,0.996,used,42.68
 2014-07-16_landsat-8_p189,0.515,city too cloudy or not covered,
 2014-07-23_landsat-8_p190,0.393,city too cloudy or not covered,
 2014-08-01_landsat-8_p189,0.0,city too cloudy or not covered,
-2014-08-08_landsat-8_p190,0.993,used,37.76
+2014-08-08_landsat-8_p190,0.993,used,37.91
 2014-08-17_landsat-8_p189,0.058,city too cloudy or not covered,
 2014-08-24_landsat-8_p190,0.004,city too cloudy or not covered,
-2015-06-01_landsat-8_p189,0.916,used,34.41
+2015-06-01_landsat-8_p189,0.916,used,34.66
 2015-06-08_landsat-8_p190,0.728,city too cloudy or not covered,
 2015-06-17_landsat-8_p189,0.025,city too cloudy or not covered,
-2015-07-03_landsat-8_p189,0.934,used,42.12
+2015-07-03_landsat-8_p189,0.934,used,41.39
 2015-07-10_landsat-8_p190,0.263,city too cloudy or not covered,
 2015-07-19_landsat-8_p189,0.78,city too cloudy or not covered,
 2015-07-26_landsat-8_p190,0.69,city too cloudy or not covered,
-2015-08-04_landsat-8_p189,0.816,used,41.56
-2015-08-11_landsat-8_p190,0.897,used,43.46
+2015-08-04_landsat-8_p189,0.816,a sealed reference site is masked,
+2015-08-11_landsat-8_p190,0.897,used,42.98
 2015-08-20_landsat-8_p189,0.0,city too cloudy or not covered,
 2015-08-27_landsat-8_p190,0.208,city too cloudy or not covered,
 2016-06-03_landsat-8_p189,0.363,city too cloudy or not covered,
 2016-06-10_landsat-8_p190,0.526,city too cloudy or not covered,
 2016-06-19_landsat-8_p189,0.0,city too cloudy or not covered,
 2016-06-26_landsat-8_p190,0.0,city too cloudy or not covered,
-2016-07-05_landsat-8_p189,0.862,used,41.21
+2016-07-05_landsat-8_p189,0.862,a sealed reference site is masked,
 2016-07-12_landsat-8_p190,0.607,city too cloudy or not covered,
-2016-07-21_landsat-8_p189,0.923,used,42.37
+2016-07-21_landsat-8_p189,0.923,used,41.06
 2016-08-06_landsat-8_p189,0.197,city too cloudy or not covered,
 2016-08-29_landsat-8_p190,0.0,city too cloudy or not covered,
 2017-06-06_landsat-8_p189,0.0,city too cloudy or not covered,
-2017-06-13_landsat-8_p190,0.997,used,39.6
+2017-06-13_landsat-8_p190,0.997,used,39.37
 2017-06-22_landsat-8_p189,0.367,city too cloudy or not covered,
 2017-06-29_landsat-8_p190,0.0,city too cloudy or not covered,
 2017-07-08_landsat-8_p189,0.493,city too cloudy or not covered,
-2017-07-31_landsat-8_p190,0.985,used,44.46
+2017-07-31_landsat-8_p190,0.985,used,43.47
 2017-08-09_landsat-8_p189,0.086,city too cloudy or not covered,
-2017-08-16_landsat-8_p190,0.972,used,34.54
-2017-08-25_landsat-8_p189,0.917,used,38.79
+2017-08-16_landsat-8_p190,0.972,a sealed reference site is masked,
+2017-08-25_landsat-8_p189,0.917,used,38.3
 2018-06-16_landsat-8_p190,0.593,city too cloudy or not covered,
-2018-07-02_landsat-8_p190,0.998,used,35.9
+2018-07-02_landsat-8_p190,0.998,used,35.6
 2018-07-18_landsat-8_p190,0.0,city too cloudy or not covered,
-2018-07-27_landsat-8_p189,0.829,used,39.64
+2018-07-27_landsat-8_p189,0.829,used,38.58
 2018-08-03_landsat-8_p190,0.841,a sealed reference site is masked,
-2018-08-12_landsat-8_p189,0.898,used,38.92
-2018-08-19_landsat-8_p190,0.942,used,39.66
-2018-08-28_landsat-8_p189,0.886,used,35.3
-2019-06-03_landsat-8_p190,0.996,used,40.98
+2018-08-12_landsat-8_p189,0.898,used,39.01
+2018-08-19_landsat-8_p190,0.942,a sealed reference site is masked,
+2018-08-28_landsat-8_p189,0.886,a sealed reference site is masked,
+2019-06-03_landsat-8_p190,0.996,used,40.21
 2019-06-12_landsat-8_p189,0.438,city too cloudy or not covered,
 2019-06-19_landsat-8_p190,0.395,city too cloudy or not covered,
-2019-06-28_landsat-8_p189,0.883,used,41.46
+2019-06-28_landsat-8_p189,0.883,used,40.35
 2019-07-05_landsat-8_p190,0.073,city too cloudy or not covered,
 2019-07-14_landsat-8_p189,0.292,city too cloudy or not covered,
 2019-07-21_landsat-8_p190,0.0,city too cloudy or not covered,
 2019-07-30_landsat-8_p189,0.113,city too cloudy or not covered,
-2019-08-15_landsat-8_p189,0.895,used,35.82
+2019-08-15_landsat-8_p189,0.895,used,35.25
 2019-08-22_landsat-8_p190,0.0,city too cloudy or not covered,
-2019-08-31_landsat-8_p189,0.895,used,38.67
+2019-08-31_landsat-8_p189,0.895,used,38.28
 2020-06-14_landsat-8_p189,0.032,city too cloudy or not covered,
-2020-06-30_landsat-8_p189,0.834,used,37.54
+2020-06-30_landsat-8_p189,0.834,used,37.26
 2020-07-07_landsat-8_p190,0.252,city too cloudy or not covered,
 2020-07-23_landsat-8_p190,0.691,city too cloudy or not covered,
-2020-08-01_landsat-8_p189,0.889,used,40.94
-2020-08-08_landsat-8_p190,0.996,used,40.48
+2020-08-01_landsat-8_p189,0.889,used,40.46
+2020-08-08_landsat-8_p190,0.996,used,40.01
 2020-08-17_landsat-8_p189,0.0,city too cloudy or not covered,
 2020-08-24_landsat-8_p190,0.061,city too cloudy or not covered,
 2021-06-01_landsat-8_p189,0.299,city too cloudy or not covered,
 2021-06-08_landsat-8_p190,0.916,a sealed reference site is masked,
-2021-06-17_landsat-8_p189,0.951,used,43.26
-2021-06-24_landsat-8_p190,0.971,used,45.0
+2021-06-17_landsat-8_p189,0.951,used,42.97
+2021-06-24_landsat-8_p190,0.971,used,45.21
 2021-07-03_landsat-8_p189,0.26,city too cloudy or not covered,
-2021-07-10_landsat-8_p190,1.0,used,40.0
+2021-07-10_landsat-8_p190,1.0,used,39.74
 2021-07-19_landsat-8_p189,0.38,city too cloudy or not covered,
-2021-07-26_landsat-8_p190,0.973,used,40.41
-2021-08-11_landsat-8_p190,0.972,used,37.78
+2021-07-26_landsat-8_p190,0.973,a sealed reference site is masked,
+2021-08-11_landsat-8_p190,0.972,used,37.9
 2021-08-20_landsat-8_p189,0.758,city too cloudy or not covered,
-2022-06-03_landsat-9_p190,0.995,used,40.05
-2022-06-04_landsat-8_p189,0.947,used,45.66
-2022-06-12_landsat-9_p189,0.927,used,42.03
-2022-06-19_landsat-9_p190,0.98,used,39.84
-2022-06-20_landsat-8_p189,0.859,used,41.51
+2022-06-03_landsat-9_p190,0.995,used,39.43
+2022-06-04_landsat-8_p189,0.947,used,45.04
+2022-06-12_landsat-9_p189,0.927,used,40.7
+2022-06-19_landsat-9_p190,0.98,used,39.4
+2022-06-20_landsat-8_p189,0.859,a sealed reference site is masked,
 2022-06-28_landsat-9_p189,0.655,city too cloudy or not covered,
 2022-07-06_landsat-8_p189,0.437,city too cloudy or not covered,
-2022-07-13_landsat-8_p190,0.998,used,38.7
-2022-07-14_landsat-9_p189,0.9,used,44.77
-2022-07-21_landsat-9_p190,0.998,used,42.36
+2022-07-13_landsat-8_p190,0.998,used,38.99
+2022-07-14_landsat-9_p189,0.9,used,44.84
+2022-07-21_landsat-9_p190,0.998,used,43.32
 2022-07-22_landsat-8_p189,0.51,city too cloudy or not covered,
 2022-07-29_landsat-8_p190,0.036,city too cloudy or not covered,
 2022-08-07_landsat-8_p189,0.01,city too cloudy or not covered,
 2022-08-15_landsat-9_p189,0.528,city too cloudy or not covered,
-2022-08-30_landsat-8_p190,0.999,used,35.01
+2022-08-30_landsat-8_p190,0.999,used,35.16
 2023-06-07_landsat-8_p189,0.0,city too cloudy or not covered,
-2023-06-14_landsat-8_p190,0.896,used,36.8
+2023-06-14_landsat-8_p190,0.896,used,36.48
 2023-06-15_landsat-9_p189,0.813,a sealed reference site is masked,
-2023-06-22_landsat-9_p190,0.999,used,40.9
+2023-06-22_landsat-9_p190,0.999,used,41.68
 2023-06-23_landsat-8_p189,0.202,city too cloudy or not covered,
-2023-06-30_landsat-8_p190,0.923,used,37.31
-2023-07-08_landsat-9_p190,0.89,used,40.71
-2023-07-09_landsat-8_p189,0.935,used,46.1
+2023-06-30_landsat-8_p190,0.923,used,37.67
+2023-07-08_landsat-9_p190,0.89,a sealed reference site is masked,
+2023-07-09_landsat-8_p189,0.935,used,45.54
 2023-07-16_landsat-8_p190,0.725,city too cloudy or not covered,
 2023-07-17_landsat-9_p189,0.0,city too cloudy or not covered,
 2023-07-24_landsat-9_p190,0.494,city too cloudy or not covered,
@@ -119,40 +119,40 @@ scene,city_clear_frac,status,sealed_mean_c
 2024-06-08_landsat-9_p190,0.764,city too cloudy or not covered,
 2024-06-09_landsat-8_p189,0.632,city too cloudy or not covered,
 2024-06-16_landsat-8_p190,0.013,city too cloudy or not covered,
-2024-06-17_landsat-9_p189,0.994,used,42.9
+2024-06-17_landsat-9_p189,0.994,used,42.3
 2024-06-24_landsat-9_p190,0.618,city too cloudy or not covered,
-2024-06-25_landsat-8_p189,0.926,used,40.83
+2024-06-25_landsat-8_p189,0.926,used,40.5
 2024-07-02_landsat-8_p190,0.304,city too cloudy or not covered,
-2024-07-10_landsat-9_p190,0.998,used,45.39
+2024-07-10_landsat-9_p190,0.998,used,45.22
 2024-07-11_landsat-8_p189,0.52,city too cloudy or not covered,
-2024-07-18_landsat-8_p190,0.983,used,41.67
-2024-07-19_landsat-9_p189,0.973,used,45.48
-2024-07-26_landsat-9_p190,0.944,used,36.63
-2024-07-27_landsat-8_p189,0.969,used,43.68
+2024-07-18_landsat-8_p190,0.983,used,41.27
+2024-07-19_landsat-9_p189,0.973,used,45.0
+2024-07-26_landsat-9_p190,0.944,used,36.24
+2024-07-27_landsat-8_p189,0.969,used,43.51
 2024-08-03_landsat-8_p190,0.448,city too cloudy or not covered,
 2024-08-11_landsat-9_p190,0.961,a sealed reference site is masked,
-2024-08-12_landsat-8_p189,0.911,used,42.48
+2024-08-12_landsat-8_p189,0.911,used,42.57
 2024-08-20_landsat-9_p189,0.605,city too cloudy or not covered,
 2024-08-27_landsat-9_p190,0.0,city too cloudy or not covered,
 2024-08-28_landsat-8_p189,0.676,city too cloudy or not covered,
 2025-06-04_landsat-9_p189,0.249,city too cloudy or not covered,
 2025-06-11_landsat-9_p190,0.496,city too cloudy or not covered,
-2025-06-12_landsat-8_p189,0.932,used,37.25
-2025-06-19_landsat-8_p190,0.988,used,42.7
-2025-06-20_landsat-9_p189,0.95,used,40.1
-2025-06-27_landsat-9_p190,0.839,used,40.75
+2025-06-12_landsat-8_p189,0.932,used,36.61
+2025-06-19_landsat-8_p190,0.988,used,42.54
+2025-06-20_landsat-9_p189,0.95,used,39.22
+2025-06-27_landsat-9_p190,0.839,a sealed reference site is masked,
 2025-06-28_landsat-8_p189,0.673,city too cloudy or not covered,
-2025-07-05_landsat-8_p190,0.998,used,38.43
-2025-07-06_landsat-9_p189,0.93,used,47.7
-2025-07-13_landsat-9_p190,1.0,used,39.03
-2025-07-14_landsat-8_p189,0.926,used,43.17
+2025-07-05_landsat-8_p190,0.998,used,38.54
+2025-07-06_landsat-9_p189,0.93,used,46.87
+2025-07-13_landsat-9_p190,1.0,used,38.61
+2025-07-14_landsat-8_p189,0.926,used,42.9
 2025-07-21_landsat-8_p190,0.728,city too cloudy or not covered,
-2025-07-22_landsat-9_p189,0.921,used,38.06
+2025-07-22_landsat-9_p189,0.921,used,37.05
 2025-07-30_landsat-8_p189,0.003,city too cloudy or not covered,
 2025-08-06_landsat-8_p190,0.71,city too cloudy or not covered,
 2025-08-07_landsat-9_p189,0.86,a sealed reference site is masked,
-2025-08-14_landsat-9_p190,0.998,used,39.87
-2025-08-15_landsat-8_p189,0.941,used,43.48
+2025-08-14_landsat-9_p190,0.998,used,40.3
+2025-08-15_landsat-8_p189,0.941,used,43.25
 2025-08-22_landsat-8_p190,0.678,city too cloudy or not covered,
 2025-08-23_landsat-9_p189,0.054,city too cloudy or not covered,
 2025-08-30_landsat-9_p190,0.0,city too cloudy or not covered,
@@ -160,17 +160,17 @@ scene,city_clear_frac,status,sealed_mean_c
 2026-06-07_landsat-9_p189,0.067,city too cloudy or not covered,
 2026-06-15_landsat-8_p189,0.21,city too cloudy or not covered,
 2026-06-23_landsat-9_p189,0.317,city too cloudy or not covered,
-2026-06-30_landsat-9_p190,1.0,used,45.01
+2026-06-30_landsat-9_p190,1.0,used,45.42
 2026-07-01_landsat-8_p189,0.758,city too cloudy or not covered,
 2026-07-09_landsat-9_p189,0.429,city too cloudy or not covered,
 2026-07-16_landsat-9_p190,0.636,city too cloudy or not covered,
 2026-07-17_landsat-8_p189,0.496,city too cloudy or not covered,
 2026-07-24_landsat-8_p190,0.17,city too cloudy or not covered,
-2026-07-25_landsat-9_p189,0.966,used,39.19
-2026-08-01_landsat-9_p190,0.937,used,38.74
+2026-07-25_landsat-9_p189,0.966,used,39.04
+2026-08-01_landsat-9_p190,0.937,a sealed reference site is masked,
 2026-08-02_landsat-8_p189,0.008,city too cloudy or not covered,
-2026-08-09_landsat-8_p190,0.998,used,39.75
+2026-08-09_landsat-8_p190,0.998,used,40.14
 2026-08-10_landsat-9_p189,0.065,city too cloudy or not covered,
 2026-08-17_landsat-9_p190,0.021,city too cloudy or not covered,
 2026-08-18_landsat-8_p189,0.17,city too cloudy or not covered,
-2026-08-26_landsat-9_p189,0.847,used,38.18
+2026-08-26_landsat-9_p189,0.847,used,37.42
