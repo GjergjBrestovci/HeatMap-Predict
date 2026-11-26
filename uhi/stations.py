@@ -185,7 +185,6 @@ def main() -> None:
     summary["ndvi_ring"] = summary["station"].map(table.groupby("station")["ndvi_ring"].median())
     summary = summary.sort_values("green_share").reset_index(drop=True)
 
-    anomalies = ss.spatial_anomalies(table, "lst_ring_c")
     both = table.dropna(subset=["lst_ring_c", "air_c"])
     overall_gap = both["lst_ring_c"] - both["air_c"]
     low = table[table["station"].isin(summary.loc[summary["altitude"] < 300, "station"])]
@@ -198,7 +197,7 @@ def main() -> None:
         "surface_minus_air_q25_c": round(float(overall_gap.quantile(0.25)), 2),
         "surface_minus_air_q75_c": round(float(overall_gap.quantile(0.75)), 2),
         "r_surface_vs_air_all_pairs": round(float(both["lst_ring_c"].corr(both["air_c"])), 3),
-        "between_places_300m": ss.anomaly_relation(anomalies),
+        "between_places_300m": ss.anomaly_relation(ss.spatial_anomalies(table, "lst_ring_c")),
         "between_places_300m_below_300m_altitude": ss.anomaly_relation(
             ss.spatial_anomalies(low, "lst_ring_c")
         ),
@@ -214,9 +213,12 @@ def main() -> None:
     (args.out / "stats.json").write_text(json.dumps(stats, indent=2, ensure_ascii=False) + "\n")
     station_plots.surface_vs_air(table, args.out / "surface_vs_air.png")
     station_plots.gap_per_station(summary, args.out / "gap_per_station.png")
+    # The plot leaves out hill stations: their cooler air is altitude, not land cover.
     station_plots.between_places(
-        anomalies.merge(meta[["station", "station_class"]], on="station"),
-        stats["between_places_300m"], args.out / "between_places.png",
+        ss.spatial_anomalies(low, "lst_ring_c").merge(
+            meta[["station", "station_class"]], on="station"
+        ),
+        stats["between_places_300m_below_300m_altitude"], args.out / "between_places.png",
     )
 
     print(f"\nOverpasses used: {stats['overpasses_used']}; stations: {len(summary)}; "
