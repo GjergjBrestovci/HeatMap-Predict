@@ -127,3 +127,23 @@ def test_class_gap():
 def test_class_gap_needs_both_classes():
     df = _frame()
     assert ss.class_gap(df[df["station_class"] == "urban"], "lst_c").empty
+
+
+def test_one_series_per_station_prefers_the_fuller_id_and_fills_holes():
+    df = pd.DataFrame(
+        [
+            ("s1", "Hohe Warte", "105", 20.0),
+            ("s1", "Hohe Warte", "5904", 20.1),
+            ("s2", "Hohe Warte", "5904", 21.0),
+            ("s3", "Hohe Warte", "5904", 22.0),
+            ("s4", "Hohe Warte", "105", 23.0),  # only the older series has this scene
+            ("s1", "Innere Stadt", "5925", 24.0),
+        ],
+        columns=["scene", "station", "station_id", "air_c"],
+    )
+    out = ss.one_series_per_station(df)
+    assert len(out) == 5
+    hw = out[out["station"] == "Hohe Warte"].set_index("scene")
+    assert hw.loc["s1", "station_id"] == "5904"
+    assert hw.loc["s4", "station_id"] == "105"
+    assert not out.duplicated(["scene", "station"]).any()

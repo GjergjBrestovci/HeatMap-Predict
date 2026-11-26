@@ -164,15 +164,18 @@ def main() -> None:
     table = table.dropna(subset=["air_c"]).dropna(subset=["lst_pixel_c", "lst_ring_c"], how="all")
     table = table.merge(stations[["id", "station_class"]], left_on="station_id", right_on="id")
     table = table.drop(columns="id")
-    counts = table.groupby("station_id")["scene"].count()
+    table = ss.one_series_per_station(table)
+    counts = table.groupby("station")["scene"].count()
     keep = counts[counts >= MIN_SCENES_PER_STATION].index
-    dropped = sorted(set(stations["name"]) - set(table.loc[table["station_id"].isin(keep), "station"]))
-    table = table[table["station_id"].isin(keep)].reset_index(drop=True)
+    dropped = sorted(set(stations["name"]) - set(keep))
+    table = table[table["station"].isin(keep)].reset_index(drop=True)
 
     # Summaries, for the 300 m surroundings (main) and for the single pixel
+    main_id = table.groupby("station")["station_id"].agg(lambda s: s.value_counts().index[0])
     meta = stations.rename(columns={"name": "station"})[
         ["station", "id", "altitude", "green_share", "station_class"]
     ]
+    meta = meta[meta["id"] == meta["station"].map(main_id)]
     summary = meta.merge(ss.station_summary(table, "lst_ring_c"), on="station")
     pixel = ss.station_summary(table, "lst_pixel_c")[["station", "scenes", "gap_median_c"]]
     summary = summary.merge(

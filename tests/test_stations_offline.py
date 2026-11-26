@@ -81,6 +81,7 @@ def test_station_pipeline_end_to_end(tmp_path, monkeypatch):
             pd.DataFrame({"time": times, "station": sid, "air_c": day + offset})
             for sid, _, _, _, _, _, offset in FAKE.values()
         ]
+        frames.append(pd.DataFrame({"time": times, "station": "99", "air_c": day + 1.0}))
         return pd.concat(frames, ignore_index=True)
 
     green = [_disc(lon, lat, 800) for _, lon, lat, _, is_green, *_ in FAKE.values() if is_green]
@@ -104,6 +105,9 @@ def test_station_pipeline_end_to_end(tmp_path, monkeypatch):
     monkeypatch.setattr(data, "fetch_landsat", lambda *a, **k: None)
     monkeypatch.setattr(data, "landsat_passes", lambda items: passes)
     monkeypatch.setattr(data, "load_landsat_pass", load)
+    # The data hub lists some stations twice; the copy must not be counted.
+    twin = meta[meta["name"] == "City"].assign(id="99")
+    meta = pd.concat([meta, twin], ignore_index=True)
     monkeypatch.setattr(stations, "station_metadata", lambda cache: meta.copy())
     monkeypatch.setattr(stations, "fetch_air", fetch_air)
     out = tmp_path / "out"

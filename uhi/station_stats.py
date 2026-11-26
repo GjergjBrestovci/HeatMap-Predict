@@ -48,6 +48,22 @@ def disc_indices(transform, shape: tuple[int, int], x: float, y: float, radius: 
     return np.flatnonzero((cx - x) ** 2 + (cy - y) ** 2 <= radius**2)
 
 
+def one_series_per_station(df: pd.DataFrame) -> pd.DataFrame:
+    """Keep one row per scene and station name.
+
+    The data hub lists some stations under two ids (an older and a newer
+    series at the same place). Counting both would weigh those stations
+    double. Per station the id with the most rows is preferred; the other
+    one fills scenes the preferred id lacks.
+    """
+    counts = df.groupby(["station", "station_id"]).size().rename("n").reset_index()
+    counts = counts.sort_values(["station", "n", "station_id"], ascending=[True, False, True])
+    counts["rank"] = counts.groupby("station").cumcount()
+    ranked = df.merge(counts[["station", "station_id", "rank"]], on=["station", "station_id"])
+    ranked = ranked.sort_values(["scene", "station", "rank"])
+    return ranked.drop_duplicates(["scene", "station"]).drop(columns="rank").reset_index(drop=True)
+
+
 def station_class(green_share: float) -> str:
     return "green" if green_share >= GREEN_SHARE_MIN else "urban"
 
