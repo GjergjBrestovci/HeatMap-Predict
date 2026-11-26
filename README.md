@@ -181,8 +181,8 @@ in surface temperature and should be reported as such.
   the group says nothing about its air deviation: slope 0.00 °C of air per °C of surface,
   r = 0.01.
 - **The one apparent link is altitude.** With the Jubiläumswarte (450 m) included, the slope
-  is 0.10 and r = 0.60. But its air is about 1.7 °C cooler than at the other stations, which
-  is what 250 m of height gives on its own.
+  is 0.10 and r = 0.60. But its air is about 1.8 °C cooler than at the other stations, and
+  250 m of height accounts for about 1.6 °C of that on its own.
 - **Day to day the two do move together** at every station (r = 0.68 to 0.92 over scenes): a
   hot day is hot at the surface and in the air. That is weather, not a difference between
   places.
