@@ -1,0 +1,10 @@
+site,type,area_ha,pixels,lst_mean_c,lst_p90_c,ndvi_mean,delta_vs_sealed_c
+Esterhazypark,"park, small",1.0,12,38.6,39.1,0.57,-1.1
+Alois-Drasche-Park,"park, small",1.6,17,37.0,37.3,0.71,-2.7
+Stadtpark,"park, medium",10.8,122,35.2,36.6,0.6,-4.5
+Türkenschanzpark,"park, medium",15.3,173,33.0,34.5,0.73,-6.7
+Augarten,"park, medium",32.0,333,35.5,37.2,0.63,-4.2
+Prater,"park, large",373.5,3964,33.1,36.4,0.74,-6.6
+Westbahn rail corridor,"sealed, railway",14.0,150,41.0,42.4,0.18,1.3
+Westgürtel (road),"sealed, road",17.4,194,39.0,40.1,0.29,-0.7
+Neubau dense housing,"sealed, housing",91.8,965,39.2,40.0,0.23,-0.5
