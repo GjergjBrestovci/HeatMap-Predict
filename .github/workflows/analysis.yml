@@ -11,7 +11,7 @@ on:
       step:
         description: Which analysis to run
         type: choice
-        options: [multi-scene]
+        options: [multi-scene, stations]
         default: multi-scene
       years:
         description: First and last summer, e.g. 2013-2026
@@ -59,10 +59,17 @@ jobs:
           REFRESH: ${{ inputs.refresh && '--refresh' || '' }}
         run: python -m uhi.multi_scene --years "$YEARS" $REFRESH
 
+      - name: Station comparison
+        if: inputs.step == 'stations'
+        env:
+          YEARS: ${{ inputs.years }}
+          REFRESH: ${{ inputs.refresh && '--refresh' || '' }}
+        run: python -m uhi.stations --years "$YEARS" $REFRESH
+
       - name: Key the cache by its scene list
         id: scenes
         run: |
-          hash=$(find data/cache -type f \( -name '*.npz' -o -name '*.geojson' \) -printf '%P\n' | sort | sha256sum | cut -c1-16)
+          hash=$(find data/cache -type f \( -name '*.npz' -o -name '*.geojson' -o -name '*.csv' \) -printf '%P\n' | sort | sha256sum | cut -c1-16)
           echo "key=uhi-data-v1-${{ inputs.years }}-$hash" >> "$GITHUB_OUTPUT"
           du -sh data/cache
 

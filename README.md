@@ -138,6 +138,45 @@ The tests cover the unit conversions, cloud masking, site statistics, the summar
 raster reader on small synthetic arrays, and run the whole pipeline on a synthetic city, all
 without network. GitHub Actions runs them on every pull request.
 
+## Ground truth: surface temperature against weather stations
+
+`python -m uhi.stations` asks how far the surface-temperature differences above can be read as
+air-temperature differences, which is what people feel and what the model will have to predict.
+
+**This has not been run on real data yet.** The code and its tests are in place; the run
+happens in GitHub Actions (`gh workflow run analysis.yml -f step=stations`) and the results
+and the answer follow in a later change.
+
+What it does:
+
+1. Takes the same summer Landsat overpasses as the park analysis (city at least 80 % clear).
+2. Loads the Vienna stations of GeoSphere Austria's 10-minute dataset (`klima-v2-10min`,
+   open, no key, CC BY 4.0) and interpolates air temperature at 2 m to the minute of each
+   overpass.
+3. Reads the Landsat surface temperature at the station's pixel and as the mean within 300 m.
+   The 300 m value is the main one, since one thermal measurement is 100 m wide.
+4. Classes each station as "urban" or "green" by the share of green land use within 300 m
+   (2022 land-use map, 50 % threshold).
+
+What it reports, in `results/stations/`:
+
+| File | Content |
+|---|---|
+| `station_scene.csv` | one row per station and overpass: air temperature, surface temperature (pixel and 300 m) |
+| `station_summary.csv` | per station: surface minus air (median, quartiles), correlation over scenes, green share, altitude |
+| `urban_vs_green.csv` | per scene, urban stations minus green stations, for the surface and for the air |
+| `stats.json` | overall bias and correlation; how much of a surface difference between places shows up in the air |
+| `*.png` | surface against air, the gap per station, differences between places |
+
+The number to look at is `between_places_300m.air_per_lst`: for each overpass every station's
+deviation from the mean of all stations, at the surface and in the air, and the slope between
+the two. A value of 0.2 would mean that a place 5 °C hotter at the surface is 1 °C warmer in
+the air.
+
+Known limits before any result: there are fewer than ten stations, none of them inside a small
+park or on a railway yard, they sit at different altitudes (the statistic is also given for
+stations below 300 m only), and all overpasses are in the late morning.
+
 ## Prototype: one Landsat scene
 
 `prototype/lst_parks_vs_sealed.py` is a proof of concept for the first part of the plan. It
