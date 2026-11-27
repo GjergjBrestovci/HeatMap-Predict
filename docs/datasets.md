@@ -31,7 +31,7 @@ from the providers' documentation and should be re-checked when first used.
 | 8 | GeoSphere INCA | hourly air temperature, wind, humidity, radiation | 1 km | 2011– | open ✔ | P1, P3 |
 | 9 | ERA5 / ERA5-Land | reanalysis (2 m temperature etc.) | ~31 km / ~9 km | 1940– / 1950– | key (CDS) | P2 |
 | 10 | Stadt Wien: Öffentlich zugängliche Grünflächen | park polygons with names | vector | current | open ✔ | P1 |
-| 11 | Stadt Wien: Realnutzungskartierung | land use per block | vector | 1981–2024 (16 editions) | open ✔ | P1, P2, P3 |
+| 11 | Stadt Wien: Realnutzungskartierung | land use per block | vector | 1981–2024 (17 editions) | open ✔ | P1, P2, P3 |
 | 12 | Stadt Wien: Flächenmehrzweckkarte (FMZK) | buildings, traffic, green and water surfaces | vector, cadastral scale | current | open ✔ | P1, P3 |
 | 13 | Stadt Wien: Baumkataster | street and park trees | points | current | open ✔ | P3 |
 | 14 | Stadt Wien: building info / surface model | building height and type | vector / 0.5–1 m raster | current | open | P3 |
@@ -73,6 +73,9 @@ from the providers' documentation and should be re-checked when first used.
 - **Serves:** P2. This is the only free archive with sub-kilometre LST going back to the 1980s.
 - **Caveat:** sensors differ, so trends across Landsat 5 → 7 → 8 need care. Compare
   differences within a scene (park minus sealed area) rather than absolute temperatures.
+- **Checked 2026-11-27 ✔:** Landsat 5 has 16–22 summer items per year over Vienna from 1984.
+  The thermal asset is called `lwir` (not `lwir11`), with the same scale and offset. The
+  overpass time moved from about 09:05 UTC in 1986 to 09:35 in 2010.
 
 ### 3. MODIS LST (MOD11A1/MYD11A1 daily, MOD11A2/MYD11A2 8-day)
 
@@ -136,6 +139,18 @@ parameters and stations. Large requests are rejected by size, so split by year.
   `/v1/station/historical/klima-v2-1d?parameters=tl_mittel,tlmax&station_ids=105&start=2026-08-09&end=2026-08-09&output_format=csv`
 - **Serves:** P1 (air temperature at satellite overpass time; Innere Stadt vs Hohe Warte vs
   outskirts as the classic heat island contrast), P2 (long series), P3 (weather features).
+- **Monthly series** (`klima-v2-1m`: `tl_mittel`, `tlmin_mittel`, `tlmax_mittel`) ✔: long
+  stations appear under a merged id (105 Hohe Warte, 31 Groß-Enzersdorf) and again per
+  physical site; the `substation` column says which site a month comes from. The merged
+  series are not homogenised: Hohe Warte minus Groß-Enzersdorf drops by about 0.5 °C when
+  the latter changes site in 1992/93.
+- **HISTALP, homogenised** ✔: on the Data Hub only as annual means to 2022
+  (`histalp-v1-1y`). The project site <https://www.zamg.ac.at/histalp/> exports monthly
+  series up to the current year as CSV (form POST to `dataset/station/csv.php`, no account).
+  Near Vienna only Wien-Hohe Warte, Eisenstadt, Retz and St. Pölten have temperature up to
+  now; Groß-Enzersdorf, Schwechat and Innere Stadt are not offered there. Terms: Austrian
+  series "downloadable for non-commercial research without restrictions", to be acknowledged
+  with Auer et al. 2007. This is not a CC licence: fine for this project, not for commercial use.
 - **Caveat:** seven stations cannot validate individual parks. Satellites measure surface
   temperature, stations measure air at 2 m; these differ by 10 °C and more on a sunny day.
 
@@ -144,7 +159,8 @@ parameters and stations. Large requests are rejected by size, so split by year.
 - **Covers:** gridded daily minimum and maximum air temperature, precipitation and sunshine
   duration for Austria at 1 km, from 1961, interpolated from stations.
 - **Download:** `/v1/grid/historical/spartacus-v3-1d-1km` with a `bbox` (NetCDF), or
-  `/v1/timeseries/historical/...` for single points (CSV).
+  `/v1/timeseries/historical/...` for points (CSV; 25 points and 46 years of the monthly
+  `spartacus-v3-1m-1km` in one request worked ✔). Monthly parameters `TM`, `TN`, `TX`.
 - **Serves:** P2: the regional climate baseline for Vienna and its rural surroundings since
   1961, independent of satellites.
 - **Caveat:** built from stations, so it shows the urban effect only where stations exist.
@@ -196,7 +212,7 @@ Layer names are from the WFS capabilities document on 2026-11-26.
 - **Serves:** P1: named park outlines, and the area attribute gives the small/medium/large
   classes. Related: `PARKINFOOGD` (1,052 park points with facilities such as water features).
 
-### 11. Realnutzungskartierung: `REALNUT2024OGD`, and 15 earlier editions
+### 11. Realnutzungskartierung: `REALNUT2024OGD`, and 16 earlier editions
 
 - **Covers:** land use per block in about 30 classes on three levels, for example
   "Bahnhöfe und Bahnanlagen", "Straßenraum unbegrünt", "dichtes Wohn(misch)gebiet",
@@ -206,8 +222,13 @@ Layer names are from the WFS capabilities document on 2026-11-26.
 - **Serves:** P1 (picks the sealed control areas by class instead of by hand), P2 (40 years of
   mapped urban expansion from one source), P3 (land-use class as a feature and as the thing
   that scenarios change).
-- **Caveat:** the class scheme and mapping method changed between editions; check the
-  attribute tables before comparing 1981 with 2024 directly.
+- **Caveat:** the class scheme changed twice (checked 2026-11-27 ✔). Editions 1981–2005 have
+  only a two-letter code (`NUTCD`, about 43 codes) and no legend is published with the data
+  or on the printed maps; `uhi/history.py` translates them by overlap with the 2007/08
+  edition. Editions 2007/08–2022 name the class in `NUTZUNG_LEVEL1`–`3`, 2024 in
+  `LEV1`–`3`. In 1981–1991 about half of the polygons have no code: they are block outlines
+  lying on top of the coded ones. Streets are not mapped before 2007/08 (about 4,000 ha).
+  Layer names are irregular: `REALNUT200708OGD`, `REALNUT2016GOGD`.
 
 ### 12. Flächenmehrzweckkarte (FMZK)
 
@@ -264,7 +285,9 @@ verified for this document.
   <https://human-settlement.emergency.copernicus.eu/download.php>.
 - **Covers:** built-up area per 100 m cell, 1975–2030 in 5-year steps, derived from Landsat and
   Sentinel. Global.
-- **Licence:** CC BY 4.0. **Download:** GeoTIFF tiles over plain HTTP, **open**.
+- **Licence:** CC BY 4.0. **Download:** GeoTIFF tiles over plain HTTP, **open** ✔. Vienna is
+  in tile `R4_C20` of the 100 m Mollweide grid, about 25 MB per epoch. It counts building
+  footprints, not roads or car parks.
 - **Serves:** P2: urban expansion on the same time axis as the Landsat thermal archive, and
   covering the suburbs in Lower Austria.
 

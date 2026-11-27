@@ -259,6 +259,190 @@ Run it with `gh workflow run analysis.yml -f step=stations`, then
 | `stats.json` | overall bias and correlation; how much of a surface difference between places shows up in the air |
 | `*.png` | surface against air, the gap per station, differences between stations below 300 m |
 
+## Warming split: regional climate against city growth, summers 1981–2026
+
+`python -m uhi.warming_split` is the second part of the plan: how much of Vienna's summer
+warming since the 1980s is the regional climate, and how much comes from the city itself.
+
+### Result
+
+**Almost all of it is regional.** Of about 3.1 °C of summer warming at Wien-Hohe Warte
+between 1981 and 2025, about 2.9 °C also happened in three towns 40–65 km away, and about
+0.2 °C is extra in Vienna. At the surface, land that was built over since 1985 became
+0.5 °C warmer than land that stayed farmland, and 1.9 °C warmer than all land that stayed
+green.
+
+| Summer (June–August) air temperature, trend line 1981–2025 | Change | 95 % interval |
+|---|---:|---:|
+| Wien-Hohe Warte | +3.1 °C | ± 0.9 °C |
+| Regional: mean of Eisenstadt, Retz, St. Pölten | +2.9 °C | ± 0.9 °C |
+| Urban extra: Hohe Warte minus the three towns | +0.18 °C | ± 0.11 °C |
+
+These are the homogenised HISTALP series. The intervals of the first two rows are wide
+because summers differ a lot from year to year; the difference is steadier because city and
+towns share the same weather. **The references are small towns, not open country**, so the
+urban extra is "Vienna against small towns" and probably a lower bound. It also differs by
+reference: −0.02 °C per decade against Eisenstadt, +0.07 against Retz and St. Pölten.
+
+![Summer air temperature, urban and rural](results/warming_split/air_trends.png)
+
+**Cross-checks with the series that are not homogenised** give the same picture:
+
+| Comparison | Summers | Urban extra | 95 % interval |
+|---|---|---:|---:|
+| Innere Stadt + Hohe Warte minus 5 rural stations | 1985–2026 (37) | +0.06 °C | ± 0.19 °C |
+| Innere Stadt alone minus the same 5 | 1985–2026 | +0.19 °C | ± 0.17 °C |
+| Hohe Warte alone minus the same 5 | 1983–2026 | −0.08 °C | ± 0.22 °C |
+| SPARTACUS grid: built-up city minus rural ring | 1981–2026 | +0.10 °C | ± 0.06 °C |
+
+The five rural stations (Bruckneudorf, Langenlebarn, Schwechat airport, Neusiedl am See,
+Seibersdorf) warmed by 0.70 to 0.80 °C per decade, Hohe Warte by 0.72 and Innere Stadt by
+0.85. The city is warmer than its surroundings, but it was already so in the 1980s: the
+Innere Stadt is about 1.4 °C above the rural stations in the daily mean and the two urban
+stations about 1.9 °C above them in the nightly minimum, then as now. Minimum and maximum
+show no clearer urban trend than the mean (+0.16 ± 0.36 °C and +0.20 ± 0.22 °C).
+
+**Land use.** 1,569 ha, 3.8 % of the city, changed from green to sealed between 1981 and
+2024 in the strict sense used here (green in every map up to one edition, sealed in every
+one after). About 800 ha of that happened between 1985 and 1997. Farmland shrank from
+8,490 ha to 5,060 ha. GHSL agrees from an independent source: building footprints grew from
+5,560 ha (1980) to 7,080 ha (2020), and on the converted pixels their share doubled from
+15 % to 31 %, against 1 % → 1 % on stable green.
+
+![Land use by map edition](results/warming_split/land_use.png)
+
+**Surface, converted land.** Converted minus stable reference in the same scene, after
+minus before:
+
+| Converted between | Area | Against all stable green | Against stable farmland |
+|---|---:|---:|---:|
+| 1985 and 1997 | 801 ha | +2.2 °C | +0.4 °C |
+| 2005 and 2016 | 306 ha | +1.6 °C | +1.0 °C |
+| 2012 and 2024 | 147 ha | +1.2 °C | −0.1 °C |
+| Area-weighted | | **+1.9 °C** | **+0.5 °C** |
+| 2005 and 2007/08 (change of map scheme, not in the mean) | 233 ha | +1.2 °C | +0.7 °C |
+
+The two references disagree, and the farmland one is the fairer: 64–85 % of the converted
+land was farmland. In late-morning summer scenes Vienna's fields are almost as hot as its
+sealed land (sealed minus farmland: 0.5 to 1.5 °C; sealed minus forest: 9 to 10 °C), because
+by July much of the grain is ripe or cut. Building on a field therefore changes the
+late-morning surface temperature little. Against "all green", which is one third forest, the
+converted land was already 4.5 to 5.6 °C hotter before it was built on, and it was drifting
+upwards before the conversion (left panel below), so +1.9 °C overstates the effect of
+sealing. Vegetation did drop on the converted land (NDVI −0.07 against farmland, −0.13
+against all green), so the conversions are real. With the same sensor before and after
+(Landsat 5 only, first period), the numbers are +1.6 °C and −0.1 °C.
+
+![Converted land before and after](results/warming_split/converted_land.png)
+
+**Surface, sealed against green over time.** Land that stayed sealed minus land that stayed
+green was 5.9 °C in the Landsat 4/5 scenes, 6.6 °C with Landsat 7 and 7.1 °C with Landsat
+8/9: +0.31 ± 0.34 °C per decade. Most of that is the overpass time, which moved from about
+08:45–09:35 UTC to 09:40–09:45 (sun 5° higher): each degree of sun elevation adds about
+0.3 °C to the gap, and with it held fixed the trend is +0.03 °C per decade. So the surface
+contrast itself has not measurably grown.
+
+![Sealed minus green per summer](results/warming_split/surface_gap.png)
+
+**Scenes.** 852 Landsat items make 479 summer overpasses 1984–2026; 211 were used (99
+Landsat 4/5, 34 Landsat 7, 78 Landsat 8/9). 217 were too cloudy over the city, 46 did not
+cover 60 % of it and 5 had a stable zone masked. 2012 has no usable scene.
+
+### Limits
+
+- **Air and surface answer different questions.** The air split is for the 2 m air
+  temperature at weather stations, all day. The surface numbers are for the ground at about
+  09:40 UTC on clear days. As the station comparison above shows, surface differences
+  between places cannot be read as air differences.
+- **Two urban stations.** Hohe Warte lies in a garden district and Innere Stadt in the old
+  centre; neither stands in a newly built quarter. The stations therefore say
+  that the existing city did not warm faster than its surroundings. They cannot say what
+  happened to the air inside the 1,569 ha that were built over.
+- **Homogenisation.** HISTALP removes breaks from station moves and instrument changes; its
+  authors state that the series are "homogenised", not guaranteed "homogeneous". It offers
+  no rural station in the Vienna basin up to now. The raw series contain moves: 10 of the
+  13 stations changed site at least once since 1981 (`stations.csv`), which is why the raw
+  split serves only as a cross-check. The trend intervals treat years as independent.
+- **Old land-use codes.** The 1981–2005 maps were translated by overlap with 2007/08. Seven
+  codes were unclear and count as neither green nor sealed (`landuse_codes.csv`); in 1981
+  they cover 2,140 ha. The 2001, 2003 and 2005 editions show almost no change against 1997
+  (10 ha converted), so conversions of those years surface only in 2007/08, mixed with the
+  change of scheme. Land use is mapped per block, not per surface: a "sealed" block can
+  hold gardens.
+- **A quarter of the converted land has no surface temperature.** 26 % of it lies in the
+  permanent holes of the Landsat product (10 % for the city), mostly industrial land.
+  The surface numbers describe the rest.
+- **Sensors.** Landsat 4/5 measures temperature at 120 m, Landsat 7 at 60 m, Landsat 8/9 at
+  100 m; edges of each zone were removed (30–60 m), but small converted areas still mix
+  with their surroundings, which pulls their effect towards zero. Only the first period has
+  a same-sensor comparison, with 11 scenes before.
+- **Landsat 7** did not bridge 2012: its striped gaps left no scene with enough of the
+  city covered. It contributes 34 scenes from 1999–2011.
+- **Morning overpass, drifting.** The overpass moved by up to an hour over the 42 years.
+  The sealed-minus-green trend is corrected for sun elevation with one linear term; the
+  before/after numbers for converted land are not.
+- **Farmland is not a fixed reference.** Its temperature depends on crop and harvest date,
+  which vary by year and may themselves shift with the climate.
+
+### Method
+
+1. **Air, regional against urban.** June–August mean air temperature per year. The main
+   split uses the homogenised HISTALP series: Wien-Hohe Warte against Eisenstadt, Retz and
+   St. Pölten, the nearest low-lying stations that HISTALP carries up to now. These three
+   are small towns 40–65 km away, not open country, so this urban extra is "Vienna against
+   small towns" and probably a lower bound. The cross-check
+   uses GeoSphere Austria's monthly station series, which are not homogenised but include
+   stations closer to the city. Urban there: Innere Stadt (from 1985) and Hohe Warte. Rural:
+   every station within 45 km, below 300 m, outside the city, with at least 85 % of the
+   summers and less than 10 % building footprint within 1 km (GHSL). The rural trend is the regional
+   part; the trend of urban minus rural is the urban extra. Only summers in which all these
+   stations have data are used, so the parts add up. The SPARTACUS 1 km grid, sampled every
+   4 km in a ring 15–40 km around the centre, is a second regional series.
+2. **Land use.** All 17 editions of the Realnutzungskartierung (1981–2024) are put on the
+   30 m Landsat grid and reduced to sealed, farmland, forest, other green, water and other.
+   A pixel is *converted* when it is green in every edition up to one point and sealed in
+   every edition after it, with at least two editions on each side. Converted pixels are
+   pooled into four periods (1985–1997, 1997–2005, 2005–2016, 2012–2024); pixels that never
+   have a temperature in the Landsat product are left out. GHSL built-up surface
+   (1975–2020) is a cross-check from an independent source.
+3. **Surface.** Every usable summer scene of Landsat 4/5 (1984–2011), Landsat 7 (1999–2012)
+   and Landsat 8/9 (2013–). Only differences within one scene are used: land that stayed
+   sealed minus land that stayed green, over time; and converted land minus stable green,
+   before against after the conversion. Scenes between the last green and the first sealed
+   edition are left out.
+
+HISTALP: Auer I. et al. (2007), HISTALP – historical instrumental climatological surface
+time series of the Greater Alpine Region, Int. J. Climatol. 27, 17–46; data from
+<https://www.zamg.ac.at/histalp/>, Austrian series free for non-commercial research. Only
+the summer means used here are stored in this repository.
+
+Two things in the data shaped this:
+
+- **The editions up to 2005 have two-letter codes and no published legend.** The codes are
+  translated by where each one lies in the 2007/08 edition, which names its classes
+  (`landuse_codes.csv`). A code whose area is less than 70 % one group counts as unclear.
+  Areas that flip from green to sealed exactly between 2005 and 2007/08 are reported but
+  kept out of the headline, because that flip can be the change of scheme.
+- **Landsat 7 is used only up to 2012**, to bridge the year between Landsat 5 and 8. After
+  2013 it adds little, has striped gaps, and from 2017 its orbit drifted to an earlier hour.
+
+Run it with `gh workflow run analysis.yml -f step=warming-split -f years=1981-2026`, then
+`gh run download --name results-warming-split --dir results`. The first run downloads about
+4 GB (852 Landsat windows); later runs read the Actions cache. Outputs in `results/warming_split/`:
+
+| File | Content |
+|---|---|
+| `stats.json` | the headline split, all trends with intervals, counts |
+| `air_homogenised.csv` | HISTALP summer means per station and year |
+| `air_summer.csv`, `air_trends.csv` | raw series: summer mean, minimum and maximum per place and year; trend per place |
+| `stations.csv` | stations used, their role, built-up share, relocations |
+| `landuse_by_edition.csv` | hectares per group and edition, with GHSL built-up surface |
+| `landuse_codes.csv` | the old two-letter codes and the group each was given |
+| `scenes.csv` | every overpass: sensor, time, sun elevation, used or why not, temperature per zone |
+| `surface_gap_by_year.csv` | sealed minus green per summer |
+| `cohorts.csv`, `event_study.csv` | converted land per conversion period and reference, before and after |
+| `*.png` | air trends, land use, sealed minus green, converted land |
+
 ## Prototype: one Landsat scene
 
 `prototype/lst_parks_vs_sealed.py` is a proof of concept for the first part of the plan. It

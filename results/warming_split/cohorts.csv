@@ -1,0 +1,10 @@
+cohort,last_green_year,first_built_year,area_ha,no_temperature_share,pixels,scheme_change,farmland_share,forest_share,reference,scenes_before,scenes_after,before_median_c,after_median_c,effect_c,effect_same_sensor_c,same_sensor_scenes,ndvi_effect
+conv_1985_1997,1985,1997,801.18,0.324,595,False,0.854,0.012,stable_farmland,11.0,164.0,0.434,0.826,0.392,-0.102,11.0,-0.048
+conv_2005_2008,2005,2008,233.19,0.194,107,True,0.636,0.021,stable_farmland,90.0,103.0,-0.913,-0.195,0.718,0.344,25.0,-0.047
+conv_2005_2016,2005,2016,305.73,0.172,289,False,0.73,0.032,stable_farmland,89.0,68.0,0.098,1.134,1.036,,0.0,-0.078
+conv_2012_2024,2012,2024,146.61,0.119,108,False,0.662,0.041,stable_farmland,132.0,27.0,0.384,0.291,-0.093,,0.0,-0.138
+conv_1985_1997,1985,1997,801.18,0.324,595,False,0.854,0.012,stable_green,11.0,164.0,4.535,6.718,2.183,1.579,11.0,-0.135
+conv_2005_2008,2005,2008,233.19,0.194,107,True,0.636,0.021,stable_green,90.0,103.0,4.225,5.415,1.191,0.822,25.0,-0.07
+conv_2005_2016,2005,2016,305.73,0.172,289,False,0.73,0.032,stable_green,89.0,68.0,5.012,6.607,1.596,,0.0,-0.103
+conv_2012_2024,2012,2024,146.61,0.119,108,False,0.662,0.041,stable_green,132.0,27.0,5.562,6.724,1.162,,0.0,-0.14
+conv_1997_2005,1997,2005,10.44,0.207,7,False,0.681,0.0,,,,,,,,,

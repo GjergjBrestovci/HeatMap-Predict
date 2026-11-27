@@ -322,24 +322,41 @@ def _href(item: pystac.Item, asset: str) -> str:
 # --------------------------------------------------------------------------- Landsat
 
 LANDSAT_BANDS = ("lwir11", "red", "nir08", "qa_pixel")
+LANDSAT_89 = ("landsat-8", "landsat-9")
+LANDSAT_457 = ("landsat-4", "landsat-5", "landsat-7")
+# The thermal band is called `lwir11` on Landsat 8/9 and `lwir` on 4/5/7. Scale,
+# offset and no-data value are the same, so both are cached as `lwir11`.
+THERMAL_ASSETS = ("lwir11", "lwir")
 
 
 def landsat_items(
-    cache: Path, years: range, max_scene_cloud: float, refresh: bool = False
+    cache: Path, years: range, max_scene_cloud: float, refresh: bool = False,
+    platforms: tuple[str, ...] = LANDSAT_89,
 ) -> list[pystac.Item]:
-    """Landsat 8/9 L2 items over Vienna for June-August of `years`."""
+    """Landsat L2 items over Vienna for June-August of `years`."""
+    # The Landsat 8/9 searches keep their original cache names.
+    suffix = "" if platforms == LANDSAT_89 else "_" + "-".join(p[-1] for p in platforms)
     items = []
     for year in years:
         items += _search(
             cache / "landsat",
-            str(year),
+            f"{year}{suffix}",
             refresh,
             collections=["landsat-c2-l2"],
             bbox=VIENNA_BBOX,
             datetime=f"{year}-06-01/{year}-08-31",
-            query={"platform": {"in": ["landsat-8", "landsat-9"]}},
+            query={"platform": {"in": list(platforms)}},
         )
     return [i for i in items if i.properties["eo:cloud_cover"] < max_scene_cloud]
+
+
+def _asset_for(item: pystac.Item, band: str) -> str:
+    if band != "lwir11":
+        return band
+    for name in THERMAL_ASSETS:
+        if name in item.assets:
+            return name
+    raise KeyError(f"{item.id} has no thermal band ({THERMAL_ASSETS})")
 
 
 def _landsat_item_arrays(item: pystac.Item, grid: Grid, cache: Path) -> dict[str, np.ndarray]:
@@ -347,7 +364,7 @@ def _landsat_item_arrays(item: pystac.Item, grid: Grid, cache: Path) -> dict[str
     if path.exists():
         with np.load(path) as z:
             return {b: z[b] for b in LANDSAT_BANDS}
-    arrays = {b: read_to_grid(_href(item, b), grid) for b in LANDSAT_BANDS}
+    arrays = {b: read_to_grid(_href(item, _asset_for(item, b)), grid) for b in LANDSAT_BANDS}
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(".tmp.npz")
     np.savez_compressed(tmp, **arrays)
