@@ -259,6 +259,58 @@ Run it with `gh workflow run analysis.yml -f step=stations`, then
 | `stats.json` | overall bias and correlation; how much of a surface difference between places shows up in the air |
 | `*.png` | surface against air, the gap per station, differences between stations below 300 m |
 
+## Warming split: regional climate against city growth, summers 1981–2026
+
+`python -m uhi.warming_split` is the second part of the plan: how much of Vienna's summer
+warming since the 1980s is the regional climate, and how much comes from the city itself.
+Results follow in a separate pull request once the run on GitHub Actions is in.
+
+### Method
+
+1. **Air, regional against urban.** June–August mean air temperature per year from GeoSphere
+   Austria's monthly station series. Urban: Innere Stadt (from 1985) and Hohe Warte. Rural:
+   every station within 45 km, below 300 m, outside the city, with at least 85 % of the
+   summers and less than 25 % built-up surface within 1 km. The rural trend is the regional
+   part; the trend of urban minus rural is the urban extra. Only summers in which all these
+   stations have data are used, so the parts add up. The SPARTACUS 1 km grid, sampled every
+   4 km in a ring 15–40 km around the centre, is a second regional series.
+2. **Land use.** All 17 editions of the Realnutzungskartierung (1981–2024) are put on the
+   30 m Landsat grid and reduced to sealed, farmland, forest, other green, water and other.
+   A pixel is *converted* when it is green in every edition up to one point and sealed in
+   every edition after it, with at least two editions on each side. GHSL built-up surface
+   (1975–2020) is a cross-check from an independent source.
+3. **Surface.** Every usable summer scene of Landsat 4/5 (1984–2011), Landsat 7 (1999–2012)
+   and Landsat 8/9 (2013–). Only differences within one scene are used: land that stayed
+   sealed minus land that stayed green, over time; and converted land minus stable green,
+   before against after the conversion. Scenes between the last green and the first sealed
+   edition are left out.
+
+Two things in the data shaped this:
+
+- **The editions up to 2005 have two-letter codes and no published legend.** The codes are
+  translated by where each one lies in the 2007/08 edition, which names its classes
+  (`landuse_codes.csv`). A code whose area is less than 70 % one group counts as unclear.
+  Areas that flip from green to sealed exactly between 2005 and 2007/08 are reported but
+  kept out of the headline, because that flip can be the change of scheme.
+- **Landsat 7 is used only up to 2012**, to bridge the year between Landsat 5 and 8. After
+  2013 it adds little, has striped gaps, and from 2017 its orbit drifted to an earlier hour.
+
+Run it with `gh workflow run analysis.yml -f step=warming-split -f years=1981-2026`, then
+`gh run download --name results-warming-split --dir results`. The first run downloads about
+4 GB (some 1,100 Landsat windows) and takes about an hour. Outputs in `results/warming_split/`:
+
+| File | Content |
+|---|---|
+| `stats.json` | the headline split, all trends with intervals, counts |
+| `air_summer.csv`, `air_trends.csv` | summer mean, minimum and maximum per place and year; trend per place |
+| `stations.csv` | stations used, their role, built-up share, relocations |
+| `landuse_by_edition.csv` | hectares per group and edition, with GHSL built-up surface |
+| `landuse_codes.csv` | the old two-letter codes and the group each was given |
+| `scenes.csv` | every overpass: sensor, time, sun elevation, used or why not, temperature per zone |
+| `surface_gap_by_year.csv` | sealed minus green per summer |
+| `cohorts.csv`, `event_study.csv` | converted land per conversion period, before and after |
+| `*.png` | air trends, land use, sealed minus green, converted land |
+
 ## Prototype: one Landsat scene
 
 `prototype/lst_parks_vs_sealed.py` is a proof of concept for the first part of the plan. It

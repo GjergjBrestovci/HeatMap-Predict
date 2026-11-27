@@ -11,10 +11,10 @@ on:
       step:
         description: Which analysis to run
         type: choice
-        options: [multi-scene, stations]
+        options: [multi-scene, stations, warming-split]
         default: multi-scene
       years:
-        description: First and last summer, e.g. 2013-2026
+        description: First and last summer, e.g. 2013-2026 (warming-split: 1981-2026)
         default: "2013-2026"
       refresh:
         description: Repeat the catalogue searches to pick up new scenes
@@ -31,7 +31,7 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 240
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -41,7 +41,8 @@ jobs:
           cache-dependency-path: requirements.txt
       - run: pip install -r requirements.txt
 
-      # Raw satellite windows and city layers, about 1.1 GB for 2013-2026.
+      # Raw satellite windows and city layers, about 1.1 GB for 2013-2026 and
+      # about 4 GB for 1981-2026 (Landsat 4/5/7 added, 17 land-use editions, GHSL).
       # The newest cache for these years is restored; a new one is saved only
       # when the list of cached scenes changed.
       - name: Restore data cache
@@ -66,15 +67,24 @@ jobs:
           REFRESH: ${{ inputs.refresh && '--refresh' || '' }}
         run: python -m uhi.stations --years "$YEARS" $REFRESH
 
+      - name: Warming split
+        if: inputs.step == 'warming-split'
+        env:
+          YEARS: ${{ inputs.years }}
+          REFRESH: ${{ inputs.refresh && '--refresh' || '' }}
+        run: python -m uhi.warming_split --years "$YEARS" $REFRESH
+
+      # Also after a failed step, so that a rerun does not download everything again.
       - name: Key the cache by its scene list
         id: scenes
+        if: always()
         run: |
           hash=$(find data/cache -type f \( -name '*.npz' -o -name '*.geojson' -o -name '*.csv' \) -printf '%P\n' | sort | sha256sum | cut -c1-16)
           echo "key=uhi-data-v1-${{ inputs.years }}-$hash" >> "$GITHUB_OUTPUT"
           du -sh data/cache
 
       - name: Save data cache
-        if: steps.restore.outputs.cache-matched-key != steps.scenes.outputs.key
+        if: always() && steps.scenes.outputs.key && steps.restore.outputs.cache-matched-key != steps.scenes.outputs.key
         uses: actions/cache/save@v4
         with:
           path: data/cache
