@@ -46,6 +46,9 @@ LAST_TM_ETM_YEAR = 2012  # Landsat 4/5/7 up to here, 8/9 afterwards
 SENSORS = {"landsat-4": "TM", "landsat-5": "TM", "landsat-7": "ETM+",
            "landsat-8": "OLI/TIRS", "landsat-9": "OLI/TIRS"}
 SCHEME_CHANGE = (2005, 2008)  # last edition with codes, first with class names
+# Conversions are pooled by period: green up to the first year, sealed from the second.
+# The first period that fits a pixel takes it.
+CONVERSION_PERIODS = ((1985, 1997), (1997, 2005), (2005, 2016), (2012, 2024))
 REFERENCES = ("stable_green", "stable_farmland")
 
 
@@ -216,43 +219,59 @@ def air_part(args, first: int, last: int, city_geom) -> tuple[dict, dict[str, pd
 # -------------------------------------------------------------------- surface
 
 
-def build_zones(stack: np.ndarray, years: list[int], inside: np.ndarray, args) -> tuple[dict, pd.DataFrame, dict]:
-    """Pixel indices per zone: the stable classes and one zone per conversion cohort."""
+def build_zones(stack: np.ndarray, years: list[int], inside: np.ndarray, gap: np.ndarray,
+                args) -> tuple[dict, pd.DataFrame, dict]:
+    """Pixel indices per zone: the stable classes and one zone per conversion period.
+
+    Converted pixels are pooled by period (`CONVERSION_PERIODS`): a pixel belongs
+    to the first period that holds both its last green and its first sealed
+    edition. Flips exactly across the change of scheme form a zone of their own.
+    Pixels that never have a temperature in the Landsat product are left out.
+    """
     traj = st.trajectories(stack)
     masks = {
         name: st.erode(traj[name] & inside, args.erode_stable)
         for name in ("stable_green", "stable_farmland", "stable_forest", "stable_built")
     }
-    zones = {name: np.flatnonzero(mask) for name, mask in masks.items()}
+    zones = {name: np.flatnonzero(mask & ~gap) for name, mask in masks.items()}
+    year_of = np.array(years)
+    converted = (traj["last_green"] >= 0) & inside
+    last_green = np.where(converted, year_of[traj["last_green"]], 0)
+    first_built = np.where(converted, year_of[traj["first_built"]], 0)
+    scheme = converted & (last_green == SCHEME_CHANGE[0]) & (first_built == SCHEME_CHANGE[1])
+    todo = converted & ~scheme
+    groups = []
+    for start, end in CONVERSION_PERIODS:
+        raw = todo & (last_green >= start) & (first_built <= end)
+        todo &= ~raw
+        groups.append((start, end, raw, False))
+    groups.append((*SCHEME_CHANGE, scheme, True))
     rows = []
-    converted = traj["last_green"] >= 0
-    pairs = np.unique(
-        np.column_stack([traj["last_green"][converted & inside], traj["first_built"][converted & inside]]),
-        axis=0,
-    )
-    origin_names = {g: st.GROUP_NAMES[g] for g in st.GREEN_GROUPS}
-    for lg, fb in pairs:
-        raw = (traj["last_green"] == lg) & (traj["first_built"] == fb) & inside
-        mask = st.erode(raw, args.erode_cohort)
-        name = f"conv_{years[lg]}_{years[fb]}"
-        origin = np.bincount(stack[lg][raw], minlength=len(st.GROUP_NAMES))
-        row = {
+    for start, end, raw, is_scheme in groups:
+        if not raw.any():
+            continue
+        eroded = st.erode(raw, args.erode_cohort)
+        mask = eroded & ~gap
+        name = f"conv_{start}_{end}"
+        origin = np.bincount(
+            stack[traj["last_green"][raw], *np.nonzero(raw)], minlength=len(st.GROUP_NAMES)
+        )
+        rows.append({
             "cohort": name,
-            "last_green_year": years[lg],
-            "first_built_year": years[fb],
+            "last_green_year": start,
+            "first_built_year": end,
             "area_ha": raw.sum() * args.pixel_ha,
+            "no_temperature_share": float(gap[raw].mean()),
             "pixels": int(mask.sum()),
-            # Green by its old code, sealed by its new class name, nothing in between:
-            # such a flip can be the change of scheme instead of a change on the ground.
-            "scheme_change": bool((years[lg], years[fb]) == SCHEME_CHANGE),
-            "main_origin": origin_names[max(st.GREEN_GROUPS, key=lambda g: origin[g])],
-            "farmland_share": origin[st.FARMLAND] / max(raw.sum(), 1),
-        }
-        rows.append(row)
-        if row["pixels"] >= args.min_cohort_pixels:
+            "scheme_change": is_scheme,
+            "farmland_share": origin[st.FARMLAND] / raw.sum(),
+            "forest_share": origin[st.FOREST] / raw.sum(),
+        })
+        if rows[-1]["pixels"] >= args.min_cohort_pixels:
             zones[name] = np.flatnonzero(mask)
     cohorts = pd.DataFrame(rows)
-    masks["converted"] = converted & inside
+    masks["converted"] = converted
+    masks["converted_outside_periods"] = todo
     return zones, cohorts, masks
 
 
@@ -306,7 +325,6 @@ def surface_part(args, first: int, last: int, city_geom) -> tuple[dict, dict[str
     # Land use over all editions
     stack, years, crosswalk = history.landuse_stack(args.cache, grid)
     landuse = history.area_by_edition(stack, years, inside, args.pixel_ha)
-    zones, cohorts, masks = build_zones(stack, years, inside, args)
 
     # GHSL: built-up area in the city per epoch, and its change in the zones
     ghsl_rows, ghsl = [], {}
@@ -314,6 +332,15 @@ def surface_part(args, first: int, last: int, city_geom) -> tuple[dict, dict[str
         ghsl[epoch] = history.ghsl_built_fraction(args.cache, epoch, grid)
         ghsl_rows.append({"year": epoch, "ghsl_built_ha": float(ghsl[epoch][inside].sum() * args.pixel_ha)})
     ghsl_table = pd.DataFrame(ghsl_rows)
+    # Landsat: thermal sensors change in 2013
+    tm_years = range(max(first, 1982), min(last, LAST_TM_ETM_YEAR) + 1)
+    oli_years = range(max(first, LAST_TM_ETM_YEAR + 1), last + 1)
+    items = data.landsat_items(args.cache, tm_years, args.max_scene_cloud, args.refresh, data.LANDSAT_457)
+    items += data.landsat_items(args.cache, oli_years, args.max_scene_cloud, args.refresh)
+    data.fetch_landsat(items, grid, args.cache)
+    passes = data.landsat_passes(items)
+    gap = data.landsat_gap_mask(passes, grid, args.cache)
+    zones, cohorts, masks = build_zones(stack, years, inside, gap, args)
     e0, e1 = history.GHSL_EPOCHS[1], history.GHSL_EPOCHS[-1]  # 1980 and 2020
     ghsl_change = {
         name: {
@@ -322,14 +349,6 @@ def surface_part(args, first: int, last: int, city_geom) -> tuple[dict, dict[str
         }
         for name, mask in masks.items() if name in ("stable_green", "stable_built", "converted")
     }
-
-    # Landsat: thermal sensors change in 2013
-    tm_years = range(max(first, 1982), min(last, LAST_TM_ETM_YEAR) + 1)
-    oli_years = range(max(first, LAST_TM_ETM_YEAR + 1), last + 1)
-    items = data.landsat_items(args.cache, tm_years, args.max_scene_cloud, args.refresh, data.LANDSAT_457)
-    items += data.landsat_items(args.cache, oli_years, args.max_scene_cloud, args.refresh)
-    data.fetch_landsat(items, grid, args.cache)
-    passes = data.landsat_passes(items)
     lst, ndvi, log = scene_table(passes, grid, args.cache, zones, inside, args)
     if lst.empty:
         raise SystemExit("No usable Landsat overpass")
@@ -385,10 +404,14 @@ def surface_part(args, first: int, last: int, city_geom) -> tuple[dict, dict[str
             crosswalk["majority_share"] < history.CROSSWALK_MIN_SHARE, "code"
         ].tolist() if len(crosswalk) else [],
         "zone_pixels": {k: int(len(v)) for k, v in zones.items() if not k.startswith("conv_")},
-        "converted_ha": float(cohorts.drop_duplicates("cohort")["area_ha"].sum()),
+        "converted_ha": float(masks["converted"].sum() * args.pixel_ha),
         "converted_ha_without_scheme_change": float(
             headline.drop_duplicates("cohort")["area_ha"].sum()
         ),
+        "converted_ha_outside_periods": float(masks["converted_outside_periods"].sum() * args.pixel_ha),
+        "converted_share_without_temperature": float(gap[masks["converted"]].mean())
+        if masks["converted"].any() else np.nan,
+        "city_share_without_temperature": float(gap[inside].mean()),
         "cohorts_found": int(cohorts["cohort"].nunique()),
         "cohorts_measured": int(measured["cohort"].nunique()),
         "ghsl_built_share_in_zones": ghsl_change,
@@ -433,7 +456,7 @@ def main() -> None:
     parser.add_argument("--erode-cohort", default=1, type=int,
                         help="pixels (30 m) dropped at the edge of converted areas")
     parser.add_argument("--min-cohort-pixels", default=100, type=int,
-                        help="smallest converted area that is measured, in pixels after edge removal")
+                        help="fewest usable pixels for a conversion period to be measured")
     parser.add_argument("--min-scenes", default=5, type=int,
                         help="scenes needed before and after a conversion")
     parser.add_argument("--event-bin-years", default=5, type=int)

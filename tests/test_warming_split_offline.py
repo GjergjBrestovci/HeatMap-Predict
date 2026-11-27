@@ -159,6 +159,9 @@ def test_warming_split_end_to_end(tmp_path, monkeypatch):
     layers = _layers(grid)
     mask = {k: geometry_mask([g], grid.shape, grid.transform, invert=True) for k, g in blocks.items()}
     sealed_from = {"early": 2001, "late": 2012, "site": 2012}  # on the ground, between the maps
+    no_temperature = np.zeros(grid.shape, dtype=bool)
+    rows, cols = np.nonzero(mask["late"])
+    no_temperature[rows.min() : rows.min() + 20, cols.min() : cols.max() + 1] = True
 
     def platform(year):
         return "landsat-5" if year < 2012 else "landsat-7" if year == 2012 else "landsat-8"
@@ -185,7 +188,9 @@ def test_warming_split_end_to_end(tmp_path, monkeypatch):
             qa[::7] = 1  # striped gaps of Landsat 7
         if year == 1990:
             qa[:] = 22280  # cloud everywhere
-        return {"lwir11": _dn(surface), "red": np.full(grid.shape, 10000, dtype="uint16"),
+        lwir = _dn(surface)
+        lwir[no_temperature] = 0  # a hole in the temperature product, in every scene
+        return {"lwir11": lwir, "red": np.full(grid.shape, 10000, dtype="uint16"),
                 "nir08": np.full(grid.shape, 20000, dtype="uint16"), "qa_pixel": qa}
 
     def ghsl(cache, epoch, grid_):
@@ -286,19 +291,24 @@ def test_warming_split_end_to_end(tmp_path, monkeypatch):
     assert surface["ghsl_built_share_in_zones"]["stable_built"]["built_share_2020"] == pytest.approx(0.6)
     assert surface["ghsl_built_share_in_zones"]["converted"]["built_share_2020"] == pytest.approx(0.0)
     assert surface["converted_ha"] == pytest.approx(1200, rel=0.03)
+    assert 0.02 < surface["converted_share_without_temperature"] < 0.15
+    assert surface["converted_ha_outside_periods"] == 0
     for ref in ("stable_green", "stable_farmland"):
         pooled = surface["converted_land"][ref]
-        assert pooled["effect"]["cohorts"] == 3
+        assert pooled["effect"]["cohorts"] == 2
         assert pooled["effect"]["weighted_mean_c"] == pytest.approx(5.0, abs=0.05)
     assert head["converted_land_surface_warming_c"] == pytest.approx(5.0, abs=0.05)
 
     cohorts = pd.read_csv(out / "cohorts.csv")
     farm = cohorts[cohorts["reference"] == "stable_farmland"].set_index("cohort")
-    assert sorted(farm.index) == ["conv_1997_2005", "conv_2005_2016", "conv_2008_2016"]
+    # "late" and "site" (via a construction site) fall into one period
+    assert sorted(farm.index) == ["conv_1997_2005", "conv_2005_2016"]
+    assert farm.loc["conv_2005_2016", "area_ha"] == pytest.approx(800, rel=0.03)
+    assert farm.loc["conv_2005_2016", "no_temperature_share"] == pytest.approx(0.15, abs=0.02)
     assert farm.loc["conv_1997_2005", "before_median_c"] == pytest.approx(0.0, abs=0.05)
     assert farm.loc["conv_1997_2005", "effect_same_sensor_c"] == pytest.approx(5.0, abs=0.05)
-    assert not farm["scheme_change"].any()  # 2005 -> 2016 passes through a construction site
-    assert (farm["main_origin"] == "farmland").all()
+    assert not farm["scheme_change"].any()
+    assert (farm["farmland_share"] == 1).all()
 
     event = pd.read_csv(out / "event_study.csv").set_index("bin")
     assert event.loc[-1, "shift_c"] == pytest.approx(0.0, abs=0.05)
