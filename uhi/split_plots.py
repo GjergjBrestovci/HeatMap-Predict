@@ -23,33 +23,37 @@ def _trend_line(ax, years, values, color) -> None:
         ax.plot(x, slope * x + intercept, color=color, linewidth=1, linestyle="--")
 
 
-def air_trends(wide: pd.DataFrame, stats: dict, path: Path) -> None:
-    """Top: summer air temperature, urban and rural stations. Bottom: urban minus rural."""
-    urban = wide[stats["urban_stations"]].mean(axis=1, skipna=False)
-    rural = wide[stats["rural_stations"]].mean(axis=1, skipna=False)
+def air_trends(homogenised: pd.DataFrame, raw: pd.DataFrame, stats: dict, path: Path) -> None:
+    """Top: homogenised summer air temperature, urban and rural. Bottom: urban minus rural,
+    for the homogenised series and, thinner, for the raw station series."""
+    hom = stats["split_homogenised"]
+    h = homogenised.set_index("year") if "year" in homogenised.columns else homogenised
+    urban = h[hom["urban_places"]].mean(axis=1, skipna=False)
+    rural = h[hom["rural_places"]].mean(axis=1, skipna=False)
     fig, (top, bottom) = plt.subplots(
         2, 1, figsize=(7.5, 6.4), sharex=True, constrained_layout=True, height_ratios=[3, 2]
     )
     for series, color, label in (
-        (urban, URBAN, "urban stations: " + ", ".join(stats["urban_stations"])),
-        (rural, RURAL, f"{len(stats['rural_stations'])} rural stations around the city"),
+        (urban, URBAN, ", ".join(hom["urban_places"])),
+        (rural, RURAL, "mean of " + ", ".join(hom["rural_places"])),
     ):
-        top.plot(wide.index, series, color=color, linewidth=1.6, marker="o", markersize=3, label=label)
-        _trend_line(top, wide.index.to_numpy(), series.to_numpy(), color)
+        top.plot(h.index, series, color=color, linewidth=1.6, marker="o", markersize=3, label=label)
+        _trend_line(top, h.index.to_numpy(), series.to_numpy(), color)
     top.set_ylabel("June–August mean air temperature (°C)")
-    top.set_title("Summer air temperature at urban and rural stations")
+    top.set_title("Summer air temperature, homogenised series (HISTALP)")
     top.legend(loc="upper left")
 
     diff = urban - rural
-    bottom.plot(wide.index, diff, color=INK, linewidth=1.4, marker="o", markersize=3,
-                label="urban minus rural stations")
-    _trend_line(bottom, wide.index.to_numpy(), diff.to_numpy(), INK)
-    for name, color in zip(stats["urban_stations"], (URBAN, "#b4532b")):
-        bottom.plot(wide.index, wide[name] - rural, color=color, linewidth=0.9, alpha=0.8,
-                    label=f"{name} minus rural")
+    bottom.plot(h.index, diff, color=INK, linewidth=1.4, marker="o", markersize=3,
+                label="homogenised: " + hom["urban_places"][0] + " minus the three towns")
+    _trend_line(bottom, h.index.to_numpy(), diff.to_numpy(), INK)
+    raw_rural = raw[stats["rural_stations"]].mean(axis=1, skipna=False)
+    for name, color in zip(stats["urban_stations"], (URBAN, GRID_SERIES)):
+        bottom.plot(raw.index, raw[name] - raw_rural, color=color, linewidth=0.9, alpha=0.85,
+                    label=f"raw: {name} minus {len(stats['rural_stations'])} rural stations")
     bottom.set_ylabel("Difference (°C)")
-    bottom.set_title("Urban minus rural")
-    bottom.legend(loc="upper left", ncols=2, fontsize=8)
+    bottom.set_title("Urban minus rural (gaps: a rural station has no complete summer)")
+    bottom.legend(loc="upper center", bbox_to_anchor=(0.5, -0.12), ncols=1, fontsize=8)
     _save(fig, path)
 
 
@@ -57,15 +61,16 @@ def land_use(table: pd.DataFrame, path: Path) -> None:
     """Sealed and green land per land-use edition, with GHSL built-up surface for comparison."""
     fig, ax = plt.subplots(figsize=(7.5, 4.4), constrained_layout=True)
     d = table.dropna(subset=["built_ha"])
-    ax.plot(d["year"], d["built_ha"], color=URBAN, marker="o", markersize=4,
-            label="sealed classes (land-use map)")
+    # Streets are not mapped before 2007/08; counting them as sealed keeps the line continuous.
+    ax.plot(d["year"], d["built_ha"] + d["unmapped_ha"], color=URBAN, marker="o", markersize=4,
+            label="sealed classes incl. streets (land-use map)")
     ax.plot(d["year"], d["green_ha"], color=RURAL, marker="o", markersize=4,
             label="green classes (land-use map)")
-    ax.plot(d["year"], d["unmapped_ha"], color=MUTED, marker="o", markersize=3, linewidth=1,
-            label="not mapped (streets before 2007)")
+    ax.plot(d["year"], d["other_ha"], color=MUTED, marker="o", markersize=3, linewidth=1,
+            label="unclear codes, construction sites")
     g = table.dropna(subset=["ghsl_built_ha"])
     ax.plot(g["year"], g["ghsl_built_ha"], color=INK, marker="s", markersize=4, linestyle=":",
-            label="built-up surface (GHSL, roofs only)")
+            label="building footprints (GHSL)")
     ax.set_ylabel("Area inside the city (ha)")
     ax.set_title("Land use in Vienna by map edition")
     ax.legend(loc="center left", fontsize=8)

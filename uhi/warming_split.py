@@ -498,7 +498,8 @@ def main() -> None:
         surface[name].round(3).to_csv(args.out / f"{name}.csv", index=False)
     (args.out / "stats.json").write_text(json.dumps(stats, indent=2, ensure_ascii=False) + "\n")
 
-    split_plots.air_trends(air["air_wide_mean"], air_stats, args.out / "air_trends.png")
+    split_plots.air_trends(air["air_homogenised"], air["air_wide_mean"], air_stats,
+                            args.out / "air_trends.png")
     split_plots.land_use(surface["landuse_by_edition"], args.out / "land_use.png")
     split_plots.surface_gap(surface["surface_gaps"], surface["surface_gap_by_year"],
                             args.out / "surface_gap.png")
