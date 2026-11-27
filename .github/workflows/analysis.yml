@@ -14,7 +14,7 @@ on:
         options: [multi-scene, stations, warming-split]
         default: multi-scene
       years:
-        description: First and last summer, e.g. 2013-2026 (warming-split: 1981-2026)
+        description: "First and last summer, e.g. 2013-2026; for warming-split 1981-2026"
         default: "2013-2026"
       refresh:
         description: Repeat the catalogue searches to pick up new scenes
