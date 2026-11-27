@@ -4,8 +4,9 @@ Usage (from the repository root):
     python -m uhi.warming_split [--years 1981-2026] [--out results/warming_split]
 
 Three parts:
-1. Air: June-August trends at long GeoSphere stations and on the SPARTACUS grid,
-   urban stations against rural ones.
+1. Air: June-August trends, urban stations against rural ones: homogenised
+   HISTALP series as the main split, the raw GeoSphere station series and the
+   SPARTACUS grid as cross-checks.
 2. Land use: which pixels changed from green to sealed between the 17 editions
    of the Realnutzungskartierung; GHSL built-up surface as a cross-check.
 3. Surface: Landsat 4/5/7/8/9 summer scenes, always as differences within one
@@ -35,9 +36,11 @@ REGION_KM = 45.0  # stations and grid points are taken from this far around the 
 RING_KM = (15.0, 40.0)  # rural ring for the gridded series
 MAX_ALTITUDE_M = 300.0
 MIN_SUMMERS_SHARE = 0.85  # of the summers in the period
-RURAL_MAX_BUILT = 0.25  # built-up share within 1 km (GHSL 2020) for a rural station
-RING_MAX_BUILT = 0.10
-CITY_MIN_BUILT = 0.50
+# Built-up share within 1 km (GHSL 2020). GHSL counts building footprints only,
+# so even the dense inner city stays below one half.
+RURAL_MAX_BUILT = 0.10  # for a rural station
+RING_MAX_BUILT = 0.05  # for a grid point in the rural ring
+CITY_MIN_BUILT = 0.25  # for a grid point in the built-up city
 STATION_RADIUS_M = 1000.0
 LAST_TM_ETM_YEAR = 2012  # Landsat 4/5/7 up to here, 8/9 afterwards
 SENSORS = {"landsat-4": "TM", "landsat-5": "TM", "landsat-7": "ETM+",
@@ -115,11 +118,14 @@ def air_part(args, first: int, last: int, city_geom) -> tuple[dict, dict[str, pd
         if RING_KM[0] <= d <= RING_KM[1] and _built_share(built, region, x, y, STATION_RADIUS_M) < RING_MAX_BUILT:
             ring_xy.append((x, y))
     city_bounds = tuple(city_geom.bounds)
-    city_xy = [
-        (x, y) for x, y in climate.lattice(city_bounds, 2000.0)
-        if city_geom.contains(data.Point(x, y))
-        and _built_share(built, region, x, y, STATION_RADIUS_M) >= CITY_MIN_BUILT
-    ]
+    city_share = {
+        (x, y): _built_share(built, region, x, y, STATION_RADIUS_M)
+        for x, y in climate.lattice(city_bounds, 2000.0) if city_geom.contains(data.Point(x, y))
+    }
+    city_xy = [xy for xy, share in city_share.items() if share >= CITY_MIN_BUILT]
+    print(f"Grid points: {len(ring_xy)} in the rural ring, {len(city_xy)} of {len(city_share)} "
+          f"city points with at least {CITY_MIN_BUILT:.0%} built-up "
+          f"(highest {max(city_share.values(), default=np.nan):.0%})")
     grids = {}
     for tag, xy in (("SPARTACUS rural ring", ring_xy), ("SPARTACUS built-up city", city_xy)):
         if not xy:
@@ -160,6 +166,16 @@ def air_part(args, first: int, last: int, city_geom) -> tuple[dict, dict[str, pd
          "ci95_per_decade", "change", "change_ci95", "decade_change"]
     ]
 
+    # Homogenised series: the main split, because the raw series contain station moves
+    histalp = climate.fetch_histalp(first, last, args.cache)
+    histalp = histalp.loc[first:last]
+    h_urban = [n for n, v in climate.HISTALP_STATIONS.items() if v[2] == "urban"]
+    h_rural = [n for n, v in climate.HISTALP_STATIONS.items() if v[2] == "rural"]
+    homogenised = st.split_warming(histalp, h_urban, h_rural)
+    homogenised["urban_extra_per_decade_against_each_rural_station"] = {
+        r: st.split_warming(histalp, h_urban, [r])["urban_extra"]["slope_per_decade"] for r in h_rural
+    }
+
     ring = "SPARTACUS rural ring"
     splits = {m: st.split_warming(wide[m], urban_names, rural_names) for m in climate.MEASURES}
     per_urban = {
@@ -174,6 +190,7 @@ def air_part(args, first: int, last: int, city_geom) -> tuple[dict, dict[str, pd
         "period": [first, last],
         "urban_stations": urban_names,
         "rural_stations": rural_names,
+        "split_homogenised": homogenised,
         "split": splits,
         "split_per_urban_station": per_urban,
         "split_against_grid_ring": {m: st.split_warming(wide[m], urban_names, [ring]) for m in climate.MEASURES},
@@ -191,6 +208,7 @@ def air_part(args, first: int, last: int, city_geom) -> tuple[dict, dict[str, pd
         "air_trends": trends,
         "stations": stations.drop(columns=["x", "y"]),
         "air_wide_mean": wide["mean_c"],
+        "air_homogenised": histalp.rename_axis("year").reset_index(),
     }
     return stats, tables
 
@@ -430,20 +448,27 @@ def main() -> None:
     air_stats, air = air_part(args, first, last, city_geom)
     surface_stats, surface = surface_part(args, first, last, city_geom)
 
-    split = air_stats["split"]["mean_c"]
+    split = air_stats["split_homogenised"]
+    raw = air_stats["split"]["mean_c"]
     green = surface_stats["converted_land"]["stable_green"]
     headline = {
+        "air_source": "HISTALP homogenised series",
         "summers": [split["urban"]["first_year"], split["urban"]["last_year"]],
         "urban_air_warming_c": split["urban"]["change"],
         "regional_air_warming_c": split["regional"]["change"],
         "urban_extra_air_warming_c": split["urban_extra"]["change"],
         "urban_extra_ci95_c": split["urban_extra"]["change_ci95"],
+        "raw_stations_summers": [raw["urban"]["first_year"], raw["urban"]["last_year"]],
+        "raw_stations_urban_air_warming_c": raw["urban"]["change"],
+        "raw_stations_regional_air_warming_c": raw["regional"]["change"],
+        "raw_stations_urban_extra_air_warming_c": raw["urban_extra"]["change"],
+        "raw_stations_urban_extra_ci95_c": raw["urban_extra"]["change_ci95"],
         "converted_land_surface_warming_c": green["effect"]["weighted_mean_c"],
         "converted_land_surface_warming_same_sensor_c": green["effect_same_sensor"]["weighted_mean_c"],
     }
     stats = _round({"headline": headline, "air": air_stats, "surface": surface_stats})
 
-    for name in ("air_summer", "air_trends", "stations"):
+    for name in ("air_summer", "air_trends", "stations", "air_homogenised"):
         air[name].round(3).to_csv(args.out / f"{name}.csv", index=False)
     for name in ("landuse_by_edition", "landuse_codes", "scenes", "surface_gap_by_year",
                  "cohorts", "event_study"):
@@ -457,11 +482,16 @@ def main() -> None:
     split_plots.converted_land(surface["event_study"], surface["cohorts"], REFERENCES[0],
                                args.event_bin_years, args.out / "converted_land.png")
 
-    print(f"\nSummer air warming {headline['summers'][0]}-{headline['summers'][1]} (trend line):")
-    print(f"  urban stations {air_stats['urban_stations']}: {headline['urban_air_warming_c']:+.2f} °C")
-    print(f"  rural stations {air_stats['rural_stations']}: {headline['regional_air_warming_c']:+.2f} °C")
+    print(f"\nSummer air warming {headline['summers'][0]}-{headline['summers'][1]} "
+          f"(trend line, homogenised series):")
+    print(f"  urban {split['urban_places']}: {headline['urban_air_warming_c']:+.2f} °C")
+    print(f"  rural {split['rural_places']}: {headline['regional_air_warming_c']:+.2f} °C")
     print(f"  urban extra: {headline['urban_extra_air_warming_c']:+.2f} "
           f"± {headline['urban_extra_ci95_c']:.2f} °C")
+    print(f"Raw station series {headline['raw_stations_summers']}: "
+          f"urban {air_stats['urban_stations']} {raw['urban']['change']:+.2f}, "
+          f"rural {air_stats['rural_stations']} {raw['regional']['change']:+.2f}, "
+          f"extra {raw['urban_extra']['change']:+.2f} ± {raw['urban_extra']['change_ci95']:.2f} °C")
     print("\nAir trends:")
     print(air["air_trends"][air["air_trends"]["measure"] == "mean_c"].round(2).to_markdown(index=False))
     print("\nStations:")

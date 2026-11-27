@@ -267,10 +267,13 @@ Results follow in a separate pull request once the run on GitHub Actions is in.
 
 ### Method
 
-1. **Air, regional against urban.** June–August mean air temperature per year from GeoSphere
-   Austria's monthly station series. Urban: Innere Stadt (from 1985) and Hohe Warte. Rural:
+1. **Air, regional against urban.** June–August mean air temperature per year. The main
+   split uses the homogenised HISTALP series: Wien-Hohe Warte against Eisenstadt, Retz and
+   St. Pölten, the nearest low-lying stations that HISTALP carries up to now. The cross-check
+   uses GeoSphere Austria's monthly station series, which are not homogenised but include
+   stations closer to the city. Urban there: Innere Stadt (from 1985) and Hohe Warte. Rural:
    every station within 45 km, below 300 m, outside the city, with at least 85 % of the
-   summers and less than 25 % built-up surface within 1 km. The rural trend is the regional
+   summers and less than 10 % building footprint within 1 km (GHSL). The rural trend is the regional
    part; the trend of urban minus rural is the urban extra. Only summers in which all these
    stations have data are used, so the parts add up. The SPARTACUS 1 km grid, sampled every
    4 km in a ring 15–40 km around the centre, is a second regional series.
@@ -302,7 +305,8 @@ Run it with `gh workflow run analysis.yml -f step=warming-split -f years=1981-20
 | File | Content |
 |---|---|
 | `stats.json` | the headline split, all trends with intervals, counts |
-| `air_summer.csv`, `air_trends.csv` | summer mean, minimum and maximum per place and year; trend per place |
+| `air_homogenised.csv` | HISTALP summer means per station and year |
+| `air_summer.csv`, `air_trends.csv` | raw series: summer mean, minimum and maximum per place and year; trend per place |
 | `stations.csv` | stations used, their role, built-up share, relocations |
 | `landuse_by_edition.csv` | hectares per group and edition, with GHSL built-up surface |
 | `landuse_codes.csv` | the old two-letter codes and the group each was given |

@@ -1,6 +1,9 @@
-"""Air temperature since 1981: GeoSphere Austria monthly station series and the SPARTACUS grid.
+"""Air temperature since 1981: station series, homogenised series and the SPARTACUS grid.
 
-Both come from the GeoSphere Austria Data Hub (open, no key, CC BY 4.0).
+The monthly station series and SPARTACUS come from the GeoSphere Austria Data
+Hub (open, no key, CC BY 4.0). The homogenised HISTALP series come from
+www.zamg.ac.at/histalp (no key; "downloadable for non-commercial research
+without restrictions", to be acknowledged with Auer et al. 2007).
 """
 
 from __future__ import annotations
@@ -20,6 +23,18 @@ SPARTACUS = f"{API}/timeseries/historical/spartacus-v3-1m-1km"
 STATION_PARAMETERS = {"tl_mittel": "mean_c", "tlmin_mittel": "min_c", "tlmax_mittel": "max_c"}
 SPARTACUS_PARAMETERS = {"TM": "mean_c", "TN": "min_c", "TX": "max_c"}
 MEASURES = ("mean_c", "min_c", "max_c")
+
+HISTALP = "https://www.zamg.ac.at/histalp/dataset/station/csv.php"
+HISTALP_MISSING = 999999
+HISTALP_UNIT_C = 0.1  # values are tenths of a degree
+# name: (station key, abbreviation, role). Hohe Warte is the only Vienna station with a
+# homogenised monthly series up to now; the three others are the nearest low-lying ones.
+HISTALP_STATIONS = {
+    "Wien-Hohe Warte": ("_152", "WIE", "urban"),
+    "Eisenstadt": ("_269", "EST", "rural"),
+    "Retz": ("_115", "RET", "rural"),
+    "St. Pölten": ("_221", "SPO", "rural"),
+}
 POINTS_PER_REQUEST = 25
 
 
@@ -139,3 +154,35 @@ def pick_series(monthly: pd.DataFrame, stations: pd.DataFrame, summers: pd.DataF
         changes[sid] = [int(y) for y in g.loc[moved, "time"].dt.year.iloc[1:]]
     table["site_change_years"] = table["id"].map(lambda s: changes.get(s, []))
     return table
+
+
+def parse_histalp_csv(text: str) -> pd.DataFrame:
+    """A HISTALP station export as year and June-August mean in °C (NaN if a month is missing)."""
+    rows = [line for line in text.splitlines() if line and not line.startswith("#")]
+    df = pd.read_csv(io.StringIO("\n".join(rows)), sep=";")
+    missing = {"year", "jun", "jul", "aug"} - set(df.columns)
+    if missing:
+        raise SystemExit(f"HISTALP CSV lacks {sorted(missing)}; has {list(df.columns)}")
+    months = df[["jun", "jul", "aug"]].apply(pd.to_numeric, errors="coerce")
+    months = months.where(months != HISTALP_MISSING)
+    return pd.DataFrame(
+        {"year": df["year"].astype(int), "mean_c": months.mean(axis=1, skipna=False) * HISTALP_UNIT_C}
+    )
+
+
+def fetch_histalp(first: int, last: int, cache: Path) -> pd.DataFrame:
+    """Homogenised summer means: one column per HISTALP station, one row per year."""
+    series = {}
+    for name, (key, abbr, _) in HISTALP_STATIONS.items():
+        path = cache / "climate" / f"histalp_{abbr}_{first}-{last}.csv"
+        if not path.exists():
+            form = {"country": "AT", "station": key, "statabbr": abbr, "parameter": "T01",
+                    "years": f"{first} - {last}", "exportCSV": "export Data as CSV"}
+            resp = requests.post(HISTALP, data=form, timeout=120)
+            resp.raise_for_status()
+            if "year;" not in resp.text:
+                raise SystemExit(f"HISTALP returned no table for {name}: {resp.text[:200]!r}")
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(resp.content)
+        series[name] = parse_histalp_csv(path.read_text()).set_index("year")["mean_c"]
+    return pd.DataFrame(series).sort_index()

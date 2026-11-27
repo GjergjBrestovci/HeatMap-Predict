@@ -130,6 +130,16 @@ def test_parsers_and_series_choice():
     )
     assert grid[["mean_c", "min_c", "max_c"]].iloc[0].tolist() == [19.1, 13.9, 24.4]
     assert climate.lattice((0, 0, 4, 2), 2) == [(1.0, 1.0), (3.0, 1.0)]
+    hom = climate.parse_histalp_csv(
+        "# unit: 0,1 °C\n# missing-value: 999999\n#-----\n"
+        "year;jan;feb;mar;apr;may;jun;jul;aug;sep;oct;nov;dec;jun-aug\n"
+        "2025;18;17;79;129;144;220;212;212;172;106;51;26;215\n"
+        "2026;-12;40;83;119;173;999999;999999;999999;999999;999999;999999;999999;999999\n"
+    )
+    assert hom["year"].tolist() == [2025, 2026]
+    assert hom["mean_c"].iloc[0] == pytest.approx(21.467, abs=0.001) and np.isnan(hom["mean_c"].iloc[1])
+    with pytest.raises(SystemExit, match="lacks"):
+        climate.parse_histalp_csv("year;jan\n2025;1\n")
 
     months = pd.date_range("1981-01-01", "1990-12-01", freq="MS", tz="UTC")
     def series(sid, sites):
@@ -218,6 +228,15 @@ def test_warming_split_end_to_end(tmp_path, monkeypatch):
             ignore_index=True,
         )
 
+    def histalp(first, last, cache):
+        years = np.arange(first, last + 1)
+        base = 18.0 + REGIONAL * (years - 1981)
+        table = pd.DataFrame({n: base for n in climate.HISTALP_STATIONS}, index=years)
+        table["Wien-Hohe Warte"] += 0.8 + 0.004 * (years - 1981)
+        table.loc[last, "Retz"] = np.nan  # the current summer is not complete yet
+        return table
+
+    monkeypatch.setattr(climate, "fetch_histalp", histalp)
     monkeypatch.setattr(history, "EDITIONS", EDITIONS)
     monkeypatch.setattr(history, "ghsl_built_fraction", ghsl)
     monkeypatch.setattr(data, "wfs", lambda layer, cache: layers[layer])
@@ -243,9 +262,17 @@ def test_warming_split_end_to_end(tmp_path, monkeypatch):
     assert split["regional"]["slope_per_decade"] == pytest.approx(0.5, abs=0.002)
     assert split["urban_extra"]["slope_per_decade"] == pytest.approx(0.1, abs=0.002)
     head = stats["headline"]
-    assert head["regional_air_warming_c"] == pytest.approx(REGIONAL * 39, abs=0.01)
-    assert head["urban_extra_air_warming_c"] == pytest.approx(URBAN_EXTRA * 39, abs=0.01)
-    assert head["urban_air_warming_c"] == pytest.approx((REGIONAL + URBAN_EXTRA) * 39, abs=0.01)
+    assert head["raw_stations_regional_air_warming_c"] == pytest.approx(REGIONAL * 39, abs=0.01)
+    assert head["raw_stations_urban_extra_air_warming_c"] == pytest.approx(URBAN_EXTRA * 39, abs=0.01)
+    # The homogenised series lead the headline: 1981-2023, the last summer has a gap.
+    assert head["summers"] == [1981, 2023]
+    assert head["regional_air_warming_c"] == pytest.approx(REGIONAL * 42, abs=0.01)
+    assert head["urban_extra_air_warming_c"] == pytest.approx(0.004 * 42, abs=0.01)
+    assert head["urban_air_warming_c"] == pytest.approx((REGIONAL + 0.004) * 42, abs=0.01)
+    assert set(air["split_homogenised"]["urban_extra_per_decade_against_each_rural_station"]) == {
+        "Eisenstadt", "Retz", "St. Pölten"
+    }
+    assert len(pd.read_csv(out / "air_homogenised.csv")) == 44
     assert air["grid_city_against_grid_ring"]["mean_c"]["urban_extra"]["slope_per_decade"] == pytest.approx(0, abs=0.002)
     assert air["grid_points"]["rural_ring"] > 50 and air["grid_points"]["built_up_city"] >= 4
 

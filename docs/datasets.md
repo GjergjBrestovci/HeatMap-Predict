@@ -143,8 +143,14 @@ parameters and stations. Large requests are rejected by size, so split by year.
   stations appear under a merged id (105 Hohe Warte, 31 Groß-Enzersdorf) and again per
   physical site; the `substation` column says which site a month comes from. The merged
   series are not homogenised: Hohe Warte minus Groß-Enzersdorf drops by about 0.5 °C when
-  the latter changes site in 1992/93. HISTALP (`histalp-v1-1y`) is homogenised but annual
-  only and ends in 2022.
+  the latter changes site in 1992/93.
+- **HISTALP, homogenised** ✔: on the Data Hub only as annual means to 2022
+  (`histalp-v1-1y`). The project site <https://www.zamg.ac.at/histalp/> exports monthly
+  series up to the current year as CSV (form POST to `dataset/station/csv.php`, no account).
+  Near Vienna only Wien-Hohe Warte, Eisenstadt, Retz and St. Pölten have temperature up to
+  now; Groß-Enzersdorf, Schwechat and Innere Stadt are not offered there. Terms: Austrian
+  series "downloadable for non-commercial research without restrictions", to be acknowledged
+  with Auer et al. 2007. This is not a CC licence: fine for this project, not for commercial use.
 - **Caveat:** seven stations cannot validate individual parks. Satellites measure surface
   temperature, stations measure air at 2 m; these differ by 10 °C and more on a sunny day.
 
