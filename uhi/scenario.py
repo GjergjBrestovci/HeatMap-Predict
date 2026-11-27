@@ -5,7 +5,9 @@ Usage (from the repository root, after the model step has run):
 
 The GeoJSON holds one or more polygons (longitude/latitude). Each needs a
 `cover` property: lawn, trees, car_park, paved, building, housing or water;
-`building` and `housing` also take `height_m`; `name` labels the output.
+`building` and `housing` also take `height_m`. `housing` means "built over as
+Vienna has built on green land since 2014": the mix of surfaces, the greenness
+and the building height are taken from those places.
 All polygons of one file are applied together.
 
 The answer is the predicted change of the late-morning summer surface
@@ -77,9 +79,12 @@ def run(bundle: dict, layers: dict, edits: gpd.GeoDataFrame, grid30: data.Grid) 
     edited = layers
     for row in edits.itertuples():
         height = getattr(row, "height_m", None)
-        height = DEFAULT_HEIGHT_M if height is None or not np.isfinite(height) else float(height)
+        height = None if height is None or not np.isfinite(height) else float(height)
+        recipe = bundle.get("housing") or None
+        if height is None and not (row.cover == "housing" and recipe):
+            height = DEFAULT_HEIGHT_M
         edited = ft.apply_edit(edited, layout.polygon_mask(row.geometry, grid10), row.cover,
-                               bundle["ndvi_of"], height)
+                               bundle["ndvi_of"], height, recipe)
     cells = predict_change(bundle, layers, edited, grid30)
     shape = edits.geometry.union_all()
     inside = layout.polygon_mask(shape, cells_grid)

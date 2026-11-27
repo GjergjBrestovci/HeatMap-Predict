@@ -162,14 +162,52 @@ def typical_ndvi(layers: dict[str, np.ndarray]) -> dict[str, float]:
     return out
 
 
+def development_recipe(layers: dict[str, np.ndarray], cells: np.ndarray) -> dict:
+    """What recently built-over land looks like: cover shares, NDVI and building height.
+
+    `cells` marks 90 m cells. The result is the recipe for the `housing` edit, so
+    that "build here" means "as Vienna has actually built", not an invented layout.
+    """
+    fine = np.kron(cells, np.ones((FINE * FINE, FINE * FINE), dtype=bool))
+    h, w = layers["cover"].shape
+    mask = np.zeros((h, w), dtype=bool)
+    mask[: fine.shape[0], : fine.shape[1]] = fine[:h, :w]
+    if not mask.any():
+        return {}
+    cover = layers["cover"][mask]
+    counts = np.bincount(cover, minlength=len(COVER_NAMES))
+    built = layers["height"][mask][cover == BUILDING]
+    return {
+        "shares": {name: float(counts[i] / counts.sum()) for i, name in enumerate(COVER_NAMES) if counts[i]},
+        "ndvi": float(np.nanmean(layers["ndvi"][mask])),
+        "height_m": float(built.mean()) if len(built) else 0.0,
+        "cells": int(cells.sum()),
+    }
+
+
 def apply_edit(layers: dict[str, np.ndarray], mask10: np.ndarray, cover: str,
-               ndvi_of: dict[str, float], height_m: float = 0.0) -> dict[str, np.ndarray]:
+               ndvi_of: dict[str, float], height_m: float | None = None,
+               recipe: dict | None = None) -> dict[str, np.ndarray]:
     """A copy of `layers` with the 10 m pixels in `mask10` turned into `cover`.
 
-    `housing` lays out rows of houses: per 50 m, 20 m of building of `height_m`,
-    10 m of paving and 20 m of lawn.
+    `housing` with a `recipe` (see `development_recipe`) scatters the recipe's
+    covers over the polygon in its proportions and gives every pixel its NDVI.
+    Without a recipe it lays out rows: per 50 m, 20 m of building, 10 m of
+    paving and 20 m of lawn.
     """
     out = {k: v.copy() for k, v in layers.items()}
+    if cover == "housing" and recipe:
+        names = list(recipe["shares"])
+        shares = np.array([recipe["shares"][n] for n in names])
+        draw = np.random.default_rng(0).choice(len(names), size=int(mask10.sum()), p=shares / shares.sum())
+        codes = np.array([COVER_NAMES.index(n) for n in names], dtype="uint8")[draw]
+        height = recipe["height_m"] if height_m is None else height_m
+        out["cover"][mask10] = codes
+        out["canopy"][mask10] = 0.0
+        out["height"][mask10] = np.where(codes == BUILDING, height, 0.0)
+        out["ndvi"][mask10] = recipe["ndvi"]
+        return out
+    height_m = 0.0 if height_m is None else height_m
     if cover == "housing":
         row = np.arange(mask10.shape[0]) % HOUSING_PERIOD_PX
         parts = (

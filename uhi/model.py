@@ -217,14 +217,15 @@ def conversion_check(args, grid30, usable, folds, target_early, target_recent, n
             cells_out = conv.drop(columns=["converted", "unchanged"]).reset_index(drop=True)
     rows["editions"] = years
     rows["converted_ha"] = float(converted30.sum() * 0.09)
-    return rows, cells_out
+    return rows, cells_out, converted & usable
 
 
 def demo_scenarios(cache: Path) -> gpd.GeoDataFrame:
     """Example edits chosen by rule from the 2022 land-use map, one scenario per row.
 
     The largest car park becomes a tree park, or a lawn; a 1 ha square in its
-    middle becomes a pocket park; the largest field becomes rows of houses.
+    middle becomes a pocket park; the largest field is built over the way green
+    land has been built over since 2014.
     """
     landuse = data.wfs("REALNUT2022OGD", cache)
     level3 = landuse["NUTZUNG_LEVEL3"]
@@ -242,7 +243,7 @@ def demo_scenarios(cache: Path) -> gpd.GeoDataFrame:
         ]
     fields = landuse[level3 == DEMO_FIELD]
     if len(fields):
-        rows.append(("field_to_housing", "housing", scenario.DEFAULT_HEIGHT_M, fields.geometry.loc[fields.area.idxmax()]))
+        rows.append(("field_to_housing", "housing", np.nan, fields.geometry.loc[fields.area.idxmax()]))
     return gpd.GeoDataFrame(rows, columns=["name", "cover", "height_m", "geometry"], crs=data.CRS)
 
 
@@ -306,12 +307,13 @@ def main() -> None:
     parks, parks_stats = parks_check(args.cache, cells, target, fit["oof_map"])
     target_early = ft.to_cells(ft.composite(groups["early"], args.min_early_scenes)) if groups["early"] else None
     if target_early is not None and np.isfinite(target_early).any():
-        conversion_stats, conversion_cells = conversion_check(
+        conversion_stats, conversion_cells, converted_cells = conversion_check(
             args, grid30, usable, folds, target_early, target,
             ft.composite(ndvi_scenes["early"], 1), ft.composite(ndvi_scenes["recent"], 1),
         )
     else:
         conversion_stats, conversion_cells = {"note": "no early scenes"}, pd.DataFrame()
+        converted_cells = np.zeros(cells.shape, dtype=bool)
 
     # Optional second target: hot days only
     hot_stats = {"hot_day_scenes": len(groups["hot"]), "needed": MIN_HOT_SCENES, "fitted": False}
@@ -333,6 +335,7 @@ def main() -> None:
         "models": fit["models_boosting"], "features": names,
         "limits": ms.training_range(fit["X"]), "held_out_mae": held_out_mae,
         "ndvi_of": ft.typical_ndvi(layers),
+        "housing": ft.development_recipe(layers, converted_cells),
         "grid30": {"transform": list(grid30.transform)[:6], "width": grid30.width, "height": grid30.height},
     }
     (args.cache / "model").mkdir(parents=True, exist_ok=True)
@@ -348,6 +351,12 @@ def main() -> None:
     if len(demos):
         demos.to_crs("EPSG:4326").to_file(args.out / "scenarios" / "examples.geojson", driver="GeoJSON")
 
+    if "field_to_housing" in demo_rows and "with_ndvi" in conversion_stats:
+        observed = conversion_stats["with_ndvi"].get("converted", {})
+        conversion_stats["full_model_field_built_over"] = {
+            "predicted_mean_c": demo_rows["field_to_housing"].get("inside", {}).get("mean_change_c"),
+            "observed_on_real_conversions_c": observed.get("observed_mean_c"),
+        }
     cover_share = {n: float(np.nanmean(features[n][usable])) for n in ft.FRACTION_NAMES}
     stats = {
         "target": {
@@ -360,6 +369,7 @@ def main() -> None:
         "features": len(names),
         "cover_share_in_city": cover_share,
         "typical_ndvi": bundle["ndvi_of"],
+        "housing_recipe": bundle["housing"],
         "cross_validation": fit["report"],
         "cells_near_another_fold_share": float(fit["edge"].mean()),
         "importance_by_quantity": grouped.set_index("quantity")["mae_increase_c"].to_dict(),

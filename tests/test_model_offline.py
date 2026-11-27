@@ -226,8 +226,12 @@ def test_model_and_scenarios_end_to_end(tmp_path, monkeypatch):
     assert park < lawn < -3 and park < pocket < 0
     assert demo["car_park_to_tree_park"]["inside"]["mean_low_c"] < park < demo["car_park_to_tree_park"]["inside"]["mean_high_c"]
     assert demo["car_park_to_tree_park"]["around"]["cells"] > demo["car_park_to_tree_park"]["inside"]["cells"]
-    # field (+1) -> 40 % building, 20 % paving, 40 % lawn (+0.8): hardly any change
-    assert abs(demo["field_to_housing"]["inside"]["mean_change_c"]) < 1
+    # "housing" follows the real conversion in this city: a field (+1) that became buildings (+4)
+    assert stats["housing_recipe"]["shares"]["building"] > 0.9  # the cells' rims hold neighbours
+    assert stats["housing_recipe"]["ndvi"] == pytest.approx(0.1, abs=0.03)
+    built_over = demo["field_to_housing"]["inside"]["mean_change_c"]
+    assert 1.5 < built_over < 4.5
+    assert stats["check_conversions"]["full_model_field_built_over"]["predicted_mean_c"] == pytest.approx(built_over, abs=0.01)
     for name in ("maps.png", "importance.png", "partial_dependence.png", "checks.png",
                  "scenarios/car_park_to_tree_park.png", "scenarios/examples.geojson",
                  "cv_scores.csv", "importance.csv", "parks_check.csv", "conversion_check.csv"):

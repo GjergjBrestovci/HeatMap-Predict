@@ -144,12 +144,12 @@ def change_band(before: np.ndarray, after: np.ndarray, held_out_mae: float) -> t
     return mean, mean - half, mean + half
 
 
-def training_range(X: np.ndarray, low: float = 1.0, high: float = 99.0) -> np.ndarray:
-    """Per feature, the 1st and 99th percentile of the training data: shape (2, features)."""
-    return np.nanpercentile(X, [low, high], axis=0)
+def training_range(X: np.ndarray) -> np.ndarray:
+    """Per feature, the lowest and highest value in the training data: shape (2, features)."""
+    return np.stack([np.nanmin(X, axis=0), np.nanmax(X, axis=0)])
 
 
 def outside_range(X: np.ndarray, limits: np.ndarray, tolerance: float = 1e-6) -> np.ndarray:
-    """Number of features per row that lie outside what the model was trained on."""
+    """Number of features per row that lie beyond anything the model was trained on."""
     with np.errstate(invalid="ignore"):
         return ((X < limits[0] - tolerance) | (X > limits[1] + tolerance)).sum(axis=1)

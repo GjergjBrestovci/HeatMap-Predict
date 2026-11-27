@@ -88,6 +88,18 @@ def test_apply_edit_and_typical_ndvi():
     share = (housing["cover"][mask] == ft.BUILDING).mean()
     assert share == pytest.approx(0.4) and (housing["cover"][mask] == ft.PAVED).mean() == pytest.approx(0.2)
     assert housing["height"][mask].max() == 15
+    cells = np.zeros((6, 6), dtype=bool)
+    cells[2, 0], cells[2, 5] = True, True  # one building cell, one grass cell
+    recipe = ft.development_recipe(layers, cells)
+    assert recipe["shares"] == {"building": 0.5, "grass": 0.5} and recipe["height_m"] == 20.0
+    assert recipe["ndvi"] == pytest.approx(0.4) and recipe["cells"] == 2
+    big = np.zeros(layers["cover"].shape, dtype=bool)
+    big[:, 30:] = True
+    mixed = ft.apply_edit(layers, big, "housing", ndvi_of, recipe=recipe)
+    assert (mixed["cover"][big] == ft.BUILDING).mean() == pytest.approx(0.5, abs=0.05)
+    assert (mixed["ndvi"][big] == pytest.approx(0.4)) and mixed["height"][big].max() == 20.0
+    assert ft.apply_edit(layers, big, "housing", ndvi_of, 9.0, recipe)["height"][big].max() == 9.0
+    assert ft.development_recipe(layers, np.zeros((6, 6), dtype=bool)) == {}
     with pytest.raises(SystemExit, match="Unknown cover"):
         ft.apply_edit(layers, mask, "volcano", ndvi_of)
 
