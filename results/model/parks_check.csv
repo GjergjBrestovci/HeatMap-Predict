@@ -1,0 +1,61 @@
+park,size_class,cells,observed_c,predicted_c
+Alfred-Böhm-Park,small,3,0.665,0.92
+Allerheiligenpark,small,3,2.354,2.341
+Am Bruckhaufen,medium,13,-1.477,-1.149
+Am Kaisermühlendamm,medium,11,-4.805,-4.325
+Am Kaisermühlendamm #2,medium,9,-3.725,-4.443
+Am Rollerdamm,medium,4,-2.072,-2.522
+An der oberen alten Donau / Mühlschüttelgasse,small,3,-2.136,-1.273
+Arenbergpark,medium,4,1.771,1.933
+Arsenal,medium,3,2.713,2.318
+Auer-Welsbach-Park,medium,13,0.687,1.013
+Augarten,large,35,-0.517,-0.234
+Belvederegarten,medium,15,1.297,1.686
+Botanischer Garten,medium,7,0.041,0.96
+Burggarten,small,3,1.52,1.909
+Donaupark,large,59,-2.205,-1.904
+Ehem. Allgem. AKH,medium,7,3.306,3.741
+Erholungsgebiet Wienerberg,large,119,-2.073,-2.404
+Florian-Berndl-Gasse,medium,5,-3.922,-3.599
+Floridsdorfer Aupark,medium,6,-1.301,-1.04
+Forsthauspark,small,3,1.13,1.313
+Friedrich-Engels-Platz,small,4,2.847,2.744
+Grünanlage-Margaretengürtel/Gaudenzdorfer Gürtel,medium,6,2.956,3.373
+Haydnpark,small,3,1.237,1.764
+Heiligenstädter Park,medium,11,-1.194,-0.693
+Heldenplatz,medium,4,3.731,3.072
+Herderpark,medium,7,1.964,1.824
+Heubergstättenpark,medium,32,3.863,1.968
+Hugo-Gottschlich-Park,small,3,3.235,2.486
+Hugo-Wolf-Park,medium,8,0.056,0.312
+Hyblerpark,small,3,1.929,2.237
+Kaiserwasser,medium,3,-0.569,-1.687
+Karl-Fellinger-Park,small,3,0.695,0.449
+Kleehäufel,medium,9,-2.76,-2.297
+Kongreßpark,medium,5,0.73,0.312
+Liechtensteinpark,medium,6,2.005,2.185
+Matzner-Park,medium,3,2.274,2.852
+Mühlgrund,medium,16,-0.344,0.144
+Oberes Mühlwasser,medium,5,-0.885,-0.675
+Parkanlage Dragonerhäufel,medium,6,-2.431,-2.467
+Parkanlage Endlichergasse,small,4,-0.306,-0.026
+Parkanlage Rehlacke,medium,5,-0.447,-0.208
+Prater,large,444,-3.815,-3.875
+Rathauspark,medium,6,2.351,3.218
+Rosa-Mayreder-Park,medium,8,3.556,3.034
+Rudolf-Nurejew-Promenade,medium,22,-1.944,-2.235
+Schlosspark Schönbrunn,large,97,-2.467,-2.335
+Schweizergarten,medium,20,0.755,0.823
+Siebeckstraße / Donizettiweg,small,3,0.258,1.378
+Sigmund-Freud-Park,small,3,3.111,3.616
+Stadion Hohe Warte,small,3,-0.344,-0.119
+Stadt Erweiterung Nordbahnhof,medium,4,2.804,3.358
+Stadtpark,medium,13,0.008,0.451
+Strandbad Angelibad,medium,4,-0.792,0.126
+Türkenschanzpark,medium,20,-2.463,-1.791
+Volksgarten,medium,8,2.797,1.954
+Volkspark Laaer Berg,medium,23,-1.208,-1.028
+Waldmüllerpark,medium,5,1.271,1.809
+Wasserpark,medium,13,-1.814,-1.999
+Wertheimsteinpark,medium,6,0.141,0.416
+Währinger Park,medium,7,0.827,0.439

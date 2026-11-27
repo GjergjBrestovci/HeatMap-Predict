@@ -1,0 +1,5 @@
+model,test_cells,n,r2,mae,rmse
+linear,all_test_cells,45865,0.933,0.82,1.131
+linear,away_from_training_blocks,18309,0.93,0.837,1.175
+boosting,all_test_cells,45865,0.961,0.641,0.864
+boosting,away_from_training_blocks,18309,0.958,0.669,0.904

@@ -443,6 +443,177 @@ Run it with `gh workflow run analysis.yml -f step=warming-split -f years=1981-20
 | `cohorts.csv`, `event_study.csv` | converted land per conversion period and reference, before and after |
 | `*.png` | air trends, land use, sealed minus green, converted land |
 
+## Model: surface temperature from the layout of the city
+
+`python -m uhi.model` is the third part of the plan: a model that predicts the summer
+surface temperature of a place from what is built and planted there, and a tool that
+answers "what if this car park became a park?".
+
+### Result
+
+**The model reproduces the surface temperature map of places it has never seen to within
+about 0.7 °C.** Its answers for a change of layout are plausible in direction and size for
+parks; for building on fields it cannot tell a small warming from no change.
+
+What is predicted: Landsat 8/9 surface temperature minus the city mean of the same scene,
+as the median over the 55 clear summer scenes of 2019–2026, on 90 m cells. Across the
+45,865 cells with a temperature this ranges from −7.5 °C (5th percentile: forest, water) to
++5.6 °C (95th percentile: dense city, industry).
+
+![Observed, predicted and difference](results/model/maps.png)
+
+**Check 1: places the model has not seen.** The city is cut into 2 km blocks in five
+groups; each cell is predicted by a model trained on the other four groups.
+
+| Model | Test cells | R² | Mean absolute error |
+|---|---|---:|---:|
+| Gradient boosting | all held-out cells (45,865) | 0.961 | 0.64 °C |
+| Gradient boosting | at least 500 m from any training block (18,309) | 0.958 | 0.67 °C |
+| Linear (ridge) | all held-out cells | 0.933 | 0.82 °C |
+| Linear (ridge) | at least 500 m from any training block | 0.930 | 0.84 °C |
+
+The 500 m buffer matters little: the widest feature reaches 500 m, so cells near a block
+edge share surroundings with training cells, but leaving them out costs only 0.03 °C. The
+second row is the honest score and the error the scenario tool uses.
+
+**Check 2: parks.** For the 60 parks of the first part that hold at least three cells, the
+prediction by models that did not see them follows the observed value closely: r = 0.97,
+mean error 0.44 °C, slope 0.95. The model knows which parks are cooler than others.
+
+**Check 3: land that was really built over.** 251 ha were green in the 2012 and 2014 land-use
+maps and sealed in 2022 and 2024 (148 cells). A reduced model, with only the features that
+exist for both dates, is trained on 2013–2016 and asked for 2019–2026:
+
+| | Observed change | Predicted, with NDVI | Predicted, without NDVI |
+|---|---:|---:|---:|
+| Built-over cells (148) | +0.59 °C | +0.96 °C | +0.51 °C |
+| Unchanged cells (42,697) | +0.05 °C | −0.08 °C | +0.03 °C |
+
+The average is right in sign and size; cell by cell it is weak (r = 0.43 with NDVI, 0.20
+without; mean error 0.9 °C). "With NDVI" knows how green the place is afterwards, which a
+planner does not. This is a sanity check on a small sample with a weaker model, not a
+validation of the scenario tool.
+
+![Parks and conversions, observed against predicted](results/model/checks.png)
+
+**What the model relies on.** Greenness (NDVI) by far, then forest and water nearby, then
+buildings and their height. Tree crowns from the Baumkataster add almost nothing once NDVI
+is known. The surroundings count more than the cell itself: NDVI within 150 m is four times
+as important as NDVI of the cell, as expected from a 100 m sensor.
+
+![Importance](results/model/importance.png)
+
+![Prediction against single features](results/model/partial_dependence.png)
+
+**Hot days.** 30 of the 55 scenes fall on days with a maximum of 30 °C or more at Hohe
+Warte. The model fitted on those alone scores the same (R² 0.955, error 0.70 °C away from
+training blocks), and the hot-day map is the same map: r = 0.993 with the main target, the
+contrasts 1 % larger. A separate hot-day model is not needed.
+
+### Example scenarios
+
+Chosen by rule from the 2022 land-use map: the largest car park and the largest field.
+Change of the late-morning summer surface temperature, mean over the cells inside the
+polygon, with the band in brackets:
+
+| Scenario | Area | Predicted change inside | Cells around (within 500 m) |
+|---|---:|---:|---:|
+| Car park → park with trees | 5.9 ha | **−2.7 °C** (−3.6 to −1.7) | −0.1 °C |
+| Car park → lawn | 5.9 ha | **−1.6 °C** (−2.4 to −0.7) | −0.1 °C |
+| 1 ha of that car park → pocket park with trees | 1.0 ha | **−0.7 °C** (−1.5 to +0.1) | −0.0 °C |
+| Field → built over | 205 ha | **−0.3 °C** (−1.1 to +0.5) | −0.1 °C |
+
+- The tree park agrees with the first part of this project, where parks of 3–30 ha away from
+  water were 3.9 °C cooler than sealed sites.
+- The pocket park shows the dilution: the same change on 1 ha moves the 100 m measurement by
+  a quarter as much, and the band includes zero.
+- "Built over" means the mix found on the land Vienna built over since 2014: 28 % building
+  (13 m high on average), 31 % roads and paving, 36 % grass, NDVI 0.31. The model predicts
+  no clear change, in line with the second part (fields are almost as hot as sealed land in
+  July). The real conversions warmed by +0.6 °C, just outside the band. So for building on
+  fields the tool is right that the change is small and cannot be trusted on its sign.
+
+![Car park to tree park](results/model/scenarios/car_park_to_tree_park.png)
+
+### The scenario tool
+
+A scenario is a GeoJSON file with one or more polygons (longitude/latitude). Each polygon has
+a `cover`: `lawn`, `trees`, `car_park`, `paved`, `building`, `housing` or `water`;
+`building` and `housing` take `height_m`. `results/model/scenarios/examples.geojson` holds
+the four examples above as a template.
+
+```bash
+# on GitHub Actions: put the file under scenarios/ on a branch, then
+gh workflow run analysis.yml --ref my-branch -f step=scenario -f scenarios="scenarios/my_idea.geojson"
+gh run download --name results-scenario --dir results
+
+# or locally, with the model from the last model run (36 MB, no other downloads)
+gh run download --name model-bundle --dir data/cache/model
+.venv/bin/python -m uhi.scenario scenarios/my_idea.geojson
+```
+
+Per scenario it writes the change per cell with its band (`*_cells.csv`), a summary
+(`*.json`) and a map (`*.png`). The band combines how much the five models disagree about
+the change with the model's held-out error of 0.67 °C. `features_outside_training` counts
+features of a cell that lie beyond anything in today's Vienna; treat such cells with care.
+
+### Limits
+
+- **Surface, late morning, clear summer days.** About 09:40 UTC. Not air temperature, not
+  the night, not what a person feels. The station comparison above found no link between
+  surface and air differences at that hour.
+- **Differences between places, not changes over time.** The model has learned that green
+  places are cooler than sealed ones. It assumes that a place which is made green becomes
+  like the places that are green. A park in a dense district also differs in other ways.
+- **NDVI is a result of a layout, not an input.** Every new cover gets the typical NDVI of
+  that cover in Vienna today (lawn 0.58, lawn with trees 0.68, road 0.20). A newly planted
+  park is not that green for years, and a dry summer lowers it everywhere.
+- **Small changes are diluted.** One thermal measurement is 100 m wide. A change below about
+  1 ha moves it by a fraction, and the answer is then smaller than the band.
+- **Fields.** In July the fields are nearly as hot as sealed land. Scenarios that start
+  from farmland come out near zero, and check 3 shows the sign is not reliable there.
+- **No temperature for 10 % of the city.** 5,232 of 51,097 cells lie in the permanent holes
+  of the Landsat product, mostly large industrial sites. The model was not trained there
+  and scenarios on such land rest on what it learned elsewhere.
+- **The band is not a confidence interval in the strict sense.** It is the spread of five
+  models combined with the typical held-out error. It does not cover the assumptions above.
+- **Tree register.** The Baumkataster holds trees the city manages; private gardens and
+  forests are missing, which is one reason crowns add little beside NDVI.
+- **Land cover is the current Flächenmehrzweckkarte**, the target is 2019–2026. Places that
+  changed in those years are slightly mislabelled.
+
+### Method
+
+1. **Target:** per scene, surface temperature minus the mean over the clear city pixels;
+   median over scenes with at least 80 % of the city clear; mean of the 3×3 Landsat pixels
+   of a cell (at least 6 valid).
+2. **Layout at 10 m:** land cover and building height (roof level minus ground level) from
+   the Flächenmehrzweckkarte, fetched in 4 km tiles; tree crowns from the Baumkataster;
+   Sentinel-2 NDVI (median of 12 clear summer dates 2022–2026); elevation from the
+   Copernicus DEM.
+3. **Features, 37:** share of building, road and parking, other paving, rail, grass,
+   forest, field, water and unmapped; building height; NDVI; each for the cell and as the
+   mean within 150 m and 500 m. Tree crowns for the cell and 150 m. Elevation and distance
+   to water. No coordinates and no district, so the model cannot learn where a cell is.
+4. **Models:** ridge regression as baseline, gradient boosting
+   (`HistGradientBoostingRegressor`) as the model; five-fold cross-validation over 2 km
+   blocks. The five boosting models together are the scenario tool.
+
+Run it with `gh workflow run analysis.yml -f step=model -f years=2013-2026`, then
+`gh run download --name results-model --dir results`. The first run fetches the
+Flächenmehrzweckkarte (about 2 million polygons, 2–3 GB) and keeps only rasters; it took
+13 minutes, later runs about 3. Outputs in `results/model/`:
+
+| File | Content |
+|---|---|
+| `stats.json` | scores, the three checks, hot days, the housing recipe, the example scenarios |
+| `cv_scores.csv` | both models, with and without the 500 m buffer |
+| `importance.csv`, `partial_dependence.csv` | per feature |
+| `parks_check.csv`, `conversion_check.csv` | observed and predicted per park and per built-over cell |
+| `scenes.csv` | every overpass: clear share, hot day, used |
+| `scenarios/` | maps of the four examples and `examples.geojson` |
+| `*.png` | the plots above |
+
 ## Prototype: one Landsat scene
 
 `prototype/lst_parks_vs_sealed.py` is a proof of concept for the first part of the plan. It
