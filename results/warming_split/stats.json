@@ -1,0 +1,961 @@
+{
+  "headline": {
+    "air_source": "HISTALP homogenised series",
+    "summers": [
+      1981,
+      2025
+    ],
+    "urban_air_warming_c": 3.119,
+    "regional_air_warming_c": 2.943,
+    "urban_extra_air_warming_c": 0.176,
+    "urban_extra_ci95_c": 0.106,
+    "raw_stations_summers": [
+      1985,
+      2026
+    ],
+    "raw_stations_urban_air_warming_c": 3.44,
+    "raw_stations_regional_air_warming_c": 3.385,
+    "raw_stations_urban_extra_air_warming_c": 0.055,
+    "raw_stations_urban_extra_ci95_c": 0.185,
+    "converted_land_surface_warming_c": 1.901,
+    "converted_land_surface_warming_same_sensor_c": 1.579
+  },
+  "air": {
+    "period": [
+      1981,
+      2026
+    ],
+    "urban_stations": [
+      "Wien Innere Stadt",
+      "Wien Hohe Warte"
+    ],
+    "rural_stations": [
+      "Bruckneudorf",
+      "Langenlebarn",
+      "Schwechat Flughafen",
+      "Neusiedl am See",
+      "Seibersdorf"
+    ],
+    "split_homogenised": {
+      "urban_places": [
+        "Wien-Hohe Warte"
+      ],
+      "rural_places": [
+        "Eisenstadt",
+        "Retz",
+        "St. Pölten"
+      ],
+      "urban": {
+        "n": 45,
+        "slope_per_decade": 0.709,
+        "ci95_per_decade": 0.198,
+        "first_year": 1981,
+        "last_year": 2025,
+        "change": 3.119,
+        "change_ci95": 0.871
+      },
+      "regional": {
+        "n": 45,
+        "slope_per_decade": 0.669,
+        "ci95_per_decade": 0.2,
+        "first_year": 1981,
+        "last_year": 2025,
+        "change": 2.943,
+        "change_ci95": 0.88
+      },
+      "urban_extra": {
+        "n": 45,
+        "slope_per_decade": 0.04,
+        "ci95_per_decade": 0.024,
+        "first_year": 1981,
+        "last_year": 2025,
+        "change": 0.176,
+        "change_ci95": 0.106
+      },
+      "urban_minus_rural_first_decade": 0.541,
+      "urban_minus_rural_last_decade": 0.681,
+      "urban_extra_per_decade_against_each_rural_station": {
+        "Eisenstadt": -0.017,
+        "Retz": 0.065,
+        "St. Pölten": 0.071
+      }
+    },
+    "split": {
+      "mean_c": {
+        "urban_places": [
+          "Wien Innere Stadt",
+          "Wien Hohe Warte"
+        ],
+        "rural_places": [
+          "Bruckneudorf",
+          "Langenlebarn",
+          "Schwechat Flughafen",
+          "Neusiedl am See",
+          "Seibersdorf"
+        ],
+        "urban": {
+          "n": 37,
+          "slope_per_decade": 0.839,
+          "ci95_per_decade": 0.223,
+          "first_year": 1985,
+          "last_year": 2026,
+          "change": 3.44,
+          "change_ci95": 0.915
+        },
+        "regional": {
+          "n": 37,
+          "slope_per_decade": 0.825,
+          "ci95_per_decade": 0.212,
+          "first_year": 1985,
+          "last_year": 2026,
+          "change": 3.385,
+          "change_ci95": 0.869
+        },
+        "urban_extra": {
+          "n": 37,
+          "slope_per_decade": 0.013,
+          "ci95_per_decade": 0.045,
+          "first_year": 1985,
+          "last_year": 2026,
+          "change": 0.055,
+          "change_ci95": 0.185
+        },
+        "urban_minus_rural_first_decade": 0.853,
+        "urban_minus_rural_last_decade": 0.88
+      },
+      "min_c": {
+        "urban_places": [
+          "Wien Innere Stadt",
+          "Wien Hohe Warte"
+        ],
+        "rural_places": [
+          "Bruckneudorf",
+          "Langenlebarn",
+          "Schwechat Flughafen",
+          "Neusiedl am See",
+          "Seibersdorf"
+        ],
+        "urban": {
+          "n": 37,
+          "slope_per_decade": 0.683,
+          "ci95_per_decade": 0.182,
+          "first_year": 1985,
+          "last_year": 2026,
+          "change": 2.801,
+          "change_ci95": 0.745
+        },
+        "regional": {
+          "n": 37,
+          "slope_per_decade": 0.646,
+          "ci95_per_decade": 0.159,
+          "first_year": 1985,
+          "last_year": 2026,
+          "change": 2.647,
+          "change_ci95": 0.654
+        },
+        "urban_extra": {
+          "n": 37,
+          "slope_per_decade": 0.038,
+          "ci95_per_decade": 0.089,
+          "first_year": 1985,
+          "last_year": 2026,
+          "change": 0.155,
+          "change_ci95": 0.364
+        },
+        "urban_minus_rural_first_decade": 1.907,
+        "urban_minus_rural_last_decade": 1.972
+      },
+      "max_c": {
+        "urban_places": [
+          "Wien Innere Stadt",
+          "Wien Hohe Warte"
+        ],
+        "rural_places": [
+          "Bruckneudorf",
+          "Langenlebarn",
+          "Schwechat Flughafen",
+          "Neusiedl am See",
+          "Seibersdorf"
+        ],
+        "urban": {
+          "n": 37,
+          "slope_per_decade": 0.96,
+          "ci95_per_decade": 0.281,
+          "first_year": 1985,
+          "last_year": 2026,
+          "change": 3.937,
+          "change_ci95": 1.152
+        },
+        "regional": {
+          "n": 37,
+          "slope_per_decade": 0.911,
+          "ci95_per_decade": 0.283,
+          "first_year": 1985,
+          "last_year": 2026,
+          "change": 3.736,
+          "change_ci95": 1.161
+        },
+        "urban_extra": {
+          "n": 37,
+          "slope_per_decade": 0.049,
+          "ci95_per_decade": 0.053,
+          "first_year": 1985,
+          "last_year": 2026,
+          "change": 0.202,
+          "change_ci95": 0.216
+        },
+        "urban_minus_rural_first_decade": -0.117,
+        "urban_minus_rural_last_decade": 0.078
+      }
+    },
+    "split_per_urban_station": {
+      "Wien Innere Stadt": {
+        "mean_c": {
+          "urban_places": [
+            "Wien Innere Stadt"
+          ],
+          "rural_places": [
+            "Bruckneudorf",
+            "Langenlebarn",
+            "Schwechat Flughafen",
+            "Neusiedl am See",
+            "Seibersdorf"
+          ],
+          "urban": {
+            "n": 37,
+            "slope_per_decade": 0.871,
+            "ci95_per_decade": 0.221,
+            "first_year": 1985,
+            "last_year": 2026,
+            "change": 3.572,
+            "change_ci95": 0.906
+          },
+          "regional": {
+            "n": 37,
+            "slope_per_decade": 0.825,
+            "ci95_per_decade": 0.212,
+            "first_year": 1985,
+            "last_year": 2026,
+            "change": 3.385,
+            "change_ci95": 0.869
+          },
+          "urban_extra": {
+            "n": 37,
+            "slope_per_decade": 0.046,
+            "ci95_per_decade": 0.042,
+            "first_year": 1985,
+            "last_year": 2026,
+            "change": 0.187,
+            "change_ci95": 0.173
+          },
+          "urban_minus_rural_first_decade": 1.363,
+          "urban_minus_rural_last_decade": 1.465
+        },
+        "min_c": {
+          "urban_places": [
+            "Wien Innere Stadt"
+          ],
+          "rural_places": [
+            "Bruckneudorf",
+            "Langenlebarn",
+            "Schwechat Flughafen",
+            "Neusiedl am See",
+            "Seibersdorf"
+          ],
+          "urban": {
+            "n": 37,
+            "slope_per_decade": 0.714,
+            "ci95_per_decade": 0.185,
+            "first_year": 1985,
+            "last_year": 2026,
+            "change": 2.928,
+            "change_ci95": 0.757
+          },
+          "regional": {
+            "n": 37,
+            "slope_per_decade": 0.646,
+            "ci95_per_decade": 0.159,
+            "first_year": 1985,
+            "last_year": 2026,
+            "change": 2.647,
+            "change_ci95": 0.654
+          },
+          "urban_extra": {
+            "n": 37,
+            "slope_per_decade": 0.069,
+            "ci95_per_decade": 0.092,
+            "first_year": 1985,
+            "last_year": 2026,
+            "change": 0.281,
+            "change_ci95": 0.377
+          },
+          "urban_minus_rural_first_decade": 2.755,
+          "urban_minus_rural_last_decade": 2.907
+        },
+        "max_c": {
+          "urban_places": [
+            "Wien Innere Stadt"
+          ],
+          "rural_places": [
+            "Bruckneudorf",
+            "Langenlebarn",
+            "Schwechat Flughafen",
+            "Neusiedl am See",
+            "Seibersdorf"
+          ],
+          "urban": {
+            "n": 37,
+            "slope_per_decade": 0.992,
+            "ci95_per_decade": 0.268,
+            "first_year": 1985,
+            "last_year": 2026,
+            "change": 4.068,
+            "change_ci95": 1.097
+          },
+          "regional": {
+            "n": 37,
+            "slope_per_decade": 0.911,
+            "ci95_per_decade": 0.283,
+            "first_year": 1985,
+            "last_year": 2026,
+            "change": 3.736,
+            "change_ci95": 1.161
+          },
+          "urban_extra": {
+            "n": 37,
+            "slope_per_decade": 0.081,
+            "ci95_per_decade": 0.057,
+            "first_year": 1985,
+            "last_year": 2026,
+            "change": 0.332,
+            "change_ci95": 0.235
+          },
+          "urban_minus_rural_first_decade": 0.113,
+          "urban_minus_rural_last_decade": 0.351
+        }
+      },
+      "Wien Hohe Warte": {
+        "mean_c": {
+          "urban_places": [
+            "Wien Hohe Warte"
+          ],
+          "rural_places": [
+            "Bruckneudorf",
+            "Langenlebarn",
+            "Schwechat Flughafen",
+            "Neusiedl am See",
+            "Seibersdorf"
+          ],
+          "urban": {
+            "n": 39,
+            "slope_per_decade": 0.773,
+            "ci95_per_decade": 0.22,
+            "first_year": 1983,
+            "last_year": 2026,
+            "change": 3.322,
+            "change_ci95": 0.948
+          },
+          "regional": {
+            "n": 39,
+            "slope_per_decade": 0.792,
+            "ci95_per_decade": 0.208,
+            "first_year": 1983,
+            "last_year": 2026,
+            "change": 3.407,
+            "change_ci95": 0.895
+          },
+          "urban_extra": {
+            "n": 39,
+            "slope_per_decade": -0.02,
+            "ci95_per_decade": 0.05,
+            "first_year": 1983,
+            "last_year": 2026,
+            "change": -0.084,
+            "change_ci95": 0.217
+          },
+          "urban_minus_rural_first_decade": 0.365,
+          "urban_minus_rural_last_decade": 0.295
+        },
+        "min_c": {
+          "urban_places": [
+            "Wien Hohe Warte"
+          ],
+          "rural_places": [
+            "Bruckneudorf",
+            "Langenlebarn",
+            "Schwechat Flughafen",
+            "Neusiedl am See",
+            "Seibersdorf"
+          ],
+          "urban": {
+            "n": 39,
+            "slope_per_decade": 0.636,
+            "ci95_per_decade": 0.176,
+            "first_year": 1983,
+            "last_year": 2026,
+            "change": 2.734,
+            "change_ci95": 0.755
+          },
+          "regional": {
+            "n": 39,
+            "slope_per_decade": 0.642,
+            "ci95_per_decade": 0.157,
+            "first_year": 1983,
+            "last_year": 2026,
+            "change": 2.762,
+            "change_ci95": 0.675
+          },
+          "urban_extra": {
+            "n": 39,
+            "slope_per_decade": -0.007,
+            "ci95_per_decade": 0.081,
+            "first_year": 1983,
+            "last_year": 2026,
+            "change": -0.028,
+            "change_ci95": 0.347
+          },
+          "urban_minus_rural_first_decade": 1.065,
+          "urban_minus_rural_last_decade": 1.037
+        },
+        "max_c": {
+          "urban_places": [
+            "Wien Hohe Warte"
+          ],
+          "rural_places": [
+            "Bruckneudorf",
+            "Langenlebarn",
+            "Schwechat Flughafen",
+            "Neusiedl am See",
+            "Seibersdorf"
+          ],
+          "urban": {
+            "n": 39,
+            "slope_per_decade": 0.892,
+            "ci95_per_decade": 0.285,
+            "first_year": 1983,
+            "last_year": 2026,
+            "change": 3.836,
+            "change_ci95": 1.225
+          },
+          "regional": {
+            "n": 39,
+            "slope_per_decade": 0.866,
+            "ci95_per_decade": 0.274,
+            "first_year": 1983,
+            "last_year": 2026,
+            "change": 3.726,
+            "change_ci95": 1.178
+          },
+          "urban_extra": {
+            "n": 39,
+            "slope_per_decade": 0.026,
+            "ci95_per_decade": 0.063,
+            "first_year": 1983,
+            "last_year": 2026,
+            "change": 0.111,
+            "change_ci95": 0.27
+          },
+          "urban_minus_rural_first_decade": -0.321,
+          "urban_minus_rural_last_decade": -0.195
+        }
+      }
+    },
+    "split_against_grid_ring": {
+      "mean_c": {
+        "urban_places": [
+          "Wien Innere Stadt",
+          "Wien Hohe Warte"
+        ],
+        "rural_places": [
+          "SPARTACUS rural ring"
+        ],
+        "urban": {
+          "n": 42,
+          "slope_per_decade": 0.818,
+          "ci95_per_decade": 0.219,
+          "first_year": 1985,
+          "last_year": 2026,
+          "change": 3.353,
+          "change_ci95": 0.899
+        },
+        "regional": {
+          "n": 42,
+          "slope_per_decade": 0.817,
+          "ci95_per_decade": 0.21,
+          "first_year": 1985,
+          "last_year": 2026,
+          "change": 3.349,
+          "change_ci95": 0.862
+        },
+        "urban_extra": {
+          "n": 42,
+          "slope_per_decade": 0.001,
+          "ci95_per_decade": 0.029,
+          "first_year": 1985,
+          "last_year": 2026,
+          "change": 0.004,
+          "change_ci95": 0.119
+        },
+        "urban_minus_rural_first_decade": 1.266,
+        "urban_minus_rural_last_decade": 1.254
+      },
+      "min_c": {
+        "urban_places": [
+          "Wien Innere Stadt",
+          "Wien Hohe Warte"
+        ],
+        "rural_places": [
+          "SPARTACUS rural ring"
+        ],
+        "urban": {
+          "n": 42,
+          "slope_per_decade": 0.664,
+          "ci95_per_decade": 0.177,
+          "first_year": 1985,
+          "last_year": 2026,
+          "change": 2.724,
+          "change_ci95": 0.725
+        },
+        "regional": {
+          "n": 42,
+          "slope_per_decade": 0.686,
+          "ci95_per_decade": 0.154,
+          "first_year": 1985,
+          "last_year": 2026,
+          "change": 2.811,
+          "change_ci95": 0.632
+        },
+        "urban_extra": {
+          "n": 42,
+          "slope_per_decade": -0.021,
+          "ci95_per_decade": 0.052,
+          "first_year": 1985,
+          "last_year": 2026,
+          "change": -0.087,
+          "change_ci95": 0.215
+        },
+        "urban_minus_rural_first_decade": 2.45,
+        "urban_minus_rural_last_decade": 2.366
+      },
+      "max_c": {
+        "urban_places": [
+          "Wien Innere Stadt",
+          "Wien Hohe Warte"
+        ],
+        "rural_places": [
+          "SPARTACUS rural ring"
+        ],
+        "urban": {
+          "n": 42,
+          "slope_per_decade": 0.941,
+          "ci95_per_decade": 0.277,
+          "first_year": 1985,
+          "last_year": 2026,
+          "change": 3.857,
+          "change_ci95": 1.136
+        },
+        "regional": {
+          "n": 42,
+          "slope_per_decade": 0.948,
+          "ci95_per_decade": 0.286,
+          "first_year": 1985,
+          "last_year": 2026,
+          "change": 3.887,
+          "change_ci95": 1.174
+        },
+        "urban_extra": {
+          "n": 42,
+          "slope_per_decade": -0.007,
+          "ci95_per_decade": 0.025,
+          "first_year": 1985,
+          "last_year": 2026,
+          "change": -0.03,
+          "change_ci95": 0.1
+        },
+        "urban_minus_rural_first_decade": 0.864,
+        "urban_minus_rural_last_decade": 0.853
+      }
+    },
+    "grid_city_against_grid_ring": {
+      "mean_c": {
+        "urban_places": [
+          "SPARTACUS built-up city"
+        ],
+        "rural_places": [
+          "SPARTACUS rural ring"
+        ],
+        "urban": {
+          "n": 46,
+          "slope_per_decade": 0.785,
+          "ci95_per_decade": 0.192,
+          "first_year": 1981,
+          "last_year": 2026,
+          "change": 3.532,
+          "change_ci95": 0.865
+        },
+        "regional": {
+          "n": 46,
+          "slope_per_decade": 0.761,
+          "ci95_per_decade": 0.188,
+          "first_year": 1981,
+          "last_year": 2026,
+          "change": 3.426,
+          "change_ci95": 0.846
+        },
+        "urban_extra": {
+          "n": 46,
+          "slope_per_decade": 0.023,
+          "ci95_per_decade": 0.012,
+          "first_year": 1981,
+          "last_year": 2026,
+          "change": 0.105,
+          "change_ci95": 0.056
+        },
+        "urban_minus_rural_first_decade": 0.954,
+        "urban_minus_rural_last_decade": 1.039
+      },
+      "min_c": {
+        "urban_places": [
+          "SPARTACUS built-up city"
+        ],
+        "rural_places": [
+          "SPARTACUS rural ring"
+        ],
+        "urban": {
+          "n": 46,
+          "slope_per_decade": 0.658,
+          "ci95_per_decade": 0.151,
+          "first_year": 1981,
+          "last_year": 2026,
+          "change": 2.96,
+          "change_ci95": 0.679
+        },
+        "regional": {
+          "n": 46,
+          "slope_per_decade": 0.639,
+          "ci95_per_decade": 0.141,
+          "first_year": 1981,
+          "last_year": 2026,
+          "change": 2.878,
+          "change_ci95": 0.636
+        },
+        "urban_extra": {
+          "n": 46,
+          "slope_per_decade": 0.018,
+          "ci95_per_decade": 0.022,
+          "first_year": 1981,
+          "last_year": 2026,
+          "change": 0.082,
+          "change_ci95": 0.098
+        },
+        "urban_minus_rural_first_decade": 1.322,
+        "urban_minus_rural_last_decade": 1.417
+      },
+      "max_c": {
+        "urban_places": [
+          "SPARTACUS built-up city"
+        ],
+        "rural_places": [
+          "SPARTACUS rural ring"
+        ],
+        "urban": {
+          "n": 46,
+          "slope_per_decade": 0.911,
+          "ci95_per_decade": 0.247,
+          "first_year": 1981,
+          "last_year": 2026,
+          "change": 4.099,
+          "change_ci95": 1.113
+        },
+        "regional": {
+          "n": 46,
+          "slope_per_decade": 0.883,
+          "ci95_per_decade": 0.251,
+          "first_year": 1981,
+          "last_year": 2026,
+          "change": 3.975,
+          "change_ci95": 1.131
+        },
+        "urban_extra": {
+          "n": 46,
+          "slope_per_decade": 0.028,
+          "ci95_per_decade": 0.019,
+          "first_year": 1981,
+          "last_year": 2026,
+          "change": 0.125,
+          "change_ci95": 0.087
+        },
+        "urban_minus_rural_first_decade": 0.586,
+        "urban_minus_rural_last_decade": 0.658
+      }
+    },
+    "urban_extra_per_decade_against_each_rural_station": {
+      "Bruckneudorf": 0.028,
+      "Langenlebarn": -0.041,
+      "Schwechat Flughafen": 0.054,
+      "Neusiedl am See": 0.023,
+      "Seibersdorf": 0.049
+    },
+    "grid_points": {
+      "rural_ring": 242,
+      "built_up_city": 34
+    },
+    "station_site_changes": {
+      "Bruckneudorf": [
+        2008
+      ],
+      "Eisenstadt Nordost": [
+        1989
+      ],
+      "Groß-Enzersdorf": [
+        1991
+      ],
+      "Langenlebarn": [
+        1993
+      ],
+      "Wien Hohe Warte": [
+        1993
+      ],
+      "Wien Unterlaa": [
+        1996
+      ],
+      "Neusiedl am See": [
+        1984,
+        2004,
+        2017
+      ],
+      "Wiener Neustadt Flugplatz": [
+        1993
+      ],
+      "Gumpoldskirchen": [
+        1991,
+        2018
+      ],
+      "Wien Mariabrunn": [
+        1997
+      ]
+    }
+  },
+  "surface": {
+    "landuse_editions": [
+      1981,
+      1985,
+      1991,
+      1994,
+      1997,
+      2001,
+      2003,
+      2005,
+      2008,
+      2009,
+      2012,
+      2014,
+      2016,
+      2018,
+      2020,
+      2022,
+      2024
+    ],
+    "landuse_codes_unclear": [
+      "BS",
+      "GE",
+      "LP",
+      "MG",
+      "MI",
+      "SG",
+      "UN"
+    ],
+    "zone_pixels": {
+      "stable_green": 91113,
+      "stable_farmland": 15729,
+      "stable_forest": 32181,
+      "stable_built": 4829
+    },
+    "converted_ha": 1568.88,
+    "converted_ha_without_scheme_change": 1263.96,
+    "converted_ha_outside_periods": 71.73,
+    "converted_share_without_temperature": 0.256,
+    "city_share_without_temperature": 0.102,
+    "cohorts_found": 5,
+    "cohorts_measured": 4,
+    "ghsl_built_share_in_zones": {
+      "stable_green": {
+        "built_share_1980": 0.008,
+        "built_share_2020": 0.012
+      },
+      "stable_built": {
+        "built_share_1980": 0.336,
+        "built_share_2020": 0.384
+      },
+      "converted": {
+        "built_share_1980": 0.146,
+        "built_share_2020": 0.305
+      }
+    },
+    "landsat_items": 852,
+    "overpasses_considered": 479,
+    "overpasses_used": 211,
+    "overpasses_used_by_sensor": {
+      "TM": 99,
+      "OLI/TIRS": 78,
+      "ETM+": 34
+    },
+    "overpasses_skipped": {
+      "city too cloudy": 217,
+      "city not covered": 46,
+      "a stable zone is masked": 5
+    },
+    "first_scene": "1984-06-02",
+    "last_scene": "2026-08-26",
+    "sealed_minus_green": {
+      "built_minus_green_c": {
+        "trend_of_yearly_medians": {
+          "n": 42,
+          "slope_per_decade": 0.314,
+          "ci95_per_decade": 0.342,
+          "first_year": 1984,
+          "last_year": 2026,
+          "change": 1.321,
+          "change_ci95": 1.438
+        },
+        "trend_holding_sun_elevation": {
+          "n": 211,
+          "slope_per_decade": 0.027,
+          "per_unit_covariate": 0.281
+        },
+        "median_by_sensor": {
+          "ETM+": 6.604,
+          "OLI/TIRS": 7.088,
+          "TM": 5.91
+        },
+        "scenes_by_sensor": {
+          "ETM+": 34,
+          "OLI/TIRS": 78,
+          "TM": 99
+        }
+      },
+      "built_minus_farmland_c": {
+        "trend_of_yearly_medians": {
+          "n": 42,
+          "slope_per_decade": -0.172,
+          "ci95_per_decade": 0.579,
+          "first_year": 1984,
+          "last_year": 2026,
+          "change": -0.724,
+          "change_ci95": 2.43
+        },
+        "trend_holding_sun_elevation": {
+          "n": 211,
+          "slope_per_decade": -0.645,
+          "per_unit_covariate": 0.473
+        },
+        "median_by_sensor": {
+          "ETM+": 0.766,
+          "OLI/TIRS": 1.469,
+          "TM": 0.45
+        },
+        "scenes_by_sensor": {
+          "ETM+": 34,
+          "OLI/TIRS": 78,
+          "TM": 99
+        }
+      },
+      "built_minus_forest_c": {
+        "trend_of_yearly_medians": {
+          "n": 42,
+          "slope_per_decade": 0.73,
+          "ci95_per_decade": 0.328,
+          "first_year": 1984,
+          "last_year": 2026,
+          "change": 3.068,
+          "change_ci95": 1.378
+        },
+        "trend_holding_sun_elevation": {
+          "n": 197,
+          "slope_per_decade": 0.42,
+          "per_unit_covariate": 0.227
+        },
+        "median_by_sensor": {
+          "ETM+": 9.623,
+          "OLI/TIRS": 10.402,
+          "TM": 8.724
+        },
+        "scenes_by_sensor": {
+          "ETM+": 32,
+          "OLI/TIRS": 69,
+          "TM": 96
+        }
+      }
+    },
+    "converted_land": {
+      "stable_green": {
+        "effect": {
+          "cohorts": 3,
+          "pixels": 992,
+          "weighted_mean_c": 1.901,
+          "median_c": 1.596,
+          "min_c": 1.162,
+          "max_c": 2.183
+        },
+        "effect_same_sensor": {
+          "cohorts": 1,
+          "pixels": 595,
+          "weighted_mean_c": 1.579,
+          "median_c": 1.579,
+          "min_c": 1.579,
+          "max_c": 1.579
+        },
+        "effect_including_scheme_change_cohorts": {
+          "cohorts": 4,
+          "pixels": 1099,
+          "weighted_mean_c": 1.831,
+          "median_c": 1.393,
+          "min_c": 1.162,
+          "max_c": 2.183
+        },
+        "ndvi_effect": {
+          "cohorts": 3,
+          "pixels": 992,
+          "weighted_mean_c": -0.126,
+          "median_c": -0.135,
+          "min_c": -0.14,
+          "max_c": -0.103
+        }
+      },
+      "stable_farmland": {
+        "effect": {
+          "cohorts": 3,
+          "pixels": 992,
+          "weighted_mean_c": 0.527,
+          "median_c": 0.392,
+          "min_c": -0.093,
+          "max_c": 1.036
+        },
+        "effect_same_sensor": {
+          "cohorts": 1,
+          "pixels": 595,
+          "weighted_mean_c": -0.102,
+          "median_c": -0.102,
+          "min_c": -0.102,
+          "max_c": -0.102
+        },
+        "effect_including_scheme_change_cohorts": {
+          "cohorts": 4,
+          "pixels": 1099,
+          "weighted_mean_c": 0.546,
+          "median_c": 0.555,
+          "min_c": -0.093,
+          "max_c": 1.036
+        },
+        "ndvi_effect": {
+          "cohorts": 3,
+          "pixels": 992,
+          "weighted_mean_c": -0.066,
+          "median_c": -0.078,
+          "min_c": -0.138,
+          "max_c": -0.048
+        }
+      }
+    }
+  }
+}

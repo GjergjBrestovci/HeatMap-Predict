@@ -1,0 +1,46 @@
+place,kind,measure,n,first_year,last_year,slope_per_decade,ci95_per_decade,change,change_ci95,decade_change
+Bruckneudorf,"station, rural",mean_c,46,1981,2026,0.699,0.194,3.144,0.875,2.733
+Bruckneudorf,"station, rural",min_c,46,1981,2026,0.51,0.204,2.294,0.919,2.097
+Bruckneudorf,"station, rural",max_c,46,1981,2026,0.662,0.252,2.979,1.134,2.7
+Eisenstadt Nordost,"station, not used",mean_c,46,1981,2026,0.743,0.202,3.343,0.909,2.937
+Eisenstadt Nordost,"station, not used",min_c,46,1981,2026,0.736,0.155,3.31,0.696,2.863
+Eisenstadt Nordost,"station, not used",max_c,46,1981,2026,0.849,0.256,3.82,1.152,3.4
+Groß-Enzersdorf,"station, not used",mean_c,46,1981,2026,0.783,0.187,3.525,0.84,3.163
+Groß-Enzersdorf,"station, not used",min_c,46,1981,2026,0.674,0.145,3.034,0.654,2.69
+Groß-Enzersdorf,"station, not used",max_c,46,1981,2026,0.828,0.246,3.725,1.109,3.387
+Gumpoldskirchen,"station, not used",mean_c,43,1981,2026,0.73,0.211,3.283,0.951,2.62
+Gumpoldskirchen,"station, not used",min_c,43,1981,2026,0.534,0.168,2.405,0.756,1.873
+Gumpoldskirchen,"station, not used",max_c,43,1981,2026,0.882,0.27,3.969,1.216,3.167
+Langenlebarn,"station, rural",mean_c,46,1981,2026,0.797,0.195,3.586,0.878,3.147
+Langenlebarn,"station, rural",min_c,46,1981,2026,0.638,0.145,2.871,0.655,2.46
+Langenlebarn,"station, rural",max_c,46,1981,2026,0.968,0.264,4.356,1.188,3.887
+Neusiedl am See,"station, rural",mean_c,45,1981,2026,0.731,0.187,3.292,0.84,2.69
+Neusiedl am See,"station, rural",min_c,45,1981,2026,0.591,0.163,2.66,0.734,2.03
+Neusiedl am See,"station, rural",max_c,45,1981,2026,0.885,0.234,3.981,1.052,3.173
+Schwechat Flughafen,"station, rural",mean_c,46,1981,2026,0.703,0.197,3.161,0.888,2.85
+Schwechat Flughafen,"station, rural",min_c,46,1981,2026,0.558,0.144,2.511,0.648,2.18
+Schwechat Flughafen,"station, rural",max_c,46,1981,2026,0.803,0.261,3.614,1.174,3.35
+Seibersdorf,"station, rural",mean_c,40,1983,2026,0.756,0.216,3.253,0.93,2.567
+Seibersdorf,"station, rural",min_c,40,1983,2026,0.653,0.158,2.807,0.677,2.257
+Seibersdorf,"station, rural",max_c,40,1983,2026,0.747,0.29,3.214,1.249,2.547
+Wien Hohe Warte,"station, urban",mean_c,46,1981,2026,0.718,0.197,3.232,0.885,2.873
+Wien Hohe Warte,"station, urban",min_c,46,1981,2026,0.576,0.158,2.593,0.709,2.307
+Wien Hohe Warte,"station, urban",max_c,46,1981,2026,0.845,0.254,3.805,1.145,3.433
+Wien Innere Stadt,"station, urban",mean_c,42,1985,2026,0.851,0.22,3.49,0.904,2.663
+Wien Innere Stadt,"station, urban",min_c,42,1985,2026,0.697,0.183,2.86,0.75,2.207
+Wien Innere Stadt,"station, urban",max_c,42,1985,2026,0.975,0.267,3.999,1.094,3.033
+Wien Mariabrunn,"station, not used",mean_c,41,1981,2026,0.751,0.188,3.379,0.844,2.9
+Wien Mariabrunn,"station, not used",min_c,41,1981,2026,0.505,0.135,2.272,0.608,1.927
+Wien Mariabrunn,"station, not used",max_c,41,1981,2026,0.954,0.263,4.292,1.185,3.733
+Wien Unterlaa,"station, not used",mean_c,46,1981,2026,0.759,0.207,3.415,0.932,3.02
+Wien Unterlaa,"station, not used",min_c,46,1981,2026,0.715,0.16,3.218,0.722,2.76
+Wien Unterlaa,"station, not used",max_c,46,1981,2026,0.777,0.27,3.498,1.214,3.16
+Wiener Neustadt Flugplatz,"station, not used",mean_c,45,1982,2026,0.766,0.2,3.37,0.881,2.993
+Wiener Neustadt Flugplatz,"station, not used",min_c,45,1982,2026,0.617,0.146,2.714,0.641,2.397
+Wiener Neustadt Flugplatz,"station, not used",max_c,45,1982,2026,0.794,0.266,3.492,1.17,3.16
+SPARTACUS rural ring,grid,mean_c,46,1981,2026,0.761,0.188,3.426,0.846,3.026
+SPARTACUS rural ring,grid,min_c,46,1981,2026,0.639,0.141,2.878,0.636,2.504
+SPARTACUS rural ring,grid,max_c,46,1981,2026,0.883,0.251,3.975,1.131,3.547
+SPARTACUS built-up city,grid,mean_c,46,1981,2026,0.785,0.192,3.532,0.865,3.11
+SPARTACUS built-up city,grid,min_c,46,1981,2026,0.658,0.151,2.96,0.679,2.598
+SPARTACUS built-up city,grid,max_c,46,1981,2026,0.911,0.247,4.099,1.113,3.618

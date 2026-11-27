@@ -1,0 +1,14 @@
+id,name,lon,lat,altitude,dist_km,in_city,summers,sites,site_change_years,built_share_1km,role
+18,Bruckneudorf,16.845,48.013,165.6,41.318,False,46,2,[2008],0.003,rural
+22,Eisenstadt Nordost,16.538,47.854,184.0,41.259,False,46,2,[1989],0.158,not used
+31,Groß-Enzersdorf,16.559,48.2,154.3,13.861,False,46,2,[1991],0.138,not used
+51,Langenlebarn,16.118,48.324,175.3,22.872,False,46,2,[1993],0.09,rural
+105,Wien Hohe Warte,16.356,48.249,198.0,4.639,True,46,2,[1993],0.249,urban
+107,Wien Unterlaa,16.419,48.125,200.0,9.891,True,46,2,[1996],0.038,not used
+5990,Schwechat Flughafen,16.581,48.118,183.0,18.495,False,46,1,[],0.059,rural
+65,Neusiedl am See,16.829,47.949,117.0,44.535,False,45,4,"[1984, 2004, 2017]",0.078,rural
+112,Wiener Neustadt Flugplatz,16.231,47.832,275.0,43.117,False,45,2,[1993],0.158,not used
+32,Gumpoldskirchen,16.281,48.036,212.0,20.375,False,43,3,"[1991, 2018]",0.129,not used
+5925,Wien Innere Stadt,16.367,48.198,177.0,1.209,True,42,1,[],0.371,urban
+106,Wien Mariabrunn,16.229,48.207,225.0,10.676,True,41,2,[1997],0.175,not used
+197,Seibersdorf,16.504,47.975,185.0,27.728,False,40,1,[],0.056,rural
