@@ -269,7 +269,9 @@ Results follow in a separate pull request once the run on GitHub Actions is in.
 
 1. **Air, regional against urban.** June–August mean air temperature per year. The main
    split uses the homogenised HISTALP series: Wien-Hohe Warte against Eisenstadt, Retz and
-   St. Pölten, the nearest low-lying stations that HISTALP carries up to now. The cross-check
+   St. Pölten, the nearest low-lying stations that HISTALP carries up to now. These three
+   are small towns 40–65 km away, not open country, so this urban extra is "Vienna against
+   small towns" and probably a lower bound. The cross-check
    uses GeoSphere Austria's monthly station series, which are not homogenised but include
    stations closer to the city. Urban there: Innere Stadt (from 1985) and Hohe Warte. Rural:
    every station within 45 km, below 300 m, outside the city, with at least 85 % of the
@@ -287,6 +289,11 @@ Results follow in a separate pull request once the run on GitHub Actions is in.
    sealed minus land that stayed green, over time; and converted land minus stable green,
    before against after the conversion. Scenes between the last green and the first sealed
    edition are left out.
+
+HISTALP: Auer I. et al. (2007), HISTALP – historical instrumental climatological surface
+time series of the Greater Alpine Region, Int. J. Climatol. 27, 17–46; data from
+<https://www.zamg.ac.at/histalp/>, Austrian series free for non-commercial research. Only
+the summer means used here are stored in this repository.
 
 Two things in the data shaped this:
 
