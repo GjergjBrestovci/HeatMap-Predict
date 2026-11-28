@@ -238,14 +238,24 @@ Layer names are from the WFS capabilities document on 2026-11-26.
 - **Serves:** P1 and P3: the most detailed picture of what is sealed. Rasterising it to the
   Landsat grid gives the share of building, road and green per pixel, which is the natural
   feature set for the model and the layer a "replace the car park with a park" scenario edits.
-- **Caveat:** the full city is large. Request by `bbox` or download the district tiles from
-  data.gv.at. Attribute meanings were not inspected yet.
+- **Checked 2026-11-27 ✔:** about 2 million polygons in total (782,000 building parts
+  alone); the server returns at most 400,000 features per request, so fetch by `bbox`
+  (`uhi/layout.py` uses 4 km tiles, 2–3 GB of GeoJSON overall). The class is in `F_KLASSE`
+  with its name in `LAYER`: 11 Gebäude, 21 Fahrbahn, 23 Gehsteig, 33 Ruhender Verkehr,
+  59 Befestigte Fläche, 27–29 rail, 52 Wald, 53 Wiese, 54 Feld/Acker, 58 Grünfläche,
+  41 Natürliches Gewässer, and so on. The layers overlap (a building can lie on a meadow
+  polygon), so the order of rasterising matters.
+- **Building height:** `FMZKBKMOGD` (the building model) gives per building part the roof
+  level `O_KOTE` and the ground level `HOEHE_DGM`, both in metres above the city datum
+  (Wiener Null). Height = `O_KOTE − HOEHE_DGM`. No surface model is needed.
 
 ### 13. Baumkataster: `BAUMKATOGD`
 
 - **Covers:** 233,731 city-managed trees ✔ with species, planting year, trunk girth, height and
   crown diameter. Private gardens and forests are not included.
-- **Serves:** P3: street-tree canopy, which no land-use map captures.
+- **Serves:** P3: street-tree canopy, which no land-use map captures. The crown diameter
+  comes as a class text (`KRONENDURCHMESSER_TXT`, e.g. "19-21 m"). `outputFormat=csv` with
+  `propertyName=KRONENDURCHMESSER_TXT,SHAPE` gives all trees with WKT points in one small file.
 
 ### 14. Building information and surface model
 
@@ -254,7 +264,10 @@ Layer names are from the WFS capabilities document on 2026-11-26.
   data.gv.at). Height = surface minus terrain.
 - **Serves:** P3: building height and density drive shading and heat storage, and are needed
   to model "add a housing block".
-- **To check:** tile sizes and which attributes carry height.
+- **Checked:** `GEBAEUDEINFOOGD` has floors (`GESCH_ANZ`) for 58,000 listed buildings
+  only; heights for all buildings are in the FMZK building model (dataset 12). For terrain,
+  P3 uses the Copernicus DEM GLO-30 (`cop-dem-glo-30` on the Planetary Computer, open ✔)
+  instead of the city's large terrain tiles.
 
 Also look on data.gv.at for the city's own heat products (Stadtklimaanalyse, Urban Heat
 Vulnerability Index) and the air-quality network's temperature readings. They were not

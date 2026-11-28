@@ -1,0 +1,282 @@
+{
+  "target": {
+    "scenes_recent": 55,
+    "scenes_early": 11,
+    "years_recent": [
+      2019,
+      2026
+    ],
+    "cells_in_city": 51097,
+    "cells_with_target": 45865,
+    "spread_c": 4.361,
+    "p05_c": -7.51,
+    "p95_c": 5.631
+  },
+  "features": 37,
+  "cover_share_in_city": {
+    "building": 0.142,
+    "road": 0.099,
+    "paved": 0.088,
+    "rail": 0.013,
+    "grass": 0.301,
+    "forest": 0.19,
+    "field": 0.092,
+    "water": 0.04,
+    "unmapped": 0.035
+  },
+  "typical_ndvi": {
+    "building": 0.175,
+    "road": 0.203,
+    "paved": 0.334,
+    "water": -0.037,
+    "lawn": 0.583,
+    "trees": 0.677
+  },
+  "housing_recipe": {
+    "shares": {
+      "none": 0.011,
+      "building": 0.278,
+      "road": 0.135,
+      "paved": 0.176,
+      "rail": 0.003,
+      "grass": 0.357,
+      "forest": 0.01,
+      "field": 0.021,
+      "water": 0.001,
+      "other": 0.008
+    },
+    "ndvi": 0.313,
+    "height_m": 12.915,
+    "cells": 176
+  },
+  "cross_validation": {
+    "linear": {
+      "all_test_cells": {
+        "n": 45865,
+        "r2": 0.933,
+        "mae": 0.82,
+        "rmse": 1.131
+      },
+      "away_from_training_blocks": {
+        "n": 18309,
+        "r2": 0.93,
+        "mae": 0.837,
+        "rmse": 1.175
+      }
+    },
+    "boosting": {
+      "all_test_cells": {
+        "n": 45865,
+        "r2": 0.961,
+        "mae": 0.641,
+        "rmse": 0.864
+      },
+      "away_from_training_blocks": {
+        "n": 18309,
+        "r2": 0.958,
+        "mae": 0.669,
+        "rmse": 0.904
+      }
+    }
+  },
+  "cells_near_another_fold_share": 0.601,
+  "importance_by_quantity": {
+    "ndvi": 1.413,
+    "forest": 0.68,
+    "water": 0.584,
+    "building": 0.148,
+    "height": 0.116,
+    "elevation": 0.085,
+    "road": 0.05,
+    "field": 0.05,
+    "paved": 0.04,
+    "grass": 0.02,
+    "water_dist_m": 0.015,
+    "unmapped": 0.012,
+    "canopy": 0.011,
+    "rail": 0.011
+  },
+  "check_parks": {
+    "parks": 60,
+    "observed_mean_c": 0.214,
+    "predicted_mean_c": 0.336,
+    "r": 0.969,
+    "mae_c": 0.44,
+    "slope_predicted_per_observed": 0.954
+  },
+  "check_conversions": {
+    "with_ndvi": {
+      "model_r2_on_early_state": 0.953,
+      "converted_cells": 148,
+      "unchanged_cells": 42697,
+      "converted": {
+        "observed_mean_c": 0.591,
+        "predicted_mean_c": 0.964,
+        "observed_median_c": 0.49,
+        "predicted_median_c": 0.753,
+        "r": 0.431,
+        "mae_c": 0.868
+      },
+      "unchanged": {
+        "observed_mean_c": 0.048,
+        "predicted_mean_c": -0.083,
+        "observed_median_c": 0.036,
+        "predicted_median_c": -0.051,
+        "r": 0.345,
+        "mae_c": 0.512
+      }
+    },
+    "without_ndvi": {
+      "model_r2_on_early_state": 0.918,
+      "converted_cells": 148,
+      "unchanged_cells": 42697,
+      "converted": {
+        "observed_mean_c": 0.591,
+        "predicted_mean_c": 0.509,
+        "observed_median_c": 0.49,
+        "predicted_median_c": 0.403,
+        "r": 0.204,
+        "mae_c": 0.841
+      },
+      "unchanged": {
+        "observed_mean_c": 0.048,
+        "predicted_mean_c": 0.028,
+        "observed_median_c": 0.036,
+        "predicted_median_c": 0.005,
+        "r": 0.006,
+        "mae_c": 0.539
+      }
+    },
+    "editions": [
+      2012,
+      2014,
+      2022,
+      2024
+    ],
+    "converted_ha": 250.56,
+    "full_model_field_built_over": {
+      "predicted_mean_c": -0.295,
+      "observed_on_real_conversions_c": 0.591
+    }
+  },
+  "hot_days": {
+    "hot_day_scenes": 30,
+    "needed": 15,
+    "fitted": true,
+    "cross_validation": {
+      "linear": {
+        "all_test_cells": {
+          "n": 45866,
+          "r2": 0.922,
+          "mae": 0.885,
+          "rmse": 1.234
+        },
+        "away_from_training_blocks": {
+          "n": 18309,
+          "r2": 0.918,
+          "mae": 0.904,
+          "rmse": 1.285
+        }
+      },
+      "boosting": {
+        "all_test_cells": {
+          "n": 45866,
+          "r2": 0.958,
+          "mae": 0.674,
+          "rmse": 0.908
+        },
+        "away_from_training_blocks": {
+          "n": 18309,
+          "r2": 0.955,
+          "mae": 0.702,
+          "rmse": 0.946
+        }
+      }
+    },
+    "r_with_main_target": 0.993,
+    "spread_hot_c": 4.407,
+    "spread_main_c": 4.361
+  },
+  "scenarios": {
+    "car_park_to_tree_park": {
+      "cover": "trees",
+      "area_ha": 5.874,
+      "cells_changed": 177,
+      "inside": {
+        "cells": 9,
+        "mean_change_c": -2.673,
+        "mean_low_c": -3.61,
+        "mean_high_c": -1.737,
+        "strongest_change_c": -3.108
+      },
+      "around": {
+        "cells": 168,
+        "mean_change_c": -0.093,
+        "mean_low_c": -0.787,
+        "mean_high_c": 0.601,
+        "strongest_change_c": -2.022
+      },
+      "cells_outside_training_range": 2
+    },
+    "car_park_to_lawn": {
+      "cover": "lawn",
+      "area_ha": 5.874,
+      "cells_changed": 177,
+      "inside": {
+        "cells": 9,
+        "mean_change_c": -1.555,
+        "mean_low_c": -2.389,
+        "mean_high_c": -0.721,
+        "strongest_change_c": -2.394
+      },
+      "around": {
+        "cells": 168,
+        "mean_change_c": -0.065,
+        "mean_low_c": -0.75,
+        "mean_high_c": 0.62,
+        "strongest_change_c": -1.354
+      },
+      "cells_outside_training_range": 0
+    },
+    "pocket_park_in_car_park": {
+      "cover": "trees",
+      "area_ha": 1.0,
+      "cells_changed": 120,
+      "inside": {
+        "cells": 4,
+        "mean_change_c": -0.739,
+        "mean_low_c": -1.531,
+        "mean_high_c": 0.053,
+        "strongest_change_c": -0.884
+      },
+      "around": {
+        "cells": 116,
+        "mean_change_c": -0.024,
+        "mean_low_c": -0.702,
+        "mean_high_c": 0.654,
+        "strongest_change_c": -0.392
+      },
+      "cells_outside_training_range": 0
+    },
+    "field_to_housing": {
+      "cover": "housing",
+      "area_ha": 205.364,
+      "cells_changed": 784,
+      "inside": {
+        "cells": 260,
+        "mean_change_c": -0.295,
+        "mean_low_c": -1.13,
+        "mean_high_c": 0.541,
+        "strongest_change_c": -1.712
+      },
+      "around": {
+        "cells": 524,
+        "mean_change_c": -0.107,
+        "mean_low_c": -0.835,
+        "mean_high_c": 0.621,
+        "strongest_change_c": -1.332
+      },
+      "cells_outside_training_range": 1
+    }
+  }
+}

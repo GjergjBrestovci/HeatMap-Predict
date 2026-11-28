@@ -1,5 +1,6 @@
 affine
 geopandas
+joblib
 matplotlib
 numpy
 pandas
@@ -8,5 +9,7 @@ pystac
 pystac-client
 rasterio
 requests
+scikit-learn
+scipy
 shapely
 tabulate

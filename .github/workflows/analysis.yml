@@ -11,11 +11,14 @@ on:
       step:
         description: Which analysis to run
         type: choice
-        options: [multi-scene, stations, warming-split]
+        options: [multi-scene, stations, warming-split, model, scenario]
         default: multi-scene
       years:
         description: "First and last summer, e.g. 2013-2026; for warming-split 1981-2026"
         default: "2013-2026"
+      scenarios:
+        description: "For step scenario: GeoJSON files in the repository"
+        default: "scenarios/*.geojson"
       refresh:
         description: Repeat the catalogue searches to pick up new scenes
         type: boolean
@@ -74,12 +77,28 @@ jobs:
           REFRESH: ${{ inputs.refresh && '--refresh' || '' }}
         run: python -m uhi.warming_split --years "$YEARS" $REFRESH
 
+      # First run: the Flächenmehrzweckkarte in tiles, about 2-3 GB of downloads;
+      # only the rasters made from it are kept in the cache.
+      - name: Model
+        if: inputs.step == 'model'
+        env:
+          YEARS: ${{ inputs.years }}
+          REFRESH: ${{ inputs.refresh && '--refresh' || '' }}
+        run: python -m uhi.model --years "$YEARS" --hot-days $REFRESH
+
+      # Needs the model from an earlier model run with the same years (in the cache).
+      - name: Scenarios
+        if: inputs.step == 'scenario'
+        env:
+          FILES: ${{ inputs.scenarios }}
+        run: python -m uhi.scenario $FILES
+
       # Also after a failed step, so that a rerun does not download everything again.
       - name: Key the cache by its scene list
         id: scenes
         if: always()
         run: |
-          hash=$(find data/cache -type f \( -name '*.npz' -o -name '*.geojson' -o -name '*.csv' \) -printf '%P\n' | sort | sha256sum | cut -c1-16)
+          hash=$( { find data/cache -type f \( -name '*.npz' -o -name '*.geojson' -o -name '*.csv' \) -printf '%P\n' | sort; sha256sum data/cache/model/bundle.joblib 2>/dev/null || true; } | sha256sum | cut -c1-16)
           echo "key=uhi-data-v1-${{ inputs.years }}-$hash" >> "$GITHUB_OUTPUT"
           du -sh data/cache
 
@@ -89,6 +108,18 @@ jobs:
         with:
           path: data/cache
           key: ${{ steps.scenes.outputs.key }}
+
+      # The fitted model and the layout layers, enough to run the scenario tool elsewhere.
+      - name: Upload model
+        if: inputs.step == 'model'
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-bundle
+          path: |
+            data/cache/model/bundle.joblib
+            data/cache/model/layers.npz
+          if-no-files-found: error
+          retention-days: 90
 
       - name: Upload results
         uses: actions/upload-artifact@v4
